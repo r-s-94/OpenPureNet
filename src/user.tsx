@@ -2,15 +2,15 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { userContext } from "./userContext";
 import { socialMediaPostContext } from "./socialMediaPostContext";
-import { SocialMediaPostArray } from "./socialMediaPostContext";
+//import { SocialMediaPostArray } from "./socialMediaPostContext";
 
 export default function User() {
   const [newUserPost, setNewUserPost] = useState<string>("");
   const { userInfoObject } = useContext(userContext);
   const { socialMediaPostArray } = useContext(socialMediaPostContext);
-  const [userPostArray, setUserPostArray] = useState<SocialMediaPostArray[]>(
+  /*const [userPostArray, setUserPostArray] = useState<SocialMediaPostArray[]>(
     []
-  );
+  );*/
 
   const filteredUserArray = socialMediaPostArray.filter((post) => {
     return post.UserId === userInfoObject.userId;
@@ -20,9 +20,13 @@ export default function User() {
 
   async function addPost() {}
 
-  async function updatePost(userId: number) {}
+  async function updatePost(userId: number) {
+    const x = userId;
+  }
 
-  async function deletePost(userId: number) {}
+  async function deletePost(userId: number) {
+    const x = userId;
+  }
 
   return (
     <>
