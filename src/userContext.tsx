@@ -1,8 +1,8 @@
 import { createContext } from "react";
 
 export interface UserInfoObject {
-  userId: string | undefined;
-  userName: string | undefined;
+  userId: string;
+  userName: string;
   userProfilName: string;
 }
 
