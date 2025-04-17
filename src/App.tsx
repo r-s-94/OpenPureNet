@@ -34,7 +34,7 @@ function App() {
 
   const [userInfoObject, setUserInfoObject] = useState<UserInfoObject>({
     userId: "",
-    userName: "",
+    userMail: "",
     userProfilName: "",
   });
 

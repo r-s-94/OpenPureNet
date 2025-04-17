@@ -33,7 +33,7 @@ export default function SocialMediaOverview() {
   async function addNewPost() {
     const {} = await supabase.from("Social-Media-Post").insert({
       UserId: userInfoObject.userId,
-      UserName: userInfoObject.userName,
+      UserName: userInfoObject.userMail,
       UserProfilName: userInfoObject.userProfilName,
       Post: newPost,
     });
