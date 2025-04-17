@@ -12,20 +12,25 @@ import { socialMediaPostContext } from "./socialMediaPostContext";
 // Create a single supabase client for interacting with your database
 
 function App() {
-  const router = createBrowserRouter([
+  const router = createBrowserRouter(
+    [
+      {
+        path: "/",
+        element: <LogIn />,
+      },
+      {
+        path: "socialMediaOverview",
+        element: <SocialMediaOverview />,
+      },
+      {
+        path: "user",
+        element: <User />,
+      },
+    ],
     {
-      path: "/",
-      element: <LogIn />,
-    },
-    {
-      path: "socialMediaOverview",
-      element: <SocialMediaOverview />,
-    },
-    {
-      path: "user",
-      element: <User />,
-    },
-  ]);
+      basename: "/OpenPureNet/",
+    }
+  );
 
   const [userInfoObject, setUserInfoObject] = useState<UserInfoObject>({
     userId: "",

@@ -13,7 +13,7 @@ export default function LogIn() {
 
   async function checkUser() {
     if (userName !== "" && userPassword !== "") {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data } = await supabase.auth.signInWithPassword({
         email: userName,
         password: userPassword,
       });

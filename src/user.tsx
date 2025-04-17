@@ -20,13 +20,9 @@ export default function User() {
 
   async function addPost() {}
 
-  async function updatePost(userId: number) {
-    const x = userId;
-  }
+  //async function updatePost(userId: number) {}
 
-  async function deletePost(userId: number) {
-    const x = userId;
-  }
+  //async function deletePost(userId: number) {}
 
   return (
     <>
@@ -66,7 +62,13 @@ export default function User() {
           <div>
             <p>{post.UserProfilName}</p>
             <p>{post.Post}</p>
-            <button
+          </div>
+        );
+      })}
+    </>
+  );
+  /*
+   <button
               onClick={() => {
                 updatePost(post.id);
               }}
@@ -76,9 +78,5 @@ export default function User() {
                 deletePost(post.id);
               }}
             ></button>
-          </div>
-        );
-      })}
-    </>
-  );
+  */
 }

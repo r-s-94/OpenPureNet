@@ -18,7 +18,7 @@ export default function SocialMediaOverview() {
   }, []);
 
   async function loadPost() {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from("Social-Media-Post")
       .select()
       .order("id");
@@ -31,7 +31,7 @@ export default function SocialMediaOverview() {
   }
 
   async function addNewPost() {
-    const { error } = await supabase.from("Social-Media-Post").insert({
+    const {} = await supabase.from("Social-Media-Post").insert({
       UserId: userInfoObject.userId,
       UserName: userInfoObject.userName,
       UserProfilName: userInfoObject.userProfilName,
@@ -43,7 +43,7 @@ export default function SocialMediaOverview() {
   }
 
   async function logOut() {
-    const { error } = await supabase.auth.signOut();
+    const {} = await supabase.auth.signOut();
     navigation("/");
   }
 
