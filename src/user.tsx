@@ -28,7 +28,7 @@ export default function User() {
   const sortedUserPostArray = filteredUserArray.sort((a, b) => b.id - a.id);
 
   async function loadPost() {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from("Social-Media-Post-Table")
       .select()
       .order("id");
@@ -47,7 +47,7 @@ export default function User() {
   }
 
   async function newProfilName() {
-    const { error } = await supabase.from("Social-Media-User-Table").insert({
+    const {} = await supabase.from("Social-Media-User-Table").insert({
       UserId: userInfoObject.authenticatedUserId,
       UserProfilname: userProfileName,
     });
@@ -56,7 +56,7 @@ export default function User() {
   }
 
   async function updateProfilName(userTableId: number) {
-    const { error } = await supabase
+    const {} = await supabase
       .from("Social-Media-User-Table")
       .update({ UserProfilname: userProfileName })
       .eq("id", userTableId);
@@ -92,7 +92,7 @@ export default function User() {
   async function editUserPost() {
     const updateCurrentDate = new Date().toLocaleString();
 
-    const { error } = await supabase
+    const {} = await supabase
       .from("Social-Media-Post-Table")
       .update({
         Post: updateUserPost,
@@ -107,7 +107,7 @@ export default function User() {
   }
 
   async function deleteUserPost(postId: number) {
-    const response = await supabase
+    const {} = await supabase
       .from("Social-Media-Post-Table")
       .delete()
       .eq("id", postId);

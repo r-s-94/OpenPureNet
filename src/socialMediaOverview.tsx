@@ -54,7 +54,7 @@ export default function SocialMediaOverview() {
   async function addNewPost() {
     const currentDate = new Date().toLocaleString();
 
-    const { error } = await supabase.from("Social-Media-Post-Table").insert({
+    const {} = await supabase.from("Social-Media-Post-Table").insert({
       UserId: userInfoObject.authenticatedUserId,
       UserProfilname: userInfoObject.profilName,
       Post: newPost,
