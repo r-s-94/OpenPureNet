@@ -18,18 +18,20 @@ export default function LogIn() {
         password: userPassword,
       });
 
-      if (error) {
+      if (error?.status === 404 || error?.code === "invalid_credentials") {
         console.log(error.status);
         console.log(error.code);
-      }
-
-      if (data) {
+        alert();
+        setUserName("");
+        setUserPassword("");
+      } else if (data) {
+        if (data.user?.id) {
+          setUserInfoObject({
+            ...userInfoObject,
+            id: data.user.id,
+          });
+        }
         console.log(data);
-        setUserInfoObject({
-          ...userInfoObject,
-          userId: data.user?.id,
-          userMail: data.user?.email,
-        });
         navigation("socialMediaOverview");
         setUserName("");
         setUserPassword("");

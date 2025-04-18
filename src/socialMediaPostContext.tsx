@@ -1,11 +1,11 @@
 import { createContext } from "react";
 
 export interface SocialMediaPostArray {
+  Date: string | null;
   id: number;
   Post: string | null;
   UserId: string;
-  UserName: string | null;
-  UserProfilName: string | null;
+  UserProfilname: string | null;
 }
 
 interface SocialMediaPostContext {
@@ -13,11 +13,11 @@ interface SocialMediaPostContext {
   setSocialMediaPostArray: React.Dispatch<
     React.SetStateAction<
       {
+        Date: string | null;
         id: number;
         Post: string | null;
         UserId: string;
-        UserName: string | null;
-        UserProfilName: string | null;
+        UserProfilname: string | null;
       }[]
     >
   >;

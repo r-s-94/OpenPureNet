@@ -19,7 +19,7 @@ export default function SocialMediaOverview() {
 
   async function loadPost() {
     const { data } = await supabase
-      .from("Social-Media-Post")
+      .from("Social-Media-Post-Table")
       .select()
       .order("id");
 
@@ -31,11 +31,11 @@ export default function SocialMediaOverview() {
   }
 
   async function addNewPost() {
-    const {} = await supabase.from("Social-Media-Post").insert({
-      UserId: userInfoObject.userId,
-      UserName: userInfoObject.userMail,
-      UserProfilName: userInfoObject.userProfilName,
+    const {} = await supabase.from("Social-Media-Post-Table").insert({
+      UserId: userInfoObject.id,
+      UserProfilName: userInfoObject.profilName,
       Post: newPost,
+      Date: "",
     });
 
     setNewPost("");
@@ -85,8 +85,9 @@ export default function SocialMediaOverview() {
       {socialMediaPostArray.map((post) => {
         return (
           <div>
-            <p>{post.UserProfilName}</p>
+            <p>{post.UserProfilname}</p>
             <p>{post.Post}</p>
+            <span>{post.Date}</span>
           </div>
         );
       })}

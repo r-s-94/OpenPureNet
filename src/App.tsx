@@ -33,13 +33,12 @@ function App() {
   );
 
   const [userInfoObject, setUserInfoObject] = useState<UserInfoObject>({
-    userId: "",
-    userMail: "",
-    userProfilName: "",
+    id: "",
+    profilName: "",
   });
 
   const [socialMediaPostArray, setSocialMediaPostArray] = useState<
-    Tables<"Social-Media-Post">[]
+    Tables<"Social-Media-Post-Table">[]
   >([]);
 
   // Create a single supabase client for interacting with your database

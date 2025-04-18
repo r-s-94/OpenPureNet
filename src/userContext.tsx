@@ -1,9 +1,8 @@
 import { createContext } from "react";
 
 export interface UserInfoObject {
-  userId: string | undefined;
-  userMail: string | undefined;
-  userProfilName: string;
+  id: string;
+  profilName: string;
 }
 
 interface UserInfosContext {
@@ -13,9 +12,8 @@ interface UserInfosContext {
 
 export const userContext = createContext<UserInfosContext>({
   userInfoObject: {
-    userId: "",
-    userMail: "",
-    userProfilName: "",
+    id: "",
+    profilName: "",
   },
   setUserInfoObject: () => {},
 });
