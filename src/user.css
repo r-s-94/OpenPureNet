@@ -1,3 +1,33 @@
+.popup-window-div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+}
+
+.popup-message-div {
+  width: 80%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
 .back-icon {
   width: 2rem;
+}
+
+.edit.icon {
+  width: 1rem;
+}
+
+.break-icon {
+  width: 1rem;
 }

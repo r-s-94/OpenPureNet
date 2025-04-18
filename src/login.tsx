@@ -26,12 +26,12 @@ export default function LogIn() {
         setUserPassword("");
       } else if (data) {
         if (data.user?.id) {
+          console.log(data);
           setUserInfoObject({
             ...userInfoObject,
-            id: data.user.id,
+            authenticatedUserId: data.user.id,
           });
         }
-        console.log(data);
         navigation("socialMediaOverview");
         setUserName("");
         setUserPassword("");

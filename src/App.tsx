@@ -33,7 +33,8 @@ function App() {
   );
 
   const [userInfoObject, setUserInfoObject] = useState<UserInfoObject>({
-    id: "",
+    userTableId: 0,
+    authenticatedUserId: "",
     profilName: "",
   });
 

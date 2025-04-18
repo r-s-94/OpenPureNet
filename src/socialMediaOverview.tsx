@@ -10,11 +10,12 @@ export default function SocialMediaOverview() {
   const { socialMediaPostArray, setSocialMediaPostArray } = useContext(
     socialMediaPostContext
   );
-  const { userInfoObject } = useContext(userContext);
+  const { userInfoObject, setUserInfoObject } = useContext(userContext);
   const navigation = useNavigate();
 
   useEffect(() => {
     loadPost();
+    loadUserData();
   }, []);
 
   async function loadPost() {
@@ -25,17 +26,39 @@ export default function SocialMediaOverview() {
 
     if (data) {
       const sortedPostArray = data.sort((a, b) => b.id - a.id);
-
       setSocialMediaPostArray(sortedPostArray);
     }
   }
 
+  async function loadUserData() {
+    const { data } = await supabase
+      .from("Social-Media-User-Table")
+      .select()
+      .order("id");
+
+    if (data) {
+      const findUser = data.find((user) => {
+        return user.UserId === userInfoObject.authenticatedUserId;
+      });
+
+      if (findUser?.UserProfilname) {
+        setUserInfoObject({
+          authenticatedUserId: findUser.UserId,
+          userTableId: findUser.id,
+          profilName: findUser.UserProfilname,
+        });
+      }
+    }
+  }
+
   async function addNewPost() {
-    const {} = await supabase.from("Social-Media-Post-Table").insert({
-      UserId: userInfoObject.id,
-      UserProfilName: userInfoObject.profilName,
+    const currentDate = new Date().toLocaleString();
+
+    const { error } = await supabase.from("Social-Media-Post-Table").insert({
+      UserId: userInfoObject.authenticatedUserId,
+      UserProfilname: userInfoObject.profilName,
       Post: newPost,
-      Date: "",
+      Date: currentDate,
     });
 
     setNewPost("");
@@ -45,6 +68,12 @@ export default function SocialMediaOverview() {
   async function logOut() {
     const {} = await supabase.auth.signOut();
     navigation("/");
+
+    setUserInfoObject({
+      userTableId: 0,
+      authenticatedUserId: "",
+      profilName: "",
+    });
   }
 
   return (
@@ -67,8 +96,10 @@ export default function SocialMediaOverview() {
               d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
             />
           </svg>
+          {userInfoObject.profilName}
         </div>
       </Link>
+
       <button onClick={logOut}>Ausloggen</button>
 
       <div className="new-post-div">
