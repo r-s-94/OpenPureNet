@@ -61,6 +61,8 @@ export default function SocialMediaOverview() {
       Date: currentDate,
     });
 
+    //
+
     setNewPost("");
     loadPost();
   }
