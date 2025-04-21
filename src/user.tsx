@@ -25,6 +25,10 @@ export default function User() {
     const loadAllOfUser = async () => {
       const { data: session } = await supabase.auth.getSession();
 
+      if (session.session?.user.id) {
+        console.log(session);
+      }
+
       const { data: post } = await supabase
         .from("Social-Media-Post-Table")
         .select()
