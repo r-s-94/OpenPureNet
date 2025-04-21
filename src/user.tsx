@@ -30,6 +30,11 @@ export default function User() {
         .select()
         .order("id");
 
+      const { data: user } = await supabase
+        .from("Social-Media-User-Table")
+        .select()
+        .order("id");
+
       if (post) {
         const correctUser = post.filter((post) => {
           return post.UserId === session.session?.user.id;
@@ -44,11 +49,20 @@ export default function User() {
         console.log(session);
       }
 
-      if (session.session?.user.id) {
-        setUserInfoObject({
-          ...userInfoObject,
-          authenticatedUserId: session.session.user.id,
-        });
+      if (session.session) {
+        if (user) {
+          const loginUser = user.find((user) => {
+            return user.UserId === session.session?.user.id;
+          });
+
+          if (loginUser?.UserProfilname) {
+            setUserInfoObject({
+              ...userInfoObject,
+              authenticatedUserId: session.session.user.id,
+              profilName: loginUser.UserProfilname,
+            });
+          }
+        }
       }
     };
 
