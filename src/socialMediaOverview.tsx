@@ -22,6 +22,8 @@ export default function SocialMediaOverview() {
         .select()
         .order("id");
 
+      //
+
       if (user) {
         const findUser = user.find((user) => {
           return user.UserId === session.session?.user.id;
