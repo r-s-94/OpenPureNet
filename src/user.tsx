@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { userContext } from "./userContext";
 import { socialMediaPostContext } from "./socialMediaPostContext";
@@ -20,6 +20,10 @@ export default function User() {
   /*const [userPostArray, setUserPostArray] = useState<SocialMediaPostArray[]>(
     []
   );*/
+
+  useEffect(() => {
+    loadPost();
+  }, []);
 
   const filteredUserArray = socialMediaPostArray.filter((post) => {
     return post.UserId === userInfoObject.authenticatedUserId;
