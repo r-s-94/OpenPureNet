@@ -25,12 +25,6 @@ export default function User() {
     loadPost();
   }, []);
 
-  const filteredUserArray = socialMediaPostArray.filter((post) => {
-    return post.UserId === userInfoObject.authenticatedUserId;
-  });
-
-  const sortedUserPostArray = filteredUserArray.sort((a, b) => b.id - a.id);
-
   async function loadPost() {
     const { data } = await supabase
       .from("Social-Media-Post-Table")
@@ -38,12 +32,18 @@ export default function User() {
       .order("id");
 
     if (data) {
-      setSocialMediaPostArray(data);
+      const filteredUserArray = data.filter((post) => {
+        return post.UserId === userInfoObject.authenticatedUserId;
+      });
+
+      const sortedUserPostArray = filteredUserArray.sort((a, b) => b.id - a.id);
+
+      setSocialMediaPostArray(sortedUserPostArray);
     }
   }
 
   function checkProfilname(userTableId: number) {
-    if (userTableId === 0) {
+    if (userTableId) {
       newProfilName();
     } else {
       updateProfilName(userTableId);
@@ -51,6 +51,8 @@ export default function User() {
   }
 
   async function newProfilName() {
+    console.log(userInfoObject.authenticatedUserId);
+
     const {} = await supabase.from("Social-Media-User-Table").insert({
       UserId: userInfoObject.authenticatedUserId,
       UserProfilname: userProfileName,
@@ -60,6 +62,8 @@ export default function User() {
   }
 
   async function updateProfilName(userTableId: number) {
+    console.log(userInfoObject.authenticatedUserId);
+
     const {} = await supabase
       .from("Social-Media-User-Table")
       .update({ UserProfilname: userProfileName })
@@ -225,7 +229,7 @@ export default function User() {
         <button onClick={addUserPost}>Posten</button>
       </div>
 
-      {sortedUserPostArray.map((post) => {
+      {socialMediaPostArray.map((post) => {
         return (
           <div>
             <p>{post.UserProfilname}</p>
