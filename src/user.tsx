@@ -30,13 +30,6 @@ export default function User() {
         .select()
         .order("id");
 
-      if (session.session?.user.id) {
-        setUserInfoObject({
-          ...userInfoObject,
-          authenticatedUserId: session.session.user.id,
-        });
-      }
-
       if (post) {
         const correctUser = post.filter((post) => {
           return post.UserId === session.session?.user.id;
@@ -45,6 +38,13 @@ export default function User() {
         const sortedPostArray = correctUser.sort((a, b) => b.id - a.id);
 
         setSocialMediaPostArray(sortedPostArray);
+      }
+
+      if (session.session?.user.id) {
+        setUserInfoObject({
+          ...userInfoObject,
+          authenticatedUserId: session.session.user.id,
+        });
       }
     };
 
