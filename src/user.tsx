@@ -25,6 +25,21 @@ export default function User() {
     const loadAllOfUser = async () => {
       const { data: session } = await supabase.auth.getSession();
 
+      const { data: post } = await supabase
+        .from("Social-Media-Post-Table")
+        .select()
+        .order("id");
+
+      if (post) {
+        const correctUser = post.filter((post) => {
+          return post.UserId === session.session?.user.id;
+        });
+
+        const sortedPostArray = correctUser.sort((a, b) => b.id - a.id);
+
+        setSocialMediaPostArray(sortedPostArray);
+      }
+
       if (session.session?.user.id) {
         console.log(session);
       }
@@ -38,7 +53,7 @@ export default function User() {
     };
 
     loadAllOfUser();
-    loadPost();
+    //loadPost();
   }, []);
 
   async function loadPost() {
