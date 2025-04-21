@@ -14,8 +14,31 @@ export default function SocialMediaOverview() {
   const navigation = useNavigate();
 
   useEffect(() => {
-    loadPost();
+    const loadUserData = async () => {
+      const { data: session } = await supabase.auth.getSession();
+
+      const { data: user } = await supabase
+        .from("Social-Media-User-Table")
+        .select()
+        .order("id");
+
+      if (user) {
+        const findUser = user.find((user) => {
+          return user.UserId === session.session?.user.id;
+        });
+
+        if (findUser?.UserProfilname) {
+          setUserInfoObject({
+            authenticatedUserId: findUser.UserId,
+            userTableId: findUser.id,
+            profilName: findUser.UserProfilname,
+          });
+        }
+      }
+    };
+
     loadUserData();
+    loadPost();
   }, []);
 
   async function loadPost() {
@@ -30,27 +53,6 @@ export default function SocialMediaOverview() {
     }
   }
 
-  async function loadUserData() {
-    const { data } = await supabase
-      .from("Social-Media-User-Table")
-      .select()
-      .order("id");
-
-    if (data) {
-      const findUser = data.find((user) => {
-        return user.UserId === userInfoObject.authenticatedUserId;
-      });
-
-      if (findUser?.UserProfilname) {
-        setUserInfoObject({
-          authenticatedUserId: findUser.UserId,
-          userTableId: findUser.id,
-          profilName: findUser.UserProfilname,
-        });
-      }
-    }
-  }
-
   async function addNewPost() {
     const currentDate = new Date().toLocaleString();
 
@@ -60,8 +62,6 @@ export default function SocialMediaOverview() {
       Post: newPost,
       Date: currentDate,
     });
-
-    //
 
     setNewPost("");
     loadPost();

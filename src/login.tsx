@@ -18,6 +18,11 @@ export default function LogIn() {
         password: userPassword,
       });
 
+      const { data: userData } = await supabase
+        .from("Social-Media-User-Table")
+        .select()
+        .order("id");
+
       if (error?.status === 404 || error?.code === "invalid_credentials") {
         console.log(error.status);
         console.log(error.code);
@@ -25,13 +30,22 @@ export default function LogIn() {
         setUserName("");
         setUserPassword("");
       } else if (data) {
-        if (data.user?.id) {
+        const exiestUser = userData?.find((user) => {
+          return user.UserId === data.user?.id;
+        });
+
+        if (exiestUser?.UserId) {
           console.log(data);
           setUserInfoObject({
             ...userInfoObject,
-            authenticatedUserId: data.user.id,
+            authenticatedUserId: exiestUser.UserId,
           });
+        } else {
+          if (exiestUser?.UserId) {
+            newUser(exiestUser?.UserId);
+          }
         }
+
         navigation("socialMediaOverview");
         setUserName("");
         setUserPassword("");
@@ -39,6 +53,13 @@ export default function LogIn() {
     } else {
       alert();
     }
+  }
+
+  async function newUser(authenticatedUserId: string) {
+    const {} = await supabase.from("Social-Media-User-Table").insert({
+      UserId: authenticatedUserId,
+      UserProfilname: "",
+    });
   }
 
   return (

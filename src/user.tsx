@@ -13,7 +13,7 @@ export default function User() {
     useState<boolean>(false);
   const [updateUserPost, setUpdateUserPost] = useState<string>("");
   const [selectedUserPostId, setSelectedUserPostId] = useState<number>(0);
-  const { userInfoObject } = useContext(userContext);
+  const { userInfoObject, setUserInfoObject } = useContext(userContext);
   const { socialMediaPostArray, setSocialMediaPostArray } = useContext(
     socialMediaPostContext
   );
@@ -22,7 +22,33 @@ export default function User() {
   );*/
 
   useEffect(() => {
-    loadPost();
+    const loadAllOfUser = async () => {
+      const { data: session } = await supabase.auth.getSession();
+
+      const { data: post } = await supabase
+        .from("Social-Media-Post-Table")
+        .select()
+        .order("id");
+
+      if (session.session?.user.id) {
+        setUserInfoObject({
+          ...userInfoObject,
+          authenticatedUserId: session.session.user.id,
+        });
+      }
+
+      if (post) {
+        const correctUser = post.filter((post) => {
+          return post.UserId === session.session?.user.id;
+        });
+
+        const sortedPostArray = correctUser.sort((a, b) => b.id - a.id);
+
+        setSocialMediaPostArray(sortedPostArray);
+      }
+    };
+
+    loadAllOfUser();
   }, []);
 
   async function loadPost() {
@@ -32,13 +58,13 @@ export default function User() {
       .order("id");
 
     if (data) {
-      const filteredUserArray = data.filter((post) => {
+      const correctUser = data.filter((post) => {
         return post.UserId === userInfoObject.authenticatedUserId;
       });
 
-      const sortedUserPostArray = filteredUserArray.sort((a, b) => b.id - a.id);
+      const sortedPostArray = correctUser.sort((a, b) => b.id - a.id);
 
-      setSocialMediaPostArray(sortedUserPostArray);
+      setSocialMediaPostArray(sortedPostArray);
     }
   }
 
