@@ -29,21 +29,6 @@ export default function User() {
         console.log(session);
       }
 
-      const { data: post } = await supabase
-        .from("Social-Media-Post-Table")
-        .select()
-        .order("id");
-
-      if (post) {
-        const correctUser = post.filter((post) => {
-          return post.UserId === session.session?.user.id;
-        });
-
-        const sortedPostArray = correctUser.sort((a, b) => b.id - a.id);
-
-        setSocialMediaPostArray(sortedPostArray);
-      }
-
       if (session.session?.user.id) {
         setUserInfoObject({
           ...userInfoObject,
@@ -53,6 +38,7 @@ export default function User() {
     };
 
     loadAllOfUser();
+    loadPost();
   }, []);
 
   async function loadPost() {
