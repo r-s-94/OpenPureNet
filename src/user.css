@@ -1,0 +1,22 @@
+.user-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.head-div {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.to-overview-icon {
+  width: 3rem;
+  height: auto;
+}
+
+.to-settings-icon {
+  width: 3rem;
+  height: auto;
+}

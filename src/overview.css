@@ -1,0 +1,26 @@
+.overview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.head-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 5rem;
+}
+
+.to-user-link {
+}
+
+.to-user-icon {
+  width: 3rem;
+  height: auto;
+}
+
+.sign-out-icon {
+  width: 3rem;
+  height: auto;
+}
