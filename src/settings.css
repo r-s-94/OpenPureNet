@@ -1,18 +1,1 @@
-.settings-div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.head-div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: 5rem;
-}
-
-.to-user-icon {
-  width: 3rem;
-  height: auto;
-}
+@import "tailwindcss";
