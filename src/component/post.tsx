@@ -179,7 +179,7 @@ export default function Post({
 
       const currentTimestamp = new Date().toLocaleString();
 
-      const { error } = await supabase.from("like-dislike-posts").insert({
+      const {} = await supabase.from("like-dislike-posts").insert({
         userId: userId,
         type: currentLikeDislike,
         timestampe: currentTimestamp,
@@ -281,7 +281,7 @@ export default function Post({
       } else {
         const currentTimestamp = new Date().toLocaleString();
 
-        const { error } = await supabase.from("comments").insert({
+        const {} = await supabase.from("comments").insert({
           userId: publicUserObject.userId,
           comment: createComment,
           timestamp: currentTimestamp,
@@ -347,7 +347,7 @@ export default function Post({
       } else {
         const updateTimestamp = new Date().toLocaleString();
 
-        const { error } = await supabase
+        const {} = await supabase
           .from("comments")
           .update({ comment: updateComment, timestamp: updateTimestamp })
           .eq("id", commentId);

@@ -18,8 +18,8 @@ export default function SignIn() {
   const [userMail, setUserMail] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
   const [resetUserPasswort, setResetUserPasswort] = useState<string>("");
-  const [noticePopUp, setNoticePopUp] = useState<boolean>(false);
-  const [noticePopUpMessage, setNoticePopUpMessage] = useState<string>("");
+  const [, setNoticePopUp] = useState<boolean>(false);
+  const [, setNoticePopUpMessage] = useState<string>("");
   const navigation = useNavigate();
   const { checkUserSession } = useContext(functionContext);
   const { userAuthObject, setUserAuthObject } = useContext(userAuthContext);
@@ -64,12 +64,9 @@ export default function SignIn() {
   }
 
   async function resetPassword() {
-    const { data } = await supabase.auth.resetPasswordForEmail(
-      resetUserPasswort,
-      {
-        redirectTo: "http://localhost:5173/OpenPureNet/update-password",
-      }
-    );
+    const {} = await supabase.auth.resetPasswordForEmail(resetUserPasswort, {
+      redirectTo: "http://localhost:5173/OpenPureNet/update-password",
+    });
 
     toast.info(
       "Wir haben dir eine E-Mail zum Zurücksetzten deines Passwortes gesendet.",

@@ -219,7 +219,7 @@ export default function Settings() {
   }
 
   async function deletePicture() {
-    const { data: profilpicture } = await supabase.storage
+    const {} = await supabase.storage
       .from("profilepicture")
       .remove([publicUserObject.profilPicture]);
 
@@ -346,7 +346,7 @@ export default function Settings() {
     });
 
     if (findUser) {
-      const { error } = await supabase
+      const {} = await supabase
         .from("private-user")
         .update({
           city: updateCityName,
@@ -371,7 +371,7 @@ export default function Settings() {
       setMinimumSignPLZ(false);
       setMinimumSignCountry(false);
     } else {
-      const { error } = await supabase.from("private-user").insert({
+      const {} = await supabase.from("private-user").insert({
         userId: currentSessionUserId,
         city: updateCityName,
         street: updateStreetName,
@@ -407,7 +407,7 @@ export default function Settings() {
   }
 
   async function deletePrivateUserData(id: number) {
-    const response = await supabase.from("private-user").delete().eq("id", id);
+    const {} = await supabase.from("private-user").delete().eq("id", id);
 
     toast.success(
       "Deine Adressdaten wurden erfolgreich aus der Datenbank entfernt.",
@@ -454,47 +454,47 @@ export default function Settings() {
   }
 
   async function deleteAccount() {
-    const public_user = await supabase
+    const {} = await supabase
       .from("public-user")
       .delete()
       .eq("userId", publicUserObject.userId);
 
-    const post = await supabase
+    const {} = await supabase
       .from("posts")
       .delete()
       .eq("userId", publicUserObject.userId);
 
-    const comments = await supabase
+    const {} = await supabase
       .from("comments")
       .delete()
       .eq("userId", publicUserObject.userId);
 
-    const private_user = await supabase
+    const {} = await supabase
       .from("private-user")
       .delete()
       .eq("userId", publicUserObject.userId);
 
-    const likeDislikePosts = await supabase
+    const {} = await supabase
       .from("like-dislike-posts")
       .delete()
       .eq("userId", publicUserObject.userId);
 
-    const likeDislikeComments = await supabase
+    const {} = await supabase
       .from("like-dislike-comments")
       .delete()
       .eq("userId", publicUserObject.userId);
 
-    const follow = await supabase
+    const {} = await supabase
       .from("follow")
       .delete()
       .eq("userId", publicUserObject.userId);
 
-    const follow2 = await supabase
+    const {} = await supabase
       .from("follow")
       .delete()
       .eq("FollowUserId", publicUserObject.userId);
 
-    const { data: profilpicture } = await supabase.storage
+    const {} = await supabase.storage
       .from("profilepicture")
       .remove([publicUserObject.profilPicture]);
 
@@ -519,9 +519,7 @@ export default function Settings() {
 
     navigation("/");
 
-    const { data } = await supabase.auth.admin.deleteUser(
-      publicUserObject.userId
-    );
+    const {} = await supabase.auth.admin.deleteUser(publicUserObject.userId);
   }
 
   async function signOut() {

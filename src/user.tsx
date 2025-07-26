@@ -23,16 +23,15 @@ export default function User() {
   const TEN_MB: number = 10 * 1000 * 1000;
   const THIRTY_FIVE_MB: number = 35 * 1000 * 1000;
   const FORTY_MB: number = 40 * 1000 * 1000;
-  const [commentsArray, setCommentsArray] = useState<Tables<"comments">[]>([]);
-  const [hiddenPostOptions, setHiddenPostOptions] = useState<string>("");
+  const [, setCommentsArray] = useState<Tables<"comments">[]>([]);
+  const [hiddenPostOptions] = useState<string>("");
   const [createPost, setCreatePost] = useState<string>("");
   const [newAvatarFile, setNewAvatarFile] = useState<File | null>(null);
   const [createPostPopUp, setCreatePostPopUp] = useState<boolean>(false);
   //const [noticePostPopUp, setNoticePostPopUp] = useState<boolean>(false);
   const [updatePost, setUpdatePost] = useState<string>("");
   const [updateAvatarFile, setUpdateAvatarFile] = useState<File | null>(null);
-  const [avatarFileNameMessage, setAvatarFileNameMessage] =
-    useState<string>("");
+  const [, setAvatarFileNameMessage] = useState<string>("");
   const [avatarFileMBMessage, setAvatarFileMBMessage] = useState<string>("");
   const [avatarFileMBSize, setAvatarFileMBSize] = useState<string>("");
   //const [avatarFileMessage, setAvatarFileMessage] = useState<string>("");
@@ -54,8 +53,7 @@ export default function User() {
   const [currentFollow, setCurrentFollow] = useState<number>(0);
   const [currentFollowed, setCurrentFollowed] = useState<number>(0);
   //const { userAuthObject, setUserAuthObject } = useContext(userAuthContext);
-  const { publicUserObject, setPublicUserObject } =
-    useContext(publicUserContext);
+  const { publicUserObject } = useContext(publicUserContext);
   const { postsArray, setPostsArray } = useContext(postsContext);
   const { searchUserObject, setSearchUserObject } =
     useContext(serachUserContext);
@@ -150,7 +148,7 @@ export default function User() {
   }, []);
 
   async function loadUserPosts() {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from("posts")
       .select(
         "id, userId, text, timestamp, medium, public_user: userId (id, userId, Profilname, profilPicture)"
@@ -263,7 +261,7 @@ export default function User() {
             newRandomFileName +
             newAvatarFile.name.slice(dotPosition, newAvatarFile.name.length);
 
-          const { data, error } = await supabase.storage
+          const { data } = await supabase.storage
             .from("medium")
             .upload(`all/${newRandomFileName}`, newAvatarFile, {
               cacheControl: "3600",
@@ -328,7 +326,7 @@ export default function User() {
           newRandomFileName +
           newAvatarFile.name.slice(dotPosition, newAvatarFile.name.length);
 
-        const { data, error } = await supabase.storage
+        const { data } = await supabase.storage
           .from("medium")
           .upload(`all/${newRandomFileName}`, newAvatarFile, {
             cacheControl: "3600",
@@ -471,7 +469,7 @@ export default function User() {
         });
 
         if (findPost) {
-          const { data: profilpicture } = await supabase.storage
+          const {} = await supabase.storage
             .from("medium")
             .remove([findPost.medium]);
         }
@@ -489,7 +487,7 @@ export default function User() {
               updateAvatarFile.name.length
             );
 
-          const { data, error } = await supabase.storage
+          const { data } = await supabase.storage
             .from("medium")
             .upload(`all/${newRandomFileName}`, updateAvatarFile, {
               cacheControl: "3600",
@@ -550,7 +548,7 @@ export default function User() {
       });
 
       if (findPost) {
-        const { data: profilpicture } = await supabase.storage
+        const {} = await supabase.storage
           .from("medium")
           .remove([findPost.medium]);
       }
@@ -568,7 +566,7 @@ export default function User() {
             updateAvatarFile.name.length
           );
 
-        const { data, error } = await supabase.storage
+        const { data } = await supabase.storage
           .from("medium")
           .upload(`all/${newRandomFileName}`, updateAvatarFile, {
             cacheControl: "3600",
@@ -660,7 +658,7 @@ export default function User() {
     });
 
     if (findPost) {
-      const { data: profilpicture } = await supabase.storage
+      const {} = await supabase.storage
         .from("medium")
         .remove([findPost.medium]);
     }
@@ -678,7 +676,7 @@ export default function User() {
   }
 
   async function loadFollowData() {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from("follow")
       .select()
       .eq("userId", publicUserObject.userId);

@@ -1,5 +1,5 @@
 import { messageContext } from "@/messageContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/supabase";
 import { serachUserContext } from "@/searchUserContext";

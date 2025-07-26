@@ -40,8 +40,7 @@ export default function Overview() {
   const [createPost, setCreatePost] = useState<string>("");
   const [checkTextContent, setCheckTextContent] = useState<boolean>(false);
   const [newAvatarFile, setNewAvatarFile] = useState<File | null>(null);
-  const [avatarFileNameMessage, setAvatarFileNameMessage] =
-    useState<string>("");
+  const [, setAvatarFileNameMessage] = useState<string>("");
   const [avatarFileMBSize, setAvatarFileMBSize] = useState<string>("");
   const [avatarFileMBMessage, setAvatarFileMBMessage] = useState<string>("");
   const [checkMediumContent, setCheckMediumContent] = useState<boolean>(false);
@@ -50,8 +49,7 @@ export default function Overview() {
   const [searchUserPopUp, setSearchUserPopUp] = useState<boolean>(false);
   const [illegalContentPopUp, setIllegalContentPopUp] =
     useState<boolean>(false);
-  const [hiddenPostOptions, setHiddenPostOptions] =
-    useState<string>("hiddenPostOptions");
+  const [hiddenPostOptions] = useState<string>("hiddenPostOptions");
   const [currentSessionUserId, setCurrentSessionUserId] = useState<string>("");
   const [searchUserArray, setSerachUserArray] = useState<
     Tables<"public-user">[]
@@ -85,13 +83,13 @@ export default function Overview() {
 
   async function acceptConsent() {
     const { data: session } = await supabase.auth.getSession();
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from("public-user")
       .select()
       .eq("userId", session.session!.user.id);
 
     if (data?.length !== 0) {
-      const { error } = await supabase
+      const {} = await supabase
         .from("public-user")
         .update({
           AGBConsent: agbConsent,
@@ -101,7 +99,7 @@ export default function Overview() {
         .eq("userId", data![0].userId);
       setConsentPopUp(false);
     } else {
-      const { error } = await supabase.from("public-user").insert({
+      const {} = await supabase.from("public-user").insert({
         userId: currentSessionUserId,
         Profilname: "",
         AGBConsent: agbConsent,
@@ -246,7 +244,7 @@ export default function Overview() {
             newRandomFileName +
             newAvatarFile.name.slice(dotPosition, newAvatarFile.name.length);
 
-          const { data, error } = await supabase.storage
+          const { data } = await supabase.storage
             .from("medium")
             .upload(`all/${newRandomFileName}`, newAvatarFile, {
               cacheControl: "3600",
@@ -311,7 +309,7 @@ export default function Overview() {
           newAvatarFile.name.slice(dotPosition, newAvatarFile.name.length);
         console.log(newRandomFileName);
 
-        const { data, error } = await supabase.storage
+        const { data } = await supabase.storage
           .from("medium")
           .upload(`all/${newRandomFileName}`, newAvatarFile, {
             cacheControl: "3600",

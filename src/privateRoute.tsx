@@ -3,7 +3,7 @@ import { userAuthContext } from "./userAuthContext";
 import { Navigate, Outlet } from "react-router-dom";
 
 export default function PrivateRoute() {
-  const { userAuthObject, setUserAuthObject } = useContext(userAuthContext);
+  const { userAuthObject } = useContext(userAuthContext);
 
   if (userAuthObject.accessToken === "") {
     return "";
