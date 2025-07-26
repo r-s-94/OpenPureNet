@@ -17,8 +17,7 @@ export default function Comment({
     useState<string>("");
   const [likeCommentCount, setLikeCommentCount] = useState<number>(0);
   const [dislikeCommentCount, setDislikeCommentCount] = useState<number>(0);
-  const { publicUserObject, setPublicUserObject } =
-    useContext(publicUserContext);
+  const { publicUserObject } = useContext(publicUserContext);
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -73,7 +72,7 @@ export default function Comment({
     prevLikeDislike: string
   ) {
     if (currentLikeDislike === prevLikeDislike) {
-      const response = await supabase
+      const {} = await supabase
         .from("like-dislike-comments")
         .delete()
         .eq("id", id);
@@ -84,14 +83,14 @@ export default function Comment({
     }
 
     if (currentLikeDislike !== prevLikeDislike) {
-      const response = await supabase
+      const {} = await supabase
         .from("like-dislike-comments")
         .delete()
         .eq("id", id);
 
       const currentTimestamp = new Date().toLocaleString();
 
-      const { error } = await supabase.from("like-dislike-comments").insert({
+      const {} = await supabase.from("like-dislike-comments").insert({
         userId: userId,
         type: currentLikeDislike,
         timestampe: currentTimestamp,

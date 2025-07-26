@@ -1,4 +1,3 @@
-import { supabase } from "@/supabase";
 import { userAuthContext } from "@/userAuthContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";

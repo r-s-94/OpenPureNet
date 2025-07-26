@@ -58,8 +58,7 @@ export default function Post({
   const [dislikePostCount, setDislikePostCount] = useState<number>(0);
   const [prevLikeDislikePostType, setPrevLikeDislikePostType] =
     useState<string>("");
-  const { publicUserObject, setPublicUserObject } =
-    useContext(publicUserContext);
+  const { publicUserObject } = useContext(publicUserContext);
   const { searchUserObject } = useContext(serachUserContext);
 
   useEffect(() => {
@@ -130,7 +129,7 @@ export default function Post({
   }, []);
 
   async function loadComments() {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from("comments")
       .select(
         "id, userId, comment, timestamp, postId, public_user: userId (id, userId, Profilname, profilPicture)"
@@ -163,7 +162,7 @@ export default function Post({
     prevLikeDislike: string
   ) {
     if (currentLikeDislike === prevLikeDislike) {
-      const response = await supabase
+      const {} = await supabase
         .from("like-dislike-posts")
         .delete()
         .eq("id", id);
@@ -173,7 +172,7 @@ export default function Post({
       loadLikeDislikePostCount(postId);
     }
     if (currentLikeDislike !== prevLikeDislike) {
-      const response = await supabase
+      const {} = await supabase
         .from("like-dislike-posts")
         .delete()
         .eq("id", id);

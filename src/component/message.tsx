@@ -7,7 +7,7 @@ import { publicUserContext } from "@/publicUserContext";
 import { functionContext } from "@/functionContext";
 
 export default function Message() {
-  const [followRequestId, setFollowRequestId] = useState<number>(0);
+  //const [followRequestId, setFollowRequestId] = useState<number>(0);
   const { publicUserObject } = useContext(publicUserContext);
   const { searchUserObject, setSearchUserObject } =
     useContext(serachUserContext);
@@ -61,7 +61,7 @@ export default function Message() {
   }
 
   async function checkFollowRequest(id: number, follow: boolean) {
-    console.log(followRequestId, follow);
+    //console.log(followRequestId, follow);
 
     const currentTimestamp = new Date().toLocaleString();
 
