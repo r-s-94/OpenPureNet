@@ -43,10 +43,9 @@ export default function User() {
   const [deletePostPopUp, setDeletePostPopUp] = useState<boolean>(false);
   const [noSupportContentPopUp, setNoSupportContentPopUp] =
     useState<boolean>(false);
-  const [noSupportContentMessage, setNoSupportContentMessage] =
-    useState<string>("");
-  const [noticeMessage, setNoticeMessage] = useState<string>("");
-  const [noticePopUp, setNoticePopUp] = useState<boolean>(false);
+  const [, setNoSupportContentMessage] = useState<string>("");
+  //const [noticeMessage, setNoticeMessage] = useState<string>("");
+  //const [noticePopUp, setNoticePopUp] = useState<boolean>(false);
   const [follow, setFollow] = useState<boolean | null>(false);
   const [followId, setFollowId] = useState<number>(0);
   const [currentFollow, setCurrentFollow] = useState<number>(0);

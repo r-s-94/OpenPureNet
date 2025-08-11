@@ -56,12 +56,11 @@ export default function Overview() {
   >([]);
   const [noticePopUp, setNoticePopUp] = useState<boolean>(false);
   const { consentPopUp, setConsentPopUp } = useContext(functionContext);
-  const { publicUserObject, setPublicUserObject } =
-    useContext(publicUserContext);
+  const { publicUserObject } = useContext(publicUserContext);
   const { postsArray, setPostsArray } = useContext(postsContext);
   const { searchUserObject, setSearchUserObject } =
     useContext(serachUserContext);
-  const { setMessageArray, messageCount } = useContext(messageContext);
+  const { messageCount } = useContext(messageContext);
   const navigation = useNavigate();
   const resetInputFile = useRef<HTMLInputElement | null>(null);
 

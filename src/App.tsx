@@ -1,9 +1,5 @@
 import "./App.css";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  useNavigate,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SignIn from "./signin";
 import Overview from "./overview";
 import User from "./user";
@@ -216,8 +212,6 @@ function App() {
     });
 
     setMessageArray([]);
-
-    //navigation("/");
   }
 
   return (
