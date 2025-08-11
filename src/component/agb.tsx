@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import AGBComponent from "./agbComponent";
 import { useContext } from "react";
 import { userAuthContext } from "@/userAuthContext";
+import "../responsive.css";
 
 export default function AGB() {
   const { userAuthObject } = useContext(userAuthContext);
@@ -16,11 +17,11 @@ export default function AGB() {
   }
 
   return (
-    <div>
-      <div>
+    <div className="agb-section">
+      <div className="agb-button-div">
         <button
           onClick={checkUserSession}
-          className="mt-15 ml-20 cursor-pointer"
+          className="agb-button mt-15 ml-30 cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -38,8 +39,8 @@ export default function AGB() {
           </svg>
         </button>
       </div>
-      <div className="">
-        <h1 className="text-3xl text-center">AGB OpenPureNet</h1>
+      <div className="agb-div">
+        <h1 className="agb-headline text-3xl text-center">AGB OpenPureNet</h1>
         <AGBComponent />
       </div>
     </div>

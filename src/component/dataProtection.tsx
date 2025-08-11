@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import DataprotectionComponent from "./dataProtectionComponent";
 import { useContext } from "react";
 import { userAuthContext } from "@/userAuthContext";
+import "../responsive.css";
 
 export default function DataProtection() {
   const { userAuthObject } = useContext(userAuthContext);
@@ -16,11 +17,11 @@ export default function DataProtection() {
   }
 
   return (
-    <div>
-      <div>
+    <div className="data-protection-section">
+      <div className="data-protection-section-button-div">
         <button
           onClick={checkUserSession}
-          className="mt-10 ml-20 cursor-pointer"
+          className="data-protection-section-button mt-10 ml-30 cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -38,8 +39,10 @@ export default function DataProtection() {
           </svg>
         </button>
       </div>
-      <div>
-        <h1 className="text-3xl text-center">Datenschutz OpenPureNet</h1>
+      <div className="data-protection-div">
+        <h1 className="data-protection-headline text-3xl text-center">
+          Datenschutz OpenPureNet
+        </h1>
         <DataprotectionComponent />
       </div>
     </div>

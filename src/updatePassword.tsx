@@ -44,7 +44,7 @@ export default function UpadatePassword() {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="w-13 mt-10 ml-50 cursor-pointer"
+          className="w-13 mt-10 ml-20 cursor-pointer"
         >
           <path
             stroke-linecap="round"
@@ -54,7 +54,7 @@ export default function UpadatePassword() {
         </svg>
       </Link>
 
-      <div className="w-[35rem] mx-auto px-5 py-15 flex justify-center items-center gap-x-3 bg-gray-50 border border-gray-400 rounded-sm">
+      <div className="w-[35rem] mx-auto mt-20 px-5 py-15 flex justify-center items-center gap-x-3 bg-gray-50 border border-gray-400 rounded-sm">
         <input
           type="text"
           value={updatePassword}

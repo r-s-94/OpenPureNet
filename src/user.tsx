@@ -6,11 +6,7 @@ import { supabase } from "./supabase";
 import type { Tables } from "./database.types";
 import Post from "./component/post";
 import { Dialog } from "@radix-ui/react-dialog";
-import {
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-} from "./components/ui/dialog";
+import { DialogContent, DialogDescription } from "./components/ui/dialog";
 import { IllegalWordsArray } from "./illegalWords";
 import { serachUserContext } from "./searchUserContext";
 import Follow from "./component/follow";
@@ -18,6 +14,7 @@ import { postsContext } from "./postContext";
 import { Toaster } from "./components/ui/sonner";
 import { toast } from "sonner";
 import { alphabeta_zA_ZArray } from "./alphabet";
+import "./responsive.css";
 
 export default function User() {
   const TEN_MB: number = 10 * 1000 * 1000;
@@ -41,10 +38,12 @@ export default function User() {
   /*const [noticeUpdatePostPopUp, setNoticeUpdatePostPopUp] =
     useState<boolean>(false);*/
   const [currentPostId, setCurrentPostId] = useState<number>(0);
+  const [postKebabMenuId, setPostKebabMenuId] = useState<number>(0);
+  const [prevPostKebabMenuId, setPrevPostKebabMenuId] = useState<number>(0);
   const [deletePostPopUp, setDeletePostPopUp] = useState<boolean>(false);
-  const [illegalContentPopUp, setIllegalContentPopUp] =
+  const [noSupportContentPopUp, setNoSupportContentPopUp] =
     useState<boolean>(false);
-  const [illegalContentMessage, setIllegalContentMessage] =
+  const [noSupportContentMessage, setNoSupportContentMessage] =
     useState<string>("");
   const [noticeMessage, setNoticeMessage] = useState<string>("");
   const [noticePopUp, setNoticePopUp] = useState<boolean>(false);
@@ -249,7 +248,7 @@ export default function User() {
       }
 
       if (resultIllegalContent !== -1) {
-        setIllegalContentPopUp(true);
+        setNoSupportContentPopUp(true);
       } else {
         if (newAvatarFile) {
           const currentTimestamp = new Date().toLocaleString();
@@ -303,7 +302,7 @@ export default function User() {
 
           toast.success("Dein Beitrag wurde Erfolgreich erstellt.", {
             unstyled: true,
-            className: "w-[27rem] h-[5rem] px-5",
+            className: "w-[20rem] h-[6rem] px-5",
           });
 
           setCheckTextContent(false);
@@ -358,7 +357,22 @@ export default function User() {
     }
   }
 
+  function openPostKebabMenu(postId: number) {
+    if (postId) {
+      if (postId === prevPostKebabMenuId) {
+        setPostKebabMenuId(0);
+        setPrevPostKebabMenuId(0);
+      } else {
+        setPostKebabMenuId(postId);
+        setPrevPostKebabMenuId(postId);
+      }
+    }
+  }
+
   function openEditPostPopUp(postId: number) {
+    setPostKebabMenuId(0);
+    setPrevPostKebabMenuId(0);
+
     const findPost = postsArray.find((post) => post.id === postId);
 
     if (findPost) {
@@ -462,7 +476,7 @@ export default function User() {
       }
 
       if (resultIllegalContent !== -1) {
-        setIllegalContentPopUp(true);
+        setNoSupportContentPopUp(true);
       } else {
         const findPost = postsArray.find((post) => {
           return post.id === postId;
@@ -644,6 +658,8 @@ export default function User() {
   }
 
   function openDeletePostPopUp(id: number) {
+    setPostKebabMenuId(0);
+    setPrevPostKebabMenuId(0);
     const findPost = postsArray.find((post) => post.id === id);
 
     if (findPost) {
@@ -738,29 +754,29 @@ export default function User() {
   }
 
   return (
-    <section className="w-full h-screen">
+    <section className="user-section w-full">
       <Dialog open={createPostPopUp} onOpenChange={setCreatePostPopUp}>
         <DialogContent
           onInteractOutside={(e) => {
             e.preventDefault();
           }}
-          className=""
+          className="create-post-popup !max-w-xl"
         >
-          <DialogDescription className="p-x-3 pt-3 pb-1">
+          <DialogDescription className="create-post-popup-description p-x-3 pt-3 pb-1">
             <textarea
               value={createPost}
               onChange={(event) => {
                 editCreatePostInput(event.target.value);
               }}
-              className="w-full h-[250px] text-black text-lg px-5 py-3 overflow-y-scroll resize-none"
+              className="create-post-popup-textarea w-full h-[250px] text-black text-lg px-5 py-3 border border-gray-400 overflow-y-scroll resize-none"
               name=""
             ></textarea>
-            <div className="flex justify-center items-center">
+            <div className="create-post-popup-input-button-div flex justify-center items-center">
               <input
                 type="file"
                 onChange={editNewAvatarFile}
                 ref={resetInputFile}
-                className="w-full bg-white text-base text-gray-700
+                className="create-post-popup-input-file w-full bg-white text-base text-gray-700
         file:me-4 file:py-1.5 file:px-5
         file:rounded-sm file:border-0
         file:text-base 
@@ -776,13 +792,13 @@ export default function User() {
                 onClick={() => {
                   resetAvatarFile("create");
                 }}
-                className="px-5 py-[7px] text-base flex justify-center items-center gap-x-1 rounded-sm bg-blue-400 border text-white border-white cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-400"
+                className="create-post-popup-reset-input-button px-5 py-[7px] text-base flex justify-center items-center gap-x-1 rounded-sm bg-blue-400 border text-white border-white cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-400"
               >
                 <span>❌</span>Entfernen
               </button>
             </div>
             <div
-              className={`px-3 py-1.5 text-base flex justify-start items-center border border-gray-100 rounded-sm ${
+              className={`create-post-popup-mb-message px-3 py-1.5 text-base flex justify-start items-center border border-gray-100 rounded-sm ${
                 avatarFileMBSize === ""
                   ? "text-black"
                   : Number(avatarFileMBSize) < TEN_MB
@@ -815,7 +831,7 @@ export default function User() {
                 ? "❌"
                 : ""}
             </div>
-            <div className="mt-5 flex justify-end items-center gap-x-5">
+            <div className="create-post-popup-button-div mt-5 flex justify-end items-center gap-x-5">
               <button
                 onClick={() => {
                   setCreatePost("");
@@ -826,7 +842,7 @@ export default function User() {
                   setCheckMediumContent(false);
                   setCreatePostPopUp(false);
                 }}
-                className="px-3 py-1.5 text-[17px] text-black flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 rounded-sm cursor-pointer hover:bg-white"
+                className="create-post-popup-close-button px-3 py-1.5 text-[17px] text-black flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 rounded-sm cursor-pointer hover:bg-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -847,7 +863,7 @@ export default function User() {
               <button
                 onClick={newPost}
                 disabled={!(checkTextContent || checkMediumContent)}
-                className={`px-5 py-1.5 text-[17px] flex justify-center items-center gap-x-1 rounded-sm ${
+                className={`create-post-popup-create-button px-5 py-1.5 text-[17px] flex justify-center items-center gap-x-1 rounded-sm ${
                   checkTextContent === true || checkMediumContent === true
                     ? "bg-blue-400 border text-white border-white cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-400"
                     : "bg-gray-200"
@@ -861,7 +877,7 @@ export default function User() {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    className="w-5"
+                    className="create-post-popup-plus-icon w-5"
                   >
                     <path
                       stroke-linecap="round"
@@ -875,7 +891,7 @@ export default function User() {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    className="w-5"
+                    className="create-post-popup-paper-icon w-5"
                   >
                     <path
                       stroke-linecap="round"
@@ -896,24 +912,24 @@ export default function User() {
           onInteractOutside={(e) => {
             e.preventDefault();
           }}
-          className=""
+          className="update-post-popup !max-w-xl"
         >
-          <DialogDescription className="p-3">
+          <DialogDescription className="update-post-popup-description p-3">
             <textarea
               value={updatePost}
               onChange={(event) => {
                 editUpdatePostInput(event.target.value);
               }}
-              className="w-full h-[250px] text-black text-lg px-5 py-3 overflow-y-scroll resize-none"
+              className="update-post-popup-textarea w-full h-[250px] text-black text-lg px-5 py-3 border border-gray-400 overflow-y-scroll resize-none"
               name=""
             ></textarea>
 
-            <div className="flex justify-center items-center">
+            <div className="update-post-popup-input-button-div flex justify-center items-center">
               <input
                 type="file"
                 onChange={editUpdateAvatarFile}
                 ref={resetInputFile}
-                className="w-full bg-white text-base text-gray-700
+                className="update-post-popup-input-file w-full bg-white text-base text-gray-700
         file:me-4 file:py-1.5 file:px-5
         file:rounded-sm file:border-0
         file:text-base 
@@ -929,14 +945,14 @@ export default function User() {
                 onClick={() => {
                   resetAvatarFile("update");
                 }}
-                className="px-5 py-[7px] text-base flex justify-center items-center gap-x-1 rounded-sm bg-blue-400 border text-white border-white cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-400"
+                className="update-post-popup-reset-input-button px-5 py-[7px] text-base flex justify-center items-center gap-x-1 rounded-sm bg-blue-400 border text-white border-white cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-400"
               >
                 <span>❌</span>Entfernen
               </button>
             </div>
 
             <div
-              className={`px-3 py-1.5 text-base flex justify-start items-center border border-gray-100 rounded-sm ${
+              className={`update-post-popup-mb-message px-3 py-1.5 text-base flex justify-start items-center border border-gray-100 rounded-sm ${
                 avatarFileMBSize === ""
                   ? "text-black"
                   : Number(avatarFileMBSize) < TEN_MB
@@ -970,7 +986,7 @@ export default function User() {
                 : ""}
             </div>
 
-            <div className="mt-5 flex justify-end items-center gap-x-3">
+            <div className="update-post-popup-button-div mt-5 flex justify-end items-center gap-x-3">
               <button
                 onClick={() => {
                   setUpdatePost("");
@@ -982,7 +998,7 @@ export default function User() {
                   setCheckMediumContent(false);
                   setUpdatePostPopUp(false);
                 }}
-                className="px-5 py-1.5 text-[16px] text-black flex justify-center items-center bg-gray-50 border border-gray-200 rounded-sm cursor-pointer hover:bg-white"
+                className="update-post-popup-close-button px-5 py-1.5 text-[16px] text-black flex justify-center items-center bg-gray-50 border border-gray-200 rounded-sm cursor-pointer hover:bg-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -990,7 +1006,7 @@ export default function User() {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  className="w-6"
+                  className="update-post-popup-close-icon w-6"
                 >
                   <path
                     stroke-linecap="round"
@@ -1005,7 +1021,7 @@ export default function User() {
                   editPost(currentPostId);
                 }}
                 disabled={!(checkTextContent || checkMediumContent)}
-                className={`px-5 py-1.5 text-[17px] flex justify-center items-center gap-x-1 rounded-sm ${
+                className={`update-post-popup-update-button px-5 py-1.5 text-[17px] flex justify-center items-center gap-x-1 rounded-sm ${
                   checkTextContent === true || checkMediumContent === true
                     ? "bg-blue-400 border text-white border-white cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-400"
                     : "bg-gray-200"
@@ -1018,7 +1034,7 @@ export default function User() {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    className="w-6"
+                    className="update-post-popup-edit-icon w-6"
                   >
                     <path
                       stroke-linecap="round"
@@ -1032,7 +1048,7 @@ export default function User() {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    className="w-6"
+                    className="update-post-popup-paper-icon w-6"
                   >
                     <path
                       stroke-linecap="round"
@@ -1048,25 +1064,31 @@ export default function User() {
         </DialogContent>
       </Dialog>
 
-      <Dialog open={illegalContentPopUp} onOpenChange={setIllegalContentPopUp}>
+      <Dialog
+        open={noSupportContentPopUp}
+        onOpenChange={setNoSupportContentPopUp}
+      >
         <DialogContent
           onInteractOutside={(e) => {
             e.preventDefault();
           }}
-          className=""
+          className="no-suppot-content-popup !max-w-xl"
         >
-          <DialogDescription className="px-5 pt-3 pb-1 text-black">
-            <p className="text-xl">
-              <span className="text-2xl text-red-500">Achtung</span>
-              <br />
-              {illegalContentMessage}
+          <DialogDescription className="no-suppot-content-popup-description px-5 pt-3 pb-1 text-black">
+            <p className="no-suppot-content-popup-attention text-2xl text-red-500">
+              Achtung
+            </p>
+            <br />
+            <p className="no-suppot-content-popup-text text-xl">
+              In deinem Beitrag wurde problematischer Inhalt gefunden, bitte
+              überprüfe deine Eingabe und korrigiere sie gegebenenfalls.
             </p>
             <button
               onClick={() => {
-                setIllegalContentMessage("");
-                setIllegalContentPopUp(false);
+                setNoSupportContentMessage("");
+                setNoSupportContentPopUp(false);
               }}
-              className="mx-auto mt-7 mb-3 px-3 py-1 text-[17px] text-black flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 rounded-sm cursor-pointer hover:bg-white"
+              className="no-suppot-content-popup-close-button mx-auto mt-7 mb-3 px-3 py-1 text-[17px] text-black flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 rounded-sm cursor-pointer hover:bg-white"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -1074,7 +1096,7 @@ export default function User() {
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                className="w-5"
+                className="no-suppot-content-popup-close-icon w-5"
               >
                 <path
                   stroke-linecap="round"
@@ -1093,17 +1115,17 @@ export default function User() {
           onInteractOutside={(e) => {
             e.preventDefault();
           }}
-          className=""
+          className="delete-post-popup !max-w-xl"
         >
-          <DialogDescription className="p-3 text-[20px] text-black flex flex-col items-start justify-center gap-y-10">
+          <DialogDescription className="delete-post-popup-description p-3 text-[20px] text-black flex flex-col items-start justify-center gap-y-10">
             Willst du den Beitrag wirklich löschen?
-            <div className="w-full flex justify-end items-center gap-x-7">
+            <div className="delete-post-popup-button-div w-full flex justify-end items-center gap-x-7">
               <button
                 onClick={() => {
                   setCurrentPostId(0);
                   setDeletePostPopUp(false);
                 }}
-                className="px-3 py-1.5 text-[16px] flex justify-center items-center bg-gray-50 border border-gray-200 rounded-sm cursor-pointer hover:bg-white"
+                className="delete-post-popup-close-button px-3 py-1.5 text-[16px] flex justify-center items-center bg-gray-50 border border-gray-200 rounded-sm cursor-pointer hover:bg-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -1125,7 +1147,7 @@ export default function User() {
                 onClick={() => {
                   deletePost(currentPostId);
                 }}
-                className="px-5 py-1.5 text-[16px] flex justify-center items-center gap-x-1 bg-red-500 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500"
+                className="delete-post-popup-delete-button px-5 py-1.5 text-[16px] flex justify-center items-center gap-x-1 bg-red-500 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500"
               >
                 {" "}
                 <svg
@@ -1149,11 +1171,196 @@ export default function User() {
         </DialogContent>
       </Dialog>
 
-      <Dialog open={noticePopUp} onOpenChange={setNoticePopUp}>
+      <Toaster
+        position="top-center"
+        richColors
+        toastOptions={{
+          unstyled: true,
+          className:
+            "user-toasty flex justify-center items-center gap-x-5 text-xl rounded-sm",
+        }}
+      />
+
+      <nav className="user-nav-bar w-full mb-10 px-20 py-5 bg-white flex justify-around items-center">
+        <button
+          onClick={toOverview}
+          className="to-overview-link cursor-pointer"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            className="back-arrow-icon w-13"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 19.5 8.25 12l7.5-7.5"
+            />
+          </svg>
+        </button>
+
+        <h1 className="user-headline text-4xl flex justify-center items-center gap-x-5">
+          <div className="user-headline-div flex justify-center items-center gap-x-3">
+            User{" "}
+            {userId === searchUserObject.userId ? (
+              <img
+                src={`https://eypauwdeqovcsrjwuxtj.supabase.co/storage/v1/object/public/profilepicture/${searchUserObject.profilPicture}`}
+                className="search-user-picture w-20 h-20 bg-cover rounded-full"
+                alt=""
+              />
+            ) : userId === publicUserObject.userId ? (
+              <img
+                src={`https://eypauwdeqovcsrjwuxtj.supabase.co/storage/v1/object/public/profilepicture/${publicUserObject.profilPicture}`}
+                className="public-user-picture w-20 h-20 bg-cover rounded-full"
+                alt=""
+              />
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                className="user-placeholder-icon w-10"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                />
+              </svg>
+            )}{" "}
+          </div>
+          <span className="user-name">
+            {userId === publicUserObject.userId
+              ? publicUserObject.Profilname
+              : searchUserObject.Profilname}
+          </span>
+        </h1>
+
+        {userId === publicUserObject.userId ? (
+          <Link
+            to="/private-route/settings"
+            className="to-settings-link cursor-pointer"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="to-settings-icon w-13"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              />
+            </svg>
+          </Link>
+        ) : (
+          <div className="user-placeholder w-13"></div>
+        )}
+      </nav>
+
+      {publicUserObject.Statustext !== "" ? (
+        <div className="user-status-text-div w-[50rem] h-[10rem] mx-auto px-3 py-2 text-lg border border-gray-300 rounded-sm">
+          {publicUserObject.Statustext}
+        </div>
+      ) : null}
+
+      <Follow currentFollow={currentFollow} currentFollowed={currentFollowed} />
+
+      <div className="user-post-overview-div w-[50%] mx-auto mt-10">
+        {userId === publicUserObject.userId ? (
+          <button
+            onClick={() => {
+              setCreatePostPopUp(true);
+            }}
+            className="user-new-post-button mx-auto mt-3 px-5 py-3 text-[17px] flex justify-center items-center gap-x-3 bg-blue-400 text-white border border-blue-400 rounded-sm cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-400"
+          >
+            <div className="flex justify-center items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                className="user-new-post-plus-icon w-7"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 4.5v15m7.5-7.5h-15"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                className="user-new-post-paper-icon w-7"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+                />
+              </svg>
+            </div>
+            <span className="user-new-button-label interaction-label text-lg">
+              Beitrag erstellen
+            </span>
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              checkFollow(followId, !follow);
+            }}
+            className="follow-button mx-auto mt-3 px-7 py-3 text-lg flex justify-center items-center gap-x-3 bg-blue-400 text-white border border-white rounded-sm cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-400"
+          >
+            {follow ? "Gefolgt" : "Folgen"}
+          </button>
+        )}
+
+        <div
+          className={`user-post-overview ${
+            publicUserObject.Statustext === "" ? "h-153" : "h-110"
+          } mt-3 px-5 bg-gray-100 rounded-sm overflow-y-scroll`}
+        >
+          {postsArray.map((post) => {
+            return (
+              <>
+                <Post
+                  post={post}
+                  openEditPostPopUp={openEditPostPopUp}
+                  openDeletePostPopUp={openDeletePostPopUp}
+                  hiddenPostOptions={hiddenPostOptions}
+                  postKebabMenuId={postKebabMenuId}
+                  openPostKebabMenu={openPostKebabMenu}
+                />
+              </>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+  /* <Dialog open={noticePopUp} onOpenChange={setNoticePopUp}>
         <DialogContent
           onInteractOutside={(e) => {
             e.preventDefault();
           }}
+          className="!max-w-xl"
         >
           <DialogHeader>
             <DialogDescription className="p-5 text-black flex flex-col gap-10">
@@ -1171,179 +1378,5 @@ export default function User() {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-
-      <Toaster
-        position="top-center"
-        richColors
-        toastOptions={{
-          unstyled: true,
-          className:
-            "flex justify-center items-center gap-x-5 text-xl rounded-sm",
-        }}
-      />
-
-      <div className="w-fullb px-20 py-5 flex justify-between items-center">
-        <button
-          onClick={toOverview}
-          className="to-overview-link cursor-pointer"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            className="w-13"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M15.75 19.5 8.25 12l7.5-7.5"
-            />
-          </svg>
-        </button>
-
-        {userId === publicUserObject.userId && (
-          <Link
-            to="/private-route/settings"
-            className="to-settings-link cursor-pointer"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="w-13"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"
-              />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-              />
-            </svg>
-          </Link>
-        )}
-      </div>
-
-      <h1 className="mb-10 text-4xl flex justify-center items-center gap-x-5">
-        <div className="flex justify-center items-center gap-x-3">
-          User{" "}
-          {userId === searchUserObject.userId ? (
-            <img
-              src={`https://eypauwdeqovcsrjwuxtj.supabase.co/storage/v1/object/public/profilepicture/${searchUserObject.profilPicture}`}
-              className="w-20 h-20 bg-cover rounded-full"
-              alt=""
-            />
-          ) : userId === publicUserObject.userId ? (
-            <img
-              src={`https://eypauwdeqovcsrjwuxtj.supabase.co/storage/v1/object/public/profilepicture/${publicUserObject.profilPicture}`}
-              className="w-20 h-20 bg-cover rounded-full"
-              alt=""
-            />
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="w-10"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-              />
-            </svg>
-          )}{" "}
-        </div>
-        <span>
-          {userId === publicUserObject.userId
-            ? publicUserObject.Profilname
-            : searchUserObject.Profilname}
-        </span>
-      </h1>
-
-      <div className="w-[50rem] h-[10rem] mx-auto px-3 py-2 text-lg border border-gray-300 rounded-sm">
-        {publicUserObject.Statustext}
-      </div>
-
-      <Follow currentFollow={currentFollow} currentFollowed={currentFollowed} />
-
-      <div className="w-200 h-155 mx-auto mt-10">
-        {userId === publicUserObject.userId ? (
-          <button
-            onClick={() => {
-              setCreatePostPopUp(true);
-            }}
-            className="mx-auto mt-3 px-5 py-3 text-[17px] flex justify-center items-center gap-x-3 bg-blue-400 text-white border border-white rounded-sm cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-400"
-          >
-            <div className="flex justify-center items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                className="w-7"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12 4.5v15m7.5-7.5h-15"
-                />
-              </svg>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                className="w-7"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
-                />
-              </svg>
-            </div>
-            <span className="text-lg">Beitrag erstellen</span>
-          </button>
-        ) : (
-          <button
-            onClick={() => {
-              checkFollow(followId, !follow);
-            }}
-            className="mx-auto mt-3 px-5 py-3 text-lg flex justify-center items-center gap-x-3 bg-blue-400 text-white border border-white rounded-sm cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-400"
-          >
-            {follow ? "Gefolgt" : "Folgen"}
-          </button>
-        )}
-
-        <div className="h-135 mt-3 px-5 bg-gray-100 rounded-sm overflow-y-scroll">
-          {postsArray.map((post) => {
-            return (
-              <>
-                <Post
-                  post={post}
-                  openEditPostPopUp={openEditPostPopUp}
-                  openDeletePostPopUp={openDeletePostPopUp}
-                  hiddenPostOptions={hiddenPostOptions}
-                />
-              </>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-  /*
    */
 }

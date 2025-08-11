@@ -1,26 +1,30 @@
+import "../responsive.css";
+
 export default function AGBComponent() {
   return (
-    <div className="px-5 py-10 flex flex-col gap-y-10">
-      <div className="mx-50 text-lg">
-        <h3 className="text-xl">§ 1 Geltungsbereich</h3>
+    <div className="agb-component px-5 py-10 flex flex-col gap-y-10">
+      <div className="agb-paragraph-div mx-50 text-lg">
+        <h3 className="paragraph-headline text-xl">§ 1 Geltungsbereich</h3>
         Diese AGB gelten für die Nutzung der Social-Media-Plattform OpenPureNet
         durch registrierte und nicht registrierte Nutzer. Mit der Risgistrierung
         stimmt der Nutzer diesen Bedingungen zu.
       </div>
-      <div className="mx-50 text-lg">
-        <h3 className="text-xl">$ 2 Vertragsgegenstand</h3>
+      <div className="agb-paragraph-div mx-50 text-lg">
+        <h3 className="paragraph-headline text-xl">§ 2 Vertragsgegenstand</h3>
         OpenPureNet bietet Nutzern die Möglichkeit, Inhalte zu posten, zu
         kommentieren und sich mit anderen auszutauschen. Es besteht kein
         Anspruch auf bestimmte Funktionen.
       </div>
-      <div className="mx-50 text-lg">
-        <h3 className="text-xl">§ 3 Registrierung und Benutzerkonto</h3>
+      <div className="agb-paragraph-div mx-50 text-lg">
+        <h3 className="paragraph-headline text-xl">
+          § 3 Registrierung und Benutzerkonto
+        </h3>
         <ol>
           <li>1. Die Nutzung der Plattform erfodert eine Registrierung.</li>
           <li>
             {" "}
-            2. Nutzer verpflichten sich, keine falschen oder missbräuchlichen
-            Angaben zu machen.
+            2. Der Nutzer verpflichten sich, keine falschen oder
+            missbräuchlichen Angaben zu machen.
           </li>
           <li>
             3. Es besteht keine Pflicht zur Angabe persönlicher Daten - alles
@@ -28,8 +32,8 @@ export default function AGBComponent() {
           </li>
         </ol>
       </div>
-      <div className="mx-50 text-lg">
-        <h3 className="text-xl">§ 4 Pflichten der Nutzer</h3>
+      <div className="agb-paragraph-div mx-50 text-lg">
+        <h3 className="paragraph-headline text-xl">§ 4 Pflichten der Nutzer</h3>
         <ol>
           <li>
             1. Nutzer verpflichent sich, keine Inhalte zu veröffentlichen, die
@@ -45,8 +49,10 @@ export default function AGBComponent() {
           </li>
         </ol>
       </div>
-      <div className="mx-50 text-lg">
-        <h3 className="text-xl">§ 5 Inhalte und Nutzungsrechte</h3>
+      <div className="agb-paragraph-div mx-50 text-lg">
+        <h3 className="paragraph-headline text-xl">
+          § 5 Inhalte und Nutzungsrechte
+        </h3>
         <ol>
           <li>
             1. Nutzer räumen OpenPureNet ein einfaches Nutzungsrecht zur
@@ -58,8 +64,8 @@ export default function AGBComponent() {
           </li>
         </ol>
       </div>
-      <div className="mx-50 text-lg">
-        <h3 className="text-xl">§ 6 Datenschutz</h3>
+      <div className="agb-paragraph-div mx-50 text-lg">
+        <h3 className="paragraph-headline text-xl">§ 6 Datenschutz</h3>
         <ol>
           <li>
             1. Die Verarbeitung personenbezogener Daten erfolgt gemäß der
@@ -75,8 +81,8 @@ export default function AGBComponent() {
           </li>
         </ol>
       </div>
-      <div className="mx-50 text-lg">
-        <h3 className="text-xl">§ 7 Haftung</h3>
+      <div className="agb-paragraph-div mx-50 text-lg">
+        <h3 className="paragraph-headline text-xl">§ 7 Haftung</h3>
         <ol>
           <li>
             1. OpenPureNet haftet uneingeschränkt bei Vorsatz, grober
@@ -89,7 +95,7 @@ export default function AGBComponent() {
           <li>3. Keine Haftung für von Nutzern eingestellte Inhalte.</li>
         </ol>
       </div>
-      <div className="mx-50 text-lg">
+      <div className="agb-paragraph-div mx-50 text-lg">
         <h3 className="text-xl">§ 8 Laufzeit und Kündigung</h3>
         <ol>
           <li>1. Die Mitgliedschaft ist unbefristet</li>
@@ -100,8 +106,8 @@ export default function AGBComponent() {
           </li>
         </ol>
       </div>
-      <div className="mx-50 text-lg">
-        <h3 className="text-xl">§ 9 Änderung der AGB</h3>
+      <div className="agb-paragraph-div mx-50 text-lg">
+        <h3 className="paragraph-headline text-xl">§ 9 Änderung der AGB</h3>
         <ol>
           <li>
             1. Der Betreiber behält sich vor, die AGB bei Bedarf anzupassen.
@@ -109,8 +115,8 @@ export default function AGBComponent() {
           <li>2. Nutzer werden rechtzeitig über Änderungen informiert.</li>
         </ol>
       </div>
-      <div className="mx-50 text-lg">
-        <h3 className="text-xl">§ 10 Schlussbestimmungen</h3>
+      <div className="agb-paragraph-div mx-50 text-lg">
+        <h3 className="paragraph-headline text-xl">§ 10 Schlussbestimmungen</h3>
         <ol>
           <li>1. Es gilt das Recht der Bundesrepublik Deutschland</li>
           <li>

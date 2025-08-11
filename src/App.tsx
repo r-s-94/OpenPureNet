@@ -1,5 +1,9 @@
 import "./App.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useNavigate,
+} from "react-router-dom";
 import SignIn from "./signin";
 import Overview from "./overview";
 import User from "./user";
@@ -23,6 +27,7 @@ import { postsContext } from "./postContext";
 import { functionContext } from "./functionContext";
 import UpadatePassword from "./updatePassword";
 import type { PostObject } from "./postContext";
+import ForgotPassword from "./forgotPassword";
 
 function App() {
   const [postsArray, setPostsArray] = useState<PostObject[]>([]);
@@ -110,6 +115,10 @@ function App() {
         element: <DataProtection />,
       },
       {
+        path: "forget-password",
+        element: <ForgotPassword />,
+      },
+      {
         path: "update-password",
         element: <UpadatePassword />,
       },
@@ -174,9 +183,46 @@ function App() {
     }
   }
 
+  async function logOut() {
+    const {} = await supabase.auth.signOut();
+
+    setPublicUserObject({
+      ...publicUserObject,
+      Profilname: "",
+      userId: "",
+      profilPicture: "",
+      AGBConsent: false,
+      dataProtectionConsent: false,
+      userDataConsent: false,
+    });
+
+    setUserAuthObject({
+      ...userAuthObject,
+      accessToken: "",
+    });
+
+    setSearchUserObject({
+      ...searchUserObject,
+      id: 0,
+      userId: "",
+      Profilname: "",
+      profilPicture: "",
+      AGBConsent: false,
+      dataProtectionConsent: false,
+      userDataConsent: false,
+      Statustext: "",
+      searchStatus: false,
+      fromMessage: false,
+    });
+
+    setMessageArray([]);
+
+    //navigation("/");
+  }
+
   return (
     <functionContext.Provider
-      value={{ consentPopUp, setConsentPopUp, checkUserSession }}
+      value={{ consentPopUp, setConsentPopUp, checkUserSession, logOut }}
     >
       <userAuthContext.Provider value={{ userAuthObject, setUserAuthObject }}>
         <publicUserContext.Provider

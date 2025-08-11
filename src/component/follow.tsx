@@ -1,3 +1,5 @@
+import "../responsive.css";
+
 export default function Follow({
   currentFollow,
   currentFollowed,
@@ -6,14 +8,14 @@ export default function Follow({
   currentFollowed: number;
 }) {
   return (
-    <div className="mt-5 flex justify-center items-center gap-x-5">
-      <div className="text-lg flex flex-col items-center justify-center">
+    <div className="follow-div mt-5 bg-white flex justify-center items-center gap-x-5">
+      <div className="follower-div text-lg flex flex-col items-center justify-center">
         Follower
-        <p>{currentFollow}</p>
+        <p className="follower-label">{currentFollow}</p>
       </div>
-      <div className="text-lg flex flex-col items-center justify-center">
+      <div className="followed-div text-lg flex flex-col items-center justify-center">
         Gefolgt
-        <p>{currentFollowed}</p>
+        <p className="followed-label">{currentFollowed}</p>
       </div>
     </div>
   );

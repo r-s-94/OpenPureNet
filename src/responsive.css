@@ -1,0 +1,2329 @@
+@media screen and (min-width: 1650px) {
+  /*SignIn*/
+
+  .logo-img {
+    width: 9rem;
+  }
+
+  .headline-div {
+    padding: 2.5rem 3.5rem;
+  }
+
+  .signin-headline {
+    font-size: 3rem;
+  }
+
+  .signin-div {
+    width: 95%;
+    max-width: 21rem;
+  }
+
+  .signin-toasty-both-fields,
+  .signin-toasty-incorrect {
+    width: 27rem;
+    height: 7rem;
+    font-size: 1.5rem;
+    padding: 15px;
+  }
+
+  .footer-info-div {
+    margin-top: 4.8rem;
+  }
+
+  /*Overview*/
+
+  .search-user-popup-input-button-div {
+    width: 29.7rem;
+  }
+
+  .search-user-popup-input {
+    width: 100%;
+  }
+
+  .search-user-popup-search-button {
+    width: 10rem;
+    height: 3.3rem;
+  }
+
+  .search-user-popup-search-icon,
+  .search-user-popup-search-user-icon {
+    width: 1.7rem;
+  }
+
+  .search-user-popup-close-button,
+  .create-post-popup-close-button,
+  .no-support-content-popup-close-button,
+  .notice-popup-close-button {
+    width: 9rem;
+    height: 2.3rem;
+  }
+
+  .create-post-popup-reset-input-button {
+    width: 10rem;
+  }
+
+  .create-post-popup-button-div {
+    margin: 2rem auto 1rem auto;
+  }
+
+  .create-post-popup-create-button {
+    width: 13rem;
+    height: 2.3rem;
+  }
+
+  .no-support-content-popup-attention {
+    margin-top: 1rem;
+  }
+
+  .no-support-content-popup-close-button {
+    width: 9rem;
+    height: 2.3rem;
+  }
+
+  .nav-content-div {
+    flex-direction: column;
+  }
+
+  .overview-logo-img {
+    width: 5rem;
+  }
+
+  .search-icon,
+  .search-user-icon {
+    width: 2rem;
+  }
+
+  .overview-new-post-button {
+    padding: 0.8rem 0.4rem;
+  }
+
+  .overview-create-button-label,
+  .overview-placeholder,
+  .overview-placeholder2 {
+    display: block;
+  }
+
+  .plus-icon,
+  .paper-icon {
+    width: 1.3rem;
+  }
+
+  .ring-bell,
+  .bell {
+    width: 2.3rem;
+  }
+
+  .user-picture {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .user-icon {
+    width: 3rem;
+  }
+
+  .logout-icon {
+    width: 2.7rem;
+  }
+
+  .show-content {
+    padding-top: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .post-overview {
+    padding: 1rem;
+    height: 48.7rem;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-left-color: #bdbdbd;
+    border-right-color: #bdbdbd;
+  }
+
+  .overview-footer {
+    margin-top: 0.1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /*Post*/
+
+  .post {
+    margin: 0;
+    padding: 0 3px;
+  }
+
+  .post-user-option-div {
+    padding: 15px 30px;
+  }
+
+  .profilpicture {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .post-kebab-menu-button {
+    display: none;
+  }
+
+  .post-text {
+    padding: 0 20px;
+  }
+
+  .post-medium-div {
+    margin: 1rem 0;
+  }
+
+  .post-medium-img,
+  .post-medium-video {
+    padding: 0 5px;
+  }
+
+  .timestamp {
+    padding: 0 15px;
+    font-size: 0.9rem;
+  }
+
+  .like-icon,
+  .dislike-icon,
+  .chat-icon {
+    width: 1.3rem;
+  }
+
+  /*Chat*/
+
+  .comment-overview-popup-close-button {
+    width: 9rem;
+    height: 2.3rem;
+  }
+
+  .comment-overview-popup-open-new-comment-button,
+  .create-comment-popup-new-comment-button {
+    width: 15.5rem;
+    height: 2.3rem;
+  }
+
+  .create-comment-popup-close-button,
+  .update-comment-popup-close-button,
+  .delete-comment-popup-close-button {
+    width: 9rem;
+    height: 2.3rem;
+  }
+
+  .update-comment-popup-update-button {
+    width: 17rem;
+    height: 2.3rem;
+  }
+
+  .delete-comment-popup-delete-button {
+    width: 9rem;
+    height: 2.3rem;
+  }
+
+  .comment-user-div {
+    padding: 0.3rem 0 0 0.5rem;
+  }
+
+  .comment-text {
+    margin: 1rem 0 1rem 0.5rem;
+  }
+
+  /*User*/
+
+  .update-post-popup-input-button-div {
+    margin: 0 auto;
+    display: flex;
+  }
+
+  .update-post-popup-reset-input-button {
+    width: 10rem;
+  }
+
+  .update-post-popup-button-div {
+    margin: 2rem auto 1rem auto;
+  }
+
+  .update-post-popup-close-button,
+  .delete-post-popup-close-button,
+  .no-suppot-content-popup-close-button {
+    width: 9rem;
+    height: 2.3rem;
+  }
+
+  .update-post-popup-update-button {
+    width: 16rem;
+    height: 2.3rem;
+  }
+
+  .delete-post-popup-delete-button {
+    width: 12rem;
+    height: 2.3rem;
+  }
+
+  .user-post-overview {
+    width: 75%;
+    height: 38rem;
+    margin: 1rem auto 0 auto;
+  }
+
+  /*Settings*/
+
+  .delete-account-popup-content {
+    margin-top: 0.7rem;
+    font-size: 1.3rem;
+  }
+
+  .delete-account-popup-close-button {
+    width: 17rem;
+    font-size: 17px;
+  }
+
+  .delete-account-popup-delete-button {
+    width: 13rem;
+    font-size: 17px;
+  }
+
+  /*Impressum*/
+}
+
+@media screen and (max-width: 1650px) {
+  /*SignIn*/
+
+  .head-div {
+    margin-top: 1rem;
+  }
+
+  .logo-img {
+    width: 8rem;
+  }
+
+  .headline-div {
+    padding: 2rem 3rem;
+  }
+
+  .signin-headline {
+    font-size: 3rem;
+  }
+
+  .signin-div {
+    width: 95%;
+    max-width: 21rem;
+  }
+
+  .signin-toasty-both-fields,
+  .signin-toasty-incorrect {
+    width: 27rem;
+    height: 7rem;
+    font-size: 1.5rem;
+    padding: 15px;
+  }
+
+  .footer-info-div {
+    margin-top: 0.1rem;
+  }
+
+  /*Overview*/
+
+  .search-user-popup-input-button-div {
+    width: 29.7rem;
+  }
+
+  .search-user-popup-input {
+    width: 100%;
+  }
+
+  .search-user-popup-search-button {
+    width: 10rem;
+    height: 3.3rem;
+  }
+
+  .search-user-popup-search-icon,
+  .search-user-popup-search-user-icon {
+    width: 1.7rem;
+  }
+
+  .search-user-popup-close-button,
+  .create-post-popup-close-button,
+  .no-support-content-popup-close-button.notice-popup-close-button {
+    width: 9rem;
+    height: 2.3rem;
+  }
+
+  .create-post-popup-create-button {
+    width: 13rem;
+    height: 2.3rem;
+  }
+
+  .create-post-popup-reset-input-button {
+    width: 10rem;
+  }
+
+  .create-post-popup-button-div {
+    margin: 2rem auto 1rem auto;
+  }
+
+  .no-support-content-popup-attention {
+    margin-top: 1rem;
+  }
+
+  .no-support-content-popup-close-button {
+    width: 9rem;
+    height: 2.3rem;
+  }
+
+  .nav-content-div {
+    flex-direction: column;
+  }
+
+  .overview-logo-img {
+    width: 5rem;
+  }
+
+  .search-icon,
+  .search-user-icon {
+    width: 2rem;
+  }
+
+  .overview-new-post-button {
+    padding: 0.8rem 0.4rem;
+  }
+
+  .overview-create-button-label {
+    display: block;
+  }
+
+  .plus-icon,
+  .paper-icon {
+    width: 1.3rem;
+  }
+
+  .ring-bell,
+  .bell {
+    width: 2.3rem;
+  }
+
+  .user-picture {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .user-icon {
+    width: 3rem;
+  }
+
+  .logout-icon {
+    width: 2.7rem;
+  }
+
+  .show-content {
+    padding-top: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .overview-placeholder,
+  .overview-placeholder2 {
+    display: block;
+  }
+
+  .post-overview {
+    height: 43.3rem;
+    padding-top: 0;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-left-color: #bdbdbd;
+    border-right-color: #bdbdbd;
+  }
+
+  .overview-footer {
+    margin-top: 0.1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /*Message*/
+
+  .message-overview-div {
+    height: 42rem;
+  }
+
+  /*Post*/
+
+  .post {
+    margin: 0;
+    padding: 0 3px;
+  }
+
+  .post-user-option-div {
+    padding: 15px 30px;
+  }
+
+  .profilpicture {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .post-kebab-menu-button {
+    display: none;
+  }
+
+  .post-text {
+    padding: 0 20px;
+  }
+
+  .post-medium-div {
+    margin: 1rem 0;
+  }
+
+  .post-medium-img,
+  .post-medium-video {
+    padding: 0 5px;
+    border-radius: 0.2rem;
+  }
+
+  .timestamp {
+    padding: 0 15px;
+    font-size: 0.9rem;
+  }
+
+  .like-icon,
+  .dislike-icon,
+  .chat-icon {
+    width: 1.3rem;
+  }
+
+  /*Chat*/
+
+  .comment-overview-popup-header {
+    height: 725px;
+  }
+
+  .comment-overview-popup-close-button {
+    width: 9rem;
+    height: 2.3rem;
+  }
+
+  .comment-overview-popup-open-new-comment-button,
+  .create-comment-popup-new-comment-button {
+    width: 15.5rem;
+    height: 2.3rem;
+  }
+
+  .create-comment-popup-close-button,
+  .update-comment-popup-close-button,
+  .delete-comment-popup-close-button {
+    width: 9rem;
+    height: 2.3rem;
+  }
+
+  .update-comment-popup-update-button {
+    width: 17rem;
+    height: 2.3rem;
+  }
+
+  .delete-comment-popup-delete-button {
+    width: 9rem;
+    height: 2.3rem;
+  }
+
+  .comment-user-div {
+    padding: 0.3rem 0 0 0.5rem;
+  }
+
+  .comment-text {
+    margin: 1rem 0 1rem 0.5rem;
+    text-align: left;
+  }
+
+  /*User*/
+
+  .update-post-popup-input-button-div {
+    margin: 0 auto;
+    display: flex;
+  }
+
+  .update-post-popup-reset-input-button {
+    width: 10rem;
+  }
+
+  .update-post-popup-button-div {
+    margin: 2rem auto 1rem auto;
+  }
+
+  .update-post-popup-close-button,
+  .delete-post-popup-close-button,
+  .no-suppot-content-popup-close-button {
+    width: 9rem;
+    height: 2.3rem;
+  }
+
+  .create-post-popup-create-button {
+    width: 13rem;
+    height: 2.3rem;
+  }
+
+  .update-post-popup-update-button {
+    width: 16rem;
+    height: 2.3rem;
+  }
+
+  .delete-post-popup-delete-button {
+    width: 12rem;
+    height: 2.3rem;
+  }
+
+  .user-post-overview {
+    width: 75%;
+    height: 33rem;
+    margin: 1rem auto 0 auto;
+  }
+
+  /*Settings*/
+
+  .settings-generally-data-main-div,
+  .private-data-overview-div {
+    margin-top: 3rem;
+  }
+
+  .delete-account-popup-content {
+    font-size: 1.3rem;
+  }
+
+  .delete-account-popup-close-button {
+    width: 17rem;
+    font-size: 17px;
+  }
+
+  .delete-account-popup-delete-button {
+    width: 13rem;
+    font-size: 17px;
+  }
+
+  /*AGB*/
+}
+
+@media screen and (max-width: 1400px) {
+  /*SignIn*/
+
+  .head-div {
+    margin-top: 1rem;
+  }
+
+  .logo-img {
+    width: 7rem;
+  }
+
+  .headline-div {
+    padding: 1.7rem 2.5rem;
+  }
+
+  .signin-headline {
+    font-size: 2.7rem;
+  }
+
+  .signin-div {
+    width: 95%;
+    max-width: 21rem;
+  }
+
+  .signin-toasty-both-fields {
+    width: 27rem;
+    height: 7rem;
+    font-size: 1.4rem;
+    padding: 15px;
+  }
+
+  .signin-toasty-incorrect {
+    font-size: 1.4rem;
+  }
+
+  .footer-info-div {
+    margin-top: 1.3rem;
+  }
+
+  /*Overview*/
+
+  .search-user-popup-input-button-div {
+    width: 29.7rem;
+  }
+
+  .search-user-popup-input {
+    width: 100%;
+  }
+
+  .search-user-popup-search-button {
+    width: 10rem;
+    height: 3.3rem;
+  }
+
+  .search-user-popup-search-icon,
+  .search-user-popup-search-user-icon {
+    width: 1.7rem;
+  }
+
+  .search-user-popup-close-button {
+    width: 10rem;
+    height: 2.3rem;
+  }
+
+  .no-support-content-popup-attention {
+    margin-top: 1rem;
+  }
+
+  .nav-content-div {
+    flex-direction: column;
+  }
+
+  .overview-logo-img {
+    width: 5rem;
+  }
+
+  .search-icon,
+  .search-user-icon {
+    width: 2rem;
+  }
+
+  .overview-create-button-label,
+  .overview-placeholder,
+  .overview-placeholder2 {
+    display: block;
+  }
+
+  .plus-icon,
+  .paper-icon {
+    width: 1.3rem;
+  }
+
+  .ring-bell,
+  .bell {
+    width: 2.3rem;
+  }
+
+  .user-picture {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .user-icon {
+    width: 3rem;
+  }
+
+  .logout-icon {
+    width: 2.7rem;
+  }
+
+  .show-content {
+    padding-top: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .post-overview {
+    width: 50%;
+    height: 44rem;
+    margin: 0 auto;
+    padding: 1rem 0;
+  }
+
+  .overview-footer {
+    margin-top: 0.1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /*Message*/
+
+  .message-overview-div {
+    width: 50%;
+  }
+
+  /*Post*/
+
+  .post {
+    margin: 0;
+    padding: 0 3px;
+  }
+
+  .post-user-option-div {
+    padding: 15px 30px;
+  }
+
+  .profilpicture {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .post-text {
+    padding: 0 20px;
+  }
+
+  .post-medium-img,
+  .post-medium-video {
+    padding: 0 5px;
+  }
+
+  .timestamp {
+    padding: 0 15px;
+    font-size: 0.9rem;
+  }
+
+  .like-icon,
+  .dislike-icon,
+  .chat-icon {
+    width: 1.3rem;
+  }
+
+  /*Chat*/
+
+  /*User*/
+
+  .user-post-overview {
+    width: 85%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  /*SignIn*/
+
+  .head-div {
+    margin-top: 1rem;
+  }
+
+  .logo-img {
+    width: 6rem;
+  }
+
+  .headline-div {
+    padding: 1.5rem 2rem;
+  }
+
+  .signin-headline {
+    font-size: 2.5rem;
+  }
+
+  .signin-toasty-both-fields,
+  .signin-toasty-incorrect {
+    font-size: 1.3rem;
+  }
+
+  .footer-info-div {
+    margin-top: 2rem;
+  }
+
+  .seperate-symbole {
+    display: block;
+  }
+
+  /*Overview*/
+
+  .search-user-popup-input-button-div {
+    width: 20rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .search-user-popup-input,
+  .search-user-popup-search-button {
+    width: 100%;
+  }
+
+  .search-user-popup-search-icon,
+  .search-user-popup-search-user-icon {
+    width: 1.7rem;
+  }
+
+  .search-user-popup-user-overview-div {
+    width: 20rem;
+    margin: 0 auto;
+  }
+
+  .search-user-popup-user-div {
+    height: 5rem;
+  }
+
+  .search-user-popup-close-button {
+    padding: 1.5px 1.5rem;
+  }
+
+  .create-post-popup-input-button-div {
+    margin: 0 auto;
+    display: flex;
+  }
+
+  .create-post-popup-close-button {
+    width: 10rem;
+  }
+
+  .create-post-popup-create-button {
+    width: 13rem;
+  }
+
+  .no-support-content-popup-attention {
+    margin-top: 1rem;
+    font-size: 1.4rem;
+  }
+
+  .no-support-content-popup-text {
+    font-size: 1.2rem;
+  }
+
+  .notice-popup-notice {
+    font-size: 1.3rem;
+  }
+
+  .nav-content-div {
+    flex-direction: column;
+  }
+
+  .overview-logo-img {
+    width: 4rem;
+  }
+
+  .search-icon,
+  .search-user-icon {
+    width: 2rem;
+  }
+
+  .overview-new-post-button {
+    padding: 0.7rem 0.3rem;
+  }
+
+  .overview-create-button-label {
+    font-size: 1rem;
+  }
+
+  .plus-icon,
+  .paper-icon {
+    width: 1.3rem;
+  }
+
+  .ring-bell,
+  .bell {
+    width: 2.3rem;
+  }
+
+  .user-picture {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .user-icon {
+    width: 2.5rem;
+  }
+
+  .show-content {
+    padding-top: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .overview-placeholder,
+  .overview-placeholder2 {
+    display: none;
+  }
+
+  .post-overview {
+    width: 75%;
+    margin: 0 auto;
+    height: 45.3rem;
+    padding: 1rem 0;
+  }
+
+  .overview-footer {
+    margin-top: 0.1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /*Message*/
+
+  .to-overview-icon {
+    width: 2.5rem;
+  }
+
+  .message-headline {
+    font-size: 2rem;
+  }
+
+  .message-overview-div {
+    width: 75%;
+  }
+
+  .message-button-div {
+    width: 11rem;
+    margin: 0.5rem 0;
+    flex-direction: column;
+    row-gap: 0.1rem;
+    column-gap: 0;
+  }
+
+  .message-follow-false-button,
+  .message-follow-true-button,
+  .message-show-profil-button {
+    width: 100%;
+    font-size: 1.1rem;
+  }
+
+  /*Post*/
+
+  .post-no-support-content-popup-attention {
+    font-size: 1.4rem;
+  }
+
+  .post-no-support-content-popup-text {
+    font-size: 1.2rem;
+  }
+
+  .post {
+    margin: 0;
+    padding: 0 3px;
+  }
+
+  .post-user-option-div {
+    padding: 15px 30px;
+  }
+
+  .profilpicture {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .post-text {
+    padding: 0 20px;
+  }
+
+  .post-medium-img,
+  .post-medium-video {
+    padding: 0 10px;
+  }
+
+  .timestamp {
+    padding: 0 15px;
+    font-size: 0.9rem;
+  }
+
+  .like-icon,
+  .dislike-icon,
+  .chat-icon {
+    width: 1.3rem;
+  }
+
+  /*Chat*/
+
+  /*User*/
+
+  .update-post-popup-input-button-div {
+    margin: 0 auto;
+    display: flex;
+  }
+
+  .delete-post-popup-description {
+    margin-top: 1rem;
+  }
+
+  .user-nav-bar {
+    padding: 20px 40px;
+    justify-content: space-between;
+  }
+
+  .back-arrow-icon {
+    width: 3rem;
+  }
+
+  .user-headline-div {
+    font-size: 2rem;
+  }
+
+  .search-user-picture,
+  .public-user-picture,
+  .user-placeholder-icon {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .user-name {
+    font-size: 2rem;
+  }
+
+  .to-settings-icon {
+    width: 3rem;
+  }
+
+  .follow-div {
+    margin: 0;
+  }
+
+  .user-new-post-button {
+    padding: 1.2rem 0.6rem;
+    border-radius: 50%;
+  }
+
+  .user-new-post-plus-icon,
+  .user-new-post-paper-icon {
+    width: 1.5rem;
+  }
+
+  .user-post-overview-div {
+    width: 75%;
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .user-post-overview {
+    height: 34rem;
+  }
+
+  /*Settings*/
+
+  .to-user-icon,
+  .logout-icon {
+    width: 3rem;
+  }
+
+  .settings-headline {
+    font-size: 2rem;
+  }
+
+  .interaction-label {
+    display: none;
+  }
+
+  .settings-status-textarea {
+    width: 75%;
+  }
+
+  .settings-status-update-button,
+  .settings-status-delete-button {
+    font-size: 1rem;
+  }
+
+  .settings-generally-data-main-div {
+    padding: 20px 15px;
+  }
+
+  .settings-generally-data-div-headline {
+    font-size: 1.5rem;
+  }
+
+  .settings-generally-data-div-input,
+  .settings-generally-data-div-picture-input {
+    height: 2.3rem;
+  }
+
+  .edit-profil-name-button,
+  .edit-password-button {
+    font-size: 1rem;
+  }
+
+  .update-picture-button,
+  .delete-picture-button,
+  .private-data-div-load-button {
+    font-size: 1rem;
+  }
+
+  .private-data-div-table {
+    width: 30rem;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .table-headline-div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .table-head-title {
+    width: 15rem;
+    text-align: left;
+    padding-left: 1rem;
+  }
+
+  .table-info-div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .private-data-div-info {
+    width: 15rem;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+  }
+
+  .number {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+  }
+
+  .private-data-div-info {
+    height: 38px;
+    text-align: left;
+  }
+
+  .private-user-data-div-button-div {
+    width: 14rem;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .create-private-data-button,
+  .update-private-data-button,
+  .delete-private-data-button {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .settings-return-consent-div-headline {
+    margin-left: 15%;
+    font-size: 1.7rem;
+  }
+
+  .settings-agb-div-headline,
+  .settings-data-protection-headline,
+  .settings-user-consent-headline {
+    margin-left: 15%;
+    font-size: 1.5rem;
+  }
+
+  .settings-agb-accept-div,
+  .settings-data-protection-accept-div,
+  .settings-user-consent-accept-div {
+    margin-left: 15%;
+  }
+
+  .settings-agb-input-checkbox,
+  .settings-data-protection-input-checkbox,
+  .settings-user-consent-input-checkbox {
+    margin-left: 0;
+  }
+
+  .settings-delete-user-account {
+    margin-left: 12.5%;
+  }
+
+  .return-consent-popup-content {
+    text-align: left;
+  }
+
+  .return-consent-popup-button-div {
+    width: 10rem;
+    margin: 1rem auto;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .return-consent-popup-description {
+    padding-top: 3rem;
+  }
+
+  .return-consent-popup-close-button,
+  .return-consent-popup-logout-button {
+    width: 100%;
+    font-size: 17px;
+  }
+
+  .delete-account-popup-content {
+    margin-top: 0.5rem;
+    text-align: left;
+  }
+
+  .settings-delete-user-account {
+    font-size: 1rem;
+  }
+
+  /*AGB*/
+
+  .agb-paragraph-div {
+    margin: 0 7rem;
+  }
+
+  /*Data-Protection*/
+
+  .data-protection-component {
+    padding: 3rem 0 1rem 0;
+  }
+
+  .clause-div {
+    margin: 0 7rem;
+  }
+
+  .data-processing-table {
+    margin: 1rem auto 0 auto;
+  }
+
+  .data-processing-table-headline {
+    padding: 0.2rem 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .data-processing-table-info {
+    padding: 0.2rem 0.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  /*SignIn*/
+
+  .head-div {
+    margin-top: 5rem;
+  }
+
+  .logo-img {
+    width: 6rem;
+  }
+
+  .headline-div {
+    padding: 1.5rem 2.3rem;
+  }
+
+  .signin-headline {
+    font-size: 2.3rem;
+  }
+
+  .signin-div {
+    width: 95%;
+    max-width: 21rem;
+  }
+
+  .signin-toasty-both-fields,
+  .signin-toasty-incorrect {
+    font-size: 1.2rem;
+  }
+
+  .footer-info-div {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .seperate-symbole {
+    display: none;
+  }
+
+  /*Overview*/
+
+  .search-user-popup-input-button-div {
+    width: 20rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .search-user-popup-input,
+  .search-user-popup-search-button,
+  .create-post-popup-reset-input-button,
+  .create-post-popup-close-button,
+  .create-post-popup-create-button {
+    width: 100%;
+  }
+
+  .search-user-popup-search-icon,
+  .search-user-popup-search-user-icon {
+    width: 1.7rem;
+  }
+
+  .search-user-popup-user-overview-div {
+    width: 20rem;
+    margin: 0 auto;
+  }
+
+  .search-user-popup-close-button {
+    padding: 1.5px 1rem;
+  }
+
+  .create-post-popup-input-button-div {
+    width: 20rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .create-post-popup-mb-message {
+    width: 20rem;
+    margin: 0 auto;
+  }
+
+  .create-post-popup-button-div {
+    width: 20rem;
+    margin: 1rem auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .no-support-content-popup-attention {
+    margin-top: 1rem;
+    font-size: 1.3rem;
+  }
+
+  .no-support-content-popup-text {
+    font-size: 1.1rem;
+  }
+
+  .notice-popup-notice {
+    font-size: 1.2rem;
+  }
+
+  .notice-popup-close-button {
+    font-size: 1rem;
+  }
+
+  .nav-content-div {
+    flex-direction: column-reverse;
+  }
+
+  .overview-nav-bar {
+    height: 4rem;
+    margin-top: 62.3rem;
+    position: fixed;
+    justify-content: space-around;
+  }
+
+  .overview-logo-img {
+    width: 3.5rem;
+  }
+
+  .search-user-button,
+  .to-message-link,
+  .to-user-link,
+  .logout-button {
+    padding: 0;
+  }
+
+  .search-icon,
+  .search-user-icon {
+    width: 1.7rem;
+  }
+
+  .overview-new-post-button {
+    padding: 0.7rem 0.3rem;
+  }
+
+  .overview-create-button-label {
+    font-size: 1rem;
+  }
+
+  .plus-icon,
+  .paper-icon {
+    width: 1.3rem;
+  }
+
+  .ring-bell,
+  .bell,
+  .user-icon,
+  .logout-icon {
+    width: 2.3rem;
+  }
+
+  .user-picture {
+    width: 2.3rem;
+    height: 2.3rem;
+  }
+
+  .interaction-label,
+  .overview-placeholder,
+  .overview-placeholder2 {
+    display: none;
+  }
+
+  .show-content {
+    padding-top: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .post-overview {
+    width: 100%;
+    height: 40.7rem;
+    padding: 1rem 0;
+    border: none;
+  }
+
+  .overview-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 0.5rem;
+  }
+
+  /*Message*/
+
+  .to-overview-icon {
+    width: 2rem;
+  }
+
+  .message-headline {
+    margin-top: 1rem;
+    font-size: 1.7rem;
+  }
+
+  .message-overview-div {
+    width: 95%;
+    padding: 0.5rem;
+    row-gap: 0.5rem;
+  }
+
+  .message-follow-false-button,
+  .message-follow-true-button,
+  .message-show-profil-button {
+    font-size: 1rem;
+  }
+
+  /*Post*/
+
+  .post-no-support-content-popup-attention {
+    font-size: 1.3rem;
+  }
+
+  .post-no-support-content-popup-text {
+    font-size: 1.1rem;
+  }
+
+  .post {
+    margin: 0;
+    padding: 0 3px;
+  }
+
+  .post-user-option-div {
+    padding: 5px 10px;
+  }
+
+  .profilpicture {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .post-option-button-div {
+    position: relative;
+  }
+
+  .post-option-div {
+    position: absolute;
+    margin: 5rem 10rem 0 0;
+  }
+
+  .post-kebab-menu-button {
+    display: block;
+  }
+
+  .hidden-post-kebab-menu-button,
+  .search-user-status,
+  .edit-delete-div {
+    display: none;
+  }
+
+  .post-text {
+    padding: 0 6px;
+  }
+
+  .post-medium-img,
+  .post-medium-video {
+    padding: 0 1px;
+  }
+
+  .timestamp {
+    padding: 0 6px;
+    font-size: 0.8rem;
+  }
+
+  .like-icon,
+  .dislike-icon,
+  .chat-icon {
+    width: 1.3rem;
+  }
+
+  /*Chat*/
+
+  .comment-overview-popup-header {
+    height: 675px;
+  }
+
+  .create-comment-popup,
+  .update-comment-popup {
+    padding: 1.5rem 0.7rem;
+  }
+
+  .comment-overview-popup-description,
+  .create-comment-popup-button-div,
+  .update-comment-popup-button-div {
+    width: 20rem;
+    margin: 1rem auto 0 auto;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .delete-comment-popup-close {
+    width: 10rem;
+    margin: 1rem auto 0 auto;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .comment-overview-popup-close-button,
+  .comment-overview-popup-open-new-comment-button,
+  .create-comment-popup-close-button,
+  .create-comment-popup-new-comment-button {
+    width: 100%;
+  }
+
+  .update-comment-popup-close-button,
+  .update-comment-popup-update-button,
+  .delete-comment-popup-close-button,
+  .delete-comment-popup-delete-button {
+    width: 100%;
+  }
+
+  /*User*/
+
+  .update-post-popup-input-button-div {
+    width: 20rem;
+    margin: 0 auto;
+    flex-direction: column;
+  }
+
+  .update-post-popup-reset-input-button,
+  .update-post-popup-close-button,
+  .update-post-popup-update-button,
+  .delete-post-popup-close-button,
+  .delete-post-popup-delete-button,
+  .user-post-overview-div {
+    width: 100%;
+  }
+
+  .update-post-popup-mb-message {
+    width: 20rem;
+    margin: 0 auto;
+  }
+
+  .update-post-popup-button-div {
+    width: 20rem;
+    margin: 1rem auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .delete-post-popup-button-div {
+    width: 13rem;
+    margin: 1rem auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .user-nav-bar {
+    justify-content: space-around;
+    padding: 1.3rem 0;
+  }
+
+  .back-arrow-icon,
+  .to-settings-icon {
+    width: 2.3rem;
+  }
+
+  .user-headline-div {
+    font-size: 1.7rem;
+  }
+
+  .search-user-picture,
+  .public-user-picture,
+  .user-placeholder-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .user-name {
+    font-size: 1.7rem;
+  }
+
+  .follow-div {
+    margin-top: 1rem;
+  }
+
+  .user-new-post-button {
+    padding: 1rem 0.5rem;
+    border-radius: 50%;
+  }
+
+  .user-new-post-plus-icon,
+  .user-new-post-paper-icon {
+    width: 1.4rem;
+  }
+
+  .follow-button {
+    font-size: 17px;
+    padding: 10px 20px;
+  }
+
+  .user-post-overview {
+    height: 36.3rem;
+    padding: 1rem 0.5rem;
+  }
+
+  /*Settings*/
+
+  .settings-nav-bar {
+    margin: 50px 0;
+  }
+
+  .to-user-icon,
+  .logout-icon {
+    width: 2.5rem;
+  }
+
+  .settings-status-button-div {
+    width: 12rem;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .edit-profil-name-div,
+  .edit-password-div {
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .edit-profil-name-button,
+  .edit-password-button {
+    width: 14rem;
+  }
+
+  .picture-button-div {
+    width: 12rem;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .delete-private-user-popup-note {
+    margin-top: 1rem;
+  }
+
+  .edit-private-user-popup-button-div {
+    width: 14rem;
+    margin: 2rem auto 1rem auto;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .delete-private-user-popup-button-div {
+    width: 12rem;
+    margin: 0 auto;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .private-user-data-div-button-div {
+    width: 13rem;
+  }
+
+  .edit-private-user-popup-close-button,
+  .edit-private-user-popup-new-user-data-button,
+  .edit-private-user-popup-update-user-data-button,
+  .delete-private-user-popup-close-button,
+  .delete-private-user-popup-delete-button,
+  .settings-status-update-button,
+  .settings-status-delete-button,
+  .update-picture-button,
+  .delete-picture-button,
+  .table-head-title,
+  .private-data-div-info {
+    width: 100%;
+  }
+
+  .private-data-div-table {
+    width: 95%;
+  }
+
+  .table-headline-div,
+  .table-info-div {
+    width: 50%;
+  }
+
+  .delete-account-popup-button-div {
+    width: 17rem;
+    margin: 1rem auto;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .delete-account-popup-close-button,
+  .delete-account-popup-delete-button {
+    width: 100%;
+    font-size: 17px;
+  }
+
+  /*Impressum*/
+
+  .impressum-headline {
+    font-size: 1.7rem;
+  }
+
+  .tmg-headline,
+  .tmg-mail {
+    font-size: 1rem;
+  }
+
+  .tmg-name,
+  .tmg-adress {
+    font-size: 0.9rem;
+  }
+
+  .tmg-contact {
+    font-size: 1.1rem;
+  }
+
+  /*AGB*/
+
+  .agb-headline {
+    margin-top: 1rem;
+  }
+
+  .agb-paragraph-div {
+    margin: 0 3rem;
+  }
+
+  /*Data-Protection*/
+
+  .data-protection-headline {
+    font-size: 1.7rem;
+  }
+
+  .clause-div {
+    margin: 0 1.7rem;
+    font-size: 1.1rem;
+  }
+
+  .clause-headline {
+    font-size: 1.2rem;
+  }
+
+  .data-processing-table-headline,
+  .data-processing-table-info {
+    padding: 0.1rem 0.4rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  /*SignIn*/
+
+  .head-div {
+    margin-top: 3rem;
+  }
+
+  .logo-img {
+    width: 4rem;
+  }
+
+  .headline-div {
+    padding: 13px 18px;
+  }
+
+  .signin-headline {
+    font-size: 1.8rem;
+  }
+
+  .signin-div {
+    width: 95%;
+  }
+
+  .signin-toasty-both-fields,
+  .signin-toasty-incorrect {
+    font-size: 1rem;
+  }
+
+  .footer-info-div {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .seperate-symbole {
+    display: none;
+  }
+
+  /*Overview*/
+
+  .search-user-popup-input-button-div {
+    width: 16rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .search-user-popup-input,
+  .search-user-popup-search-button,
+  .create-post-popup-reset-input-button,
+  .create-post-popup-close-button,
+  .create-post-popup-create-button {
+    width: 100%;
+  }
+
+  .search-user-popup-search-icon,
+  .search-user-popup-search-user-icon {
+    width: 1.5rem;
+  }
+
+  .search-user-popup-user-overview-div,
+  .create-post-popup-mb-message {
+    width: 16rem;
+    margin: 0 auto;
+  }
+
+  .search-user-popup-close-button {
+    padding: 1.5px 1rem;
+  }
+
+  .create-post-popup,
+  .update-post-popup {
+    padding: 1.5rem 0.3rem;
+  }
+
+  .create-post-popup-description {
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .create-post-popup-textarea,
+  .update-post-popup-textarea {
+    width: 97%;
+    margin: 0 auto;
+  }
+
+  .create-post-popup-input-button-div {
+    width: 16rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .create-post-popup-button-div {
+    width: 16rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .no-support-content-popup-attention {
+    margin-top: 1rem;
+  }
+
+  .notice-popup-notice {
+    font-size: 1.1rem;
+  }
+
+  .overview-nav-bar {
+    margin-top: 61.5rem;
+    position: fixed;
+  }
+
+  .overview-logo-img {
+    width: 3rem;
+  }
+
+  .search-icon,
+  .search-user-icon {
+    width: 1.7rem;
+  }
+
+  .ring-bell,
+  .bell {
+    width: 2rem;
+  }
+
+  .overview-new-post-button {
+    padding: 0.5rem 0.1rem;
+  }
+
+  .user-picture {
+    width: 2.1rem;
+    height: 2.1rem;
+  }
+
+  .user-icon {
+    width: 2.1rem;
+  }
+
+  .interaction-label,
+  .overview-placeholder,
+  .overview-placeholder2 {
+    display: none;
+  }
+
+  .show-content {
+    padding-top: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .plus-icon,
+  .paper-icon {
+    width: 1.3rem;
+  }
+
+  .post-overview {
+    height: 41.5rem;
+    padding: 1rem 0;
+  }
+
+  .overview-footer {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 0.3rem;
+  }
+
+  /*Post*/
+
+  .post {
+    margin: 0;
+    padding: 0 3px;
+  }
+
+  .post-user-option-div {
+    padding: 7px 15px;
+  }
+
+  .profilpicture {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .post-text {
+    padding: 0 10px;
+  }
+
+  .post-medium-div {
+    margin: 0.5rem 0;
+  }
+
+  .timestamp {
+    padding: 0 6px;
+    font-size: 0.8rem;
+  }
+
+  .like-icon,
+  .dislike-icon,
+  .chat-icon {
+    width: 1rem;
+  }
+
+  /*Chat*/
+
+  .comment-overview-popup-header {
+    height: 675px;
+  }
+
+  .comment-overview-popup-description {
+    width: 15.5rem;
+    margin: 1rem auto 0 auto;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .comment-overview-popup-close-button,
+  .comment-overview-popup-open-new-comment-button {
+    width: 100%;
+  }
+
+  .comment-option-button-div {
+    column-gap: 0.5rem;
+  }
+
+  .comment-edit-delete-button-div,
+  .comment-like-dislike-button-div {
+    column-gap: 0.3rem;
+  }
+
+  .comment-like-icon,
+  .comment-dislike-icon {
+    width: 1.3rem;
+  }
+
+  .create-comment-popup-button-div {
+    width: 15.3rem;
+  }
+
+  .create-comment-popup,
+  .update-comment-popup {
+    padding: 2rem 0.5rem;
+  }
+
+  .update-comment-popup-description {
+    padding: 0 1px;
+  }
+
+  .update-comment-popup-button-div {
+    width: 16.3rem;
+  }
+
+  .delete-comment-popup-close {
+    width: 10rem;
+  }
+
+  .comment-option-button-div {
+    justify-content: center;
+    column-gap: 7%;
+  }
+
+  /*User*/
+
+  .create-post-popup,
+  .update-post-popup {
+    padding: 1.5rem 0.3rem;
+  }
+
+  .create-post-popup-textarea,
+  .update-post-popup-textarea {
+    width: 97%;
+    margin: 0 auto;
+  }
+
+  .update-post-popup-description {
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .delete-post-popup-description {
+    padding: 0.5rem 0 1rem 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+  }
+
+  .update-post-popup-input-button-div {
+    width: 16rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .update-post-popup-reset-input-button,
+  .update-post-popup-close-button,
+  .update-post-popup-update-button {
+    width: 100%;
+  }
+
+  .update-post-popup-mb-message {
+    width: 16rem;
+    margin: 0 auto;
+  }
+
+  .update-post-popup-button-div {
+    width: 16rem;
+    margin: 0 auto;
+  }
+
+  .delete-post-popup-button-div {
+    margin: 0 auto;
+  }
+
+  .back-arrow-icon,
+  .to-settings-icon {
+    width: 1.7rem;
+  }
+
+  .user-headline-div,
+  .user-name,
+  .user-new-post-plus-icon,
+  .user-new-post-paper-icon {
+    font-size: 1.3rem;
+  }
+
+  .search-user-picture,
+  .public-user-picture,
+  .user-placeholder-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .user-new-post-button {
+    padding: 0.8rem 0.2rem;
+    font-size: 0.5rem;
+  }
+
+  .follow-button {
+    font-size: 16px;
+    padding: 8px 18px;
+  }
+
+  .user-post-overview {
+    width: 95%;
+    padding: 0.5rem 0.3rem;
+  }
+
+  /*Settings*/
+
+  .settings-success-toasty {
+    height: 11rem;
+  }
+
+  .settings-notice-toasty {
+    height: 8rem;
+  }
+
+  .edit-private-user-popup-input {
+    width: 14rem;
+  }
+
+  .edit-private-user-popup-button-div {
+    width: 13rem;
+  }
+
+  .delete-private-user-popup-description {
+    padding: 20px 0;
+  }
+
+  .settings-nav-bar {
+    margin: 30px 0;
+  }
+
+  .to-user-icon,
+  .logout-icon {
+    width: 2.3rem;
+  }
+
+  .settings-headline {
+    font-size: 1.7rem;
+  }
+
+  .settings-status-textarea {
+    width: 95%;
+  }
+
+  .settings-generally-data-div-headline,
+  .private-data-div-headline {
+    font-size: 1.3rem;
+  }
+
+  .settings-generally-data-main-div {
+    width: 95%;
+    margin-top: 0.7rem;
+  }
+
+  .private-data-div,
+  .private-data-overview-div,
+  .delete-account-popup-content {
+    margin-top: 1rem;
+  }
+
+  .settings-return-consent-div-headline {
+    font-size: 1.5rem;
+  }
+
+  .settings-agb-div-headline,
+  .settings-data-protection-div-headline,
+  .settings-user-consent-headline {
+    padding-right: 5%;
+    font-size: 1.3rem;
+  }
+
+  .settings-agb-overview {
+    width: 95%;
+    padding: 0;
+  }
+
+  .settings-data-protection-overview {
+    width: 95%;
+    padding: 1rem 0;
+  }
+
+  .return-consent-popup-description {
+    padding-top: 2rem;
+  }
+
+  .settings-user-consent-text {
+    width: 95%;
+  }
+
+  .return-consent-popup-close-button,
+  .return-consent-popup-logout-button {
+    font-size: 16px;
+  }
+
+  .delete-account-popup-description {
+    padding: 0;
+  }
+
+  .delete-account-popup-button-div {
+    width: 15rem;
+  }
+
+  .delete-account-popup-close-button,
+  .delete-account-popup-delete-button {
+    font-size: 16px;
+  }
+
+  /*Impressum*/
+
+  /*AGB*/
+
+  .agb-headline {
+    font-size: 1.7rem;
+  }
+
+  .agb-paragraph-div {
+    margin: 0 auto;
+    font-size: 1rem;
+  }
+
+  .agb-paragraph-headline {
+    font-size: 1.3rem;
+  }
+
+  /*Data-Protection*/
+
+  .data-protection-headline {
+    margin: 0.3rem auto;
+    font-size: 1.5rem;
+  }
+
+  .data-protection-component {
+    padding: 1rem 0;
+  }
+
+  .clause-div {
+    margin: 0 0.5rem;
+    font-size: 1rem;
+  }
+
+  .clause-headline {
+    font-size: 1.2rem;
+  }
+
+  .data-processing-table {
+    margin: 0.5rem auto 0 auto;
+  }
+
+  .data-processing-table-headline {
+    padding: 0.1rem 0.3rem;
+    font-size: 1rem;
+  }
+
+  .data-processing-table-info {
+    padding: 0.1rem 0.3rem;
+    font-size: 0.9rem;
+  }
+}
