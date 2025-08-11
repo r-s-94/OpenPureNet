@@ -78,6 +78,7 @@ export default function User() {
             Profilname: searchUserData.Profilname,
             profilPicture: searchUserData.profilPicture,
             Statustext: searchUserData.Statustext,
+            searchStatus: true,
           });
         }
       }
