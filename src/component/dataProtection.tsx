@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import DataprotectionComponent from "./dataProtectionComponent";
 import { useContext } from "react";
 import { userAuthContext } from "@/userAuthContext";
-import "../responsive.css";
+//import "../responsive.css";
 
 export default function DataProtection() {
   const { userAuthObject } = useContext(userAuthContext);

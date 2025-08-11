@@ -27,7 +27,7 @@ import { functionContext } from "./functionContext";
 import { Toaster } from "./components/ui/sonner";
 import { toast } from "sonner";
 import { alphabeta_zA_ZArray } from "./alphabet";
-import "./responsive.css";
+//import "./responsive.css";
 
 export default function Overview() {
   const TEN_MB: number = 10 * 1000 * 1000;
@@ -400,7 +400,7 @@ export default function Overview() {
   }
 
   return (
-    <div className="overview-section flex flex-col items-center justify-center">
+    <div className="overview-section h-screen flex flex-col items-center justify-center">
       <Dialog open={consentPopUp} onOpenChange={setConsentPopUp}>
         <DialogContent
           onInteractOutside={(e) => {
@@ -1103,7 +1103,7 @@ export default function Overview() {
         </div>
       </div>
 
-      <div className="overview-footer w-full py-2 flex justify-center items-center gap-x-3 border border-gray-200">
+      <div className="overview-footer w-full h-[3rem] flex justify-center items-center gap-x-3 border border-gray-200">
         <Link to="/impressum" className="cursor-pointer">
           Impressum
         </Link>
@@ -1154,7 +1154,10 @@ export default function Overview() {
       </div>
     </div>
   );
-  /*<Dialog open={noticePostPopUp} onOpenChange={setNoticePostPopUp}>
+  /*
+  
+  
+  <Dialog open={noticePostPopUp} onOpenChange={setNoticePostPopUp}>
         <DialogContent
           onInteractOutside={(e) => {
             e.preventDefault();

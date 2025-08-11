@@ -1,7 +1,7 @@
 import { userAuthContext } from "@/userAuthContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import "../responsive.css";
+//import "../responsive.css";
 
 export default function Impressum() {
   const { userAuthObject } = useContext(userAuthContext);

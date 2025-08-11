@@ -2,7 +2,7 @@ import { publicUserContext } from "@/publicUserContext";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "@/supabase";
 import type { CommentObject } from "./post";
-import "../responsive.css";
+//import "../responsive.css";
 
 export default function Comment({
   comment,

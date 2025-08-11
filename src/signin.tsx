@@ -69,7 +69,7 @@ export default function SignIn() {
   }
 
   return (
-    <div className="signin-section w-full h-screen flex flex-col items-center justify-center gap-y-5 bg-cover bg-no-repeat bg-center">
+    <div className="signin-section w-full h-screen flex flex-col items-center justify-center gap-y-5">
       <Toaster
         position="top-center"
         richColors
@@ -121,7 +121,7 @@ export default function SignIn() {
         </DialogContent>
       </Dialog>
 
-      <div className="head-div mx-auto my-3 flex justify-center items-center gap-x-3 ">
+      <div className="head-div mx-auto my-3 flex justify-center items-center gap-x-3">
         <img
           src={OpenPureNetImg}
           className="logo-img w-35 rounded-full"

@@ -15,7 +15,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import type { PostObject } from "@/postContext";
 import type { PublicUserObject } from "@/postContext";
-import "../responsive.css";
+//import "../responsive.css";
 
 export interface CommentObject {
   comment: string;

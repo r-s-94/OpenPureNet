@@ -5,7 +5,7 @@ import { supabase } from "@/supabase";
 import { serachUserContext } from "@/searchUserContext";
 import { publicUserContext } from "@/publicUserContext";
 import { functionContext } from "@/functionContext";
-import "../responsive.css";
+//import "../responsive.css";
 
 export default function Message() {
   //const [followRequestId, setFollowRequestId] = useState<number>(0);

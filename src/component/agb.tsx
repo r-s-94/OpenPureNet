@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import AGBComponent from "./agbComponent";
 import { useContext } from "react";
 import { userAuthContext } from "@/userAuthContext";
-import "../responsive.css";
+//import "../responsive.css";
 
 export default function AGB() {
   const { userAuthObject } = useContext(userAuthContext);
