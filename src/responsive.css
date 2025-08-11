@@ -1931,7 +1931,7 @@
   }
 
   .overview-nav-bar {
-    margin-top: 61.5rem;
+    margin-top: 39rem;
     position: fixed;
   }
 
@@ -1980,11 +1980,13 @@
   }
 
   .post-overview {
-    height: 41.5rem;
+    height: 23.5rem;
+    margin-top: -4rem;
     padding: 1rem 0;
   }
 
   .overview-footer {
+    height: 7.7rem;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -2031,7 +2033,7 @@
   /*Chat*/
 
   .comment-overview-popup-header {
-    height: 675px;
+    height: 70vh;
   }
 
   .comment-overview-popup-description {
@@ -2171,6 +2173,7 @@
 
   .user-post-overview {
     width: 95%;
+    height: 18rem;
     padding: 0.5rem 0.3rem;
   }
 
