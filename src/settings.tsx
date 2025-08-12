@@ -16,7 +16,7 @@ import DataprotectionComponent from "./component/dataProtectionComponent";
 import { Toaster } from "./components/ui/sonner";
 import { toast } from "sonner";
 import { functionContext } from "./functionContext";
-//import "./responsive.css";
+import "./responsive.css";
 
 export default function Settings() {
   const [privateUserObject, setPrivateUserObject] = useState<

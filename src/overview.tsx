@@ -27,7 +27,7 @@ import { functionContext } from "./functionContext";
 import { Toaster } from "./components/ui/sonner";
 import { toast } from "sonner";
 import { alphabeta_zA_ZArray } from "./alphabet";
-//import "./responsive.css";
+import "./responsive.css";
 
 export default function Overview() {
   const TEN_MB: number = 10 * 1000 * 1000;
@@ -1082,7 +1082,7 @@ export default function Overview() {
         <div className="show-content w-full h-190.7 pt-3 grid grid-cols-3 bg-white">
           <div className="overview-placeholder"></div>
 
-          <div className="post-overview w-full h-170 mt-3 pt-1 px-3 flex flex-col gap-y-1 bg-gray-50 border-l-gray-300 border-r-gray-300 border-t-white border-b-white overflow-y-scroll">
+          <div className="post-overview w-full h-170 mt-3 pt-1 px-3 flex flex-col gap-y-1 bg-gray-50 border-l-gray-300 border-r-gray-300 border-t-white border-b-white shadow-[inset_-1px_-12px_6px_-1px_rgba(0,_0,_0,_0.1)] overflow-y-scroll">
             {postsArray.map((post) => {
               return (
                 <>

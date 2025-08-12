@@ -14,7 +14,7 @@ import { postsContext } from "./postContext";
 import { Toaster } from "./components/ui/sonner";
 import { toast } from "sonner";
 import { alphabeta_zA_ZArray } from "./alphabet";
-//import "./responsive.css";
+import "./responsive.css";
 
 export default function User() {
   const TEN_MB: number = 10 * 1000 * 1000;
@@ -1335,7 +1335,7 @@ export default function User() {
         <div
           className={`user-post-overview ${
             publicUserObject.Statustext === "" ? "h-153" : "h-110"
-          } mt-3 px-5 bg-gray-100 rounded-sm overflow-y-scroll`}
+          } mt-3 px-5 bg-gray-100 rounded-sm shadow-[inset_-1px_-12px_6px_-1px_rgba(0,_0,_0,_0.1)] overflow-y-scroll`}
         >
           {postsArray.map((post) => {
             return (

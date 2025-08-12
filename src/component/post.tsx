@@ -814,7 +814,9 @@ export default function Post({
               </svg>
             )}
             <p className="profilname text-[18px]">
-              {post.public_user.Profilname}
+              {post.public_user.Profilname !== ""
+                ? post.public_user.Profilname
+                : "Profilname"}
             </p>
           </div>
 
