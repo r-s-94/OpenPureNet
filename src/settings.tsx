@@ -1088,15 +1088,15 @@ export default function Settings() {
                 Einwilligung zurückgezogen
               </span>
               <p className="return-consent-popup-content text-[18px]">
-                Du hast mindestens einer erforderlichen Einwilligung
-                widersprochen (z.B. AGB, Datenschutz).
+                Du hast mindestens eine erforderliche Einwilligung widersprochen
+                (z.B. AGB, Datenschutz).
                 <br />
                 <br />
                 OpenPureNet kann ohne deine vollständige Zustimmung leider nicht
                 genutz werden.
                 <br />
                 <br />
-                Bist du dir sicher, dass du die Einwilligung(en) zurückziehen
+                Bist du dir sicher, dass du die Einwilligung zurückziehen
                 willst?
               </p>
               <div className="return-consent-popup-button-div w-full flex justify-end items-center gap-x-3">

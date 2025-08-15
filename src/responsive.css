@@ -820,6 +820,31 @@
 
   /*Overview*/
 
+  .consent-popup {
+    padding: 1.5rem 0.5rem;
+  }
+
+  .consent-popup-description {
+  }
+
+  .consent-popup-agb-div {
+    padding-top: 23rem;
+  }
+
+  .consent-popup-agb-div,
+  .consent-popup-data-protection-div,
+  .consent-popup-user-consent-div {
+    width: 75%;
+  }
+
+  .consent-popup-data-protection {
+    padding: 0;
+  }
+
+  .consent-popup-input-checkbox {
+    margin-left: 1rem;
+  }
+
   .search-user-popup-input-button-div {
     width: 20rem;
     margin: 0 auto;
@@ -1240,6 +1265,18 @@
     font-size: 1rem;
   }
 
+  /*Forget-Password*/
+
+  .to-signin-icon {
+    width: 2.7rem;
+  }
+
+  .forget-password-text {
+    text-align: left;
+  }
+
+  /*Update-Password*/
+
   /*AGB*/
 
   .agb-paragraph-div {
@@ -1312,6 +1349,39 @@
   }
 
   /*Overview*/
+
+  .consent-popup {
+    padding: 1.5rem 0;
+  }
+
+  .consent-popup-description {
+    margin: 0;
+    padding: 0;
+  }
+
+  .consent-popup-agb-div {
+    padding-top: 25rem;
+  }
+
+  .consent-popup-agb,
+  .consent-popup-data-protection {
+    height: 20rem;
+  }
+
+  .consent-popup-agb,
+  .consent-popup-user-consent {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .consent-popup-data-protection {
+    width: 93%;
+    margin: 0 auto;
+  }
+
+  .consent-popup-headline {
+    margin: 0 2rem;
+  }
 
   .search-user-popup-input-button-div {
     width: 20rem;
@@ -1687,7 +1757,7 @@
   }
 
   .settings-status-button-div {
-    width: 12rem;
+    width: 13rem;
     flex-direction: column;
     row-gap: 0.5rem;
   }
@@ -1767,6 +1837,50 @@
     font-size: 17px;
   }
 
+  /*Forget-Password*/
+
+  .to-signin-icon {
+    width: 2.5rem;
+  }
+
+  .forget-password-text {
+    font-size: 1.2rem;
+  }
+
+  .forget-password-div {
+    width: 75%;
+    padding: 3rem 0;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .forget-password-input {
+    font-size: 1.1rem;
+  }
+
+  .forget-password-reset-button {
+    width: 13.3rem;
+    font-size: 17px;
+  }
+
+  /*Update-Password*/
+
+  .update-password-div {
+    width: 75%;
+    padding: 3rem 0;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .update-password-input {
+    font-size: 1.1rem;
+  }
+
+  .update-password-button {
+    width: 13.3rem;
+    font-size: 17px;
+  }
+
   /*Impressum*/
 
   .impressum-headline {
@@ -1794,7 +1908,8 @@
   }
 
   .agb-paragraph-div {
-    margin: 0 3rem;
+    margin: 0 1rem;
+    font-size: 1.1rem;
   }
 
   /*Data-Protection*/
@@ -1859,6 +1974,10 @@
   }
 
   /*Overview*/
+
+  .consent-popup-agb-div {
+    padding-top: 37rem;
+  }
 
   .search-user-popup-input-button-div {
     width: 16rem;
@@ -2279,6 +2398,18 @@
   .delete-account-popup-close-button,
   .delete-account-popup-delete-button {
     font-size: 16px;
+  }
+
+  /*Forget-Password*/
+
+  .forget-password-div {
+    width: 90%;
+  }
+
+  /*Update-Password*/
+
+  .update-password-div {
+    width: 90%;
   }
 
   /*Impressum*/

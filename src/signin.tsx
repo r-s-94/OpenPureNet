@@ -61,7 +61,7 @@ export default function SignIn() {
         setUserPassword("");
       }
     } else {
-      toast.error("Beide Felder müssen ausgefühlt sein.", {
+      toast.error("Beide Felder müssen ausgefüllt sein.", {
         unstyled: true,
         className: "signin-toasty-both-fields w-[27rem] h-[5rem]",
       });

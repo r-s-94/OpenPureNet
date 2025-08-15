@@ -28,6 +28,7 @@ import { Toaster } from "./components/ui/sonner";
 import { toast } from "sonner";
 import { alphabeta_zA_ZArray } from "./alphabet";
 import "./responsive.css";
+import { userAuthContext } from "./userAuthContext";
 
 export default function Overview() {
   const TEN_MB: number = 10 * 1000 * 1000;
@@ -56,10 +57,12 @@ export default function Overview() {
   >([]);
   const [noticePopUp, setNoticePopUp] = useState<boolean>(false);
   const { consentPopUp, setConsentPopUp } = useContext(functionContext);
-  const { publicUserObject } = useContext(publicUserContext);
+  const { publicUserObject, setPublicUserObject } =
+    useContext(publicUserContext);
   const { postsArray, setPostsArray } = useContext(postsContext);
   const { searchUserObject, setSearchUserObject } =
     useContext(serachUserContext);
+  const { userAuthObject, setUserAuthObject } = useContext(userAuthContext);
   const { messageCount } = useContext(messageContext);
   const navigation = useNavigate();
   const resetInputFile = useRef<HTMLInputElement | null>(null);
@@ -396,6 +399,22 @@ export default function Overview() {
   }
 
   async function toSignIn() {
+    const {} = await supabase.auth.signOut();
+
+    setPublicUserObject({
+      ...publicUserObject,
+      Profilname: "",
+      userId: "",
+      AGBConsent: false,
+      dataProtectionConsent: false,
+      userDataConsent: false,
+    });
+
+    setUserAuthObject({
+      ...userAuthObject,
+      accessToken: "",
+    });
+    setPostsArray([]);
     navigation("/");
   }
 
@@ -406,54 +425,56 @@ export default function Overview() {
           onInteractOutside={(e) => {
             e.preventDefault();
           }}
-          className="!max-w-7xl"
+          className="consent-popup !max-w-7xl"
         >
-          <DialogDescription className=" h-[90vh] px-3 py-5 text-black flex flex-col items-center justify-center gap-y-10 overflow-y-scroll">
-            <div className="mt-[40rem] flex flex-col items-start justify-center gap-y-3">
-              <h2 className="text-lg">
+          <DialogDescription className="consent-popup-description h-[90vh] px-3 py-5 text-black flex flex-col items-center justify-center gap-y-10 overflow-y-scroll">
+            <div className="consent-popup-agb-div mt-[40rem] flex flex-col items-start justify-center gap-y-3">
+              <h2 className="consent-popup-headline text-lg">
                 Allgemine Geschäftsbedingungen (AGB) von OpenPureNet
               </h2>
-              <div className="h-[400px] p-3 border border-gray-400 rounded-sm overflow-y-scroll">
+              <div className="consent-popup-agb h-[400px] p-3 border border-gray-400 rounded-sm overflow-y-scroll">
                 <AGBComponent />
               </div>
-              <div className="w-ful mt-1 text-base flex justify-start items-center gap-x-3">
+              <div className="consent-popup-accept-div mt-1 text-base flex justify-start items-center gap-x-3">
                 <input
                   type="checkbox"
                   checked={agbConsent}
                   onChange={(event) => {
                     setAGBConsent(event.target.checked);
                   }}
-                  className="cursor-pointer"
+                  className="consent-popup-input-checkbox cursor-pointer"
                   name=""
                 />{" "}
                 Akzeptieren
               </div>
             </div>
 
-            <div className="flex flex-col items-start justify-center gap-y-5">
-              <h2 className="text-lg">Datenschutzerklärung für OpenPureNet</h2>
-              <div className="h-[400px] p-3 border border-gray-400 rounded-sm overflow-y-scroll">
+            <div className="consent-popup-data-protection-div flex flex-col items-start justify-center gap-y-5">
+              <h2 className="consent-popup-headline text-lg">
+                Datenschutzerklärung für OpenPureNet
+              </h2>
+              <div className="consent-popup-data-protection h-[400px] p-3 border border-gray-400 rounded-sm overflow-y-scroll">
                 <Dataprotection />
               </div>
-              <div className="w-full mt-1 text-base flex justify-start items-center gap-x-3">
+              <div className="consent-popup-accept-div mt-1 text-base flex justify-start items-center gap-x-3">
                 <input
                   type="checkbox"
                   checked={dataprotectionConsent}
                   onChange={(event) => {
                     setDataprotectionConsent(event.target.checked);
                   }}
-                  className="cursor-pointer"
+                  className="consent-popup-input-checkbox cursor-pointer"
                   name=""
                 />
                 Akzeptieren
               </div>
             </div>
 
-            <div className="flex flex-col items-start justify-center gap-y-5">
-              <h2 className="text-lg">
+            <div className="consent-popup-user-consent-div flex flex-col items-start justify-center gap-y-5">
+              <h2 className="consent-popup-headline text-lg">
                 Einwilligung zur Datenverarbeitung durch Drittanbieter
               </h2>
-              <div className="p-3 text-lg border border-gray-400 rounded-sm">
+              <div className="consent-popup-user-consent p-3 text-lg border border-gray-400 rounded-sm">
                 Ich willige ein, dass meine freiwilligen angegebenen
                 personenbezogenen Daten (z.B. Adresse, Stadt, Telefonnummer), im
                 Rahmen der Nutzung der Plattform OpenPureNet, an den
@@ -463,21 +484,21 @@ export default function Overview() {
                 Bereitstellung und Sicherheit meines Nutzerkontos. Ich kann
                 diese Einwilligung jederzeit widerrufen.
               </div>
-              <div className="w-full mt-1 text-base flex justify-start items-center gap-x-3">
+              <div className="consent-popup-accept-div mt-1 text-base flex justify-start items-center gap-x-3">
                 <input
                   type="checkbox"
                   checked={userDataConsent}
                   onChange={(event) => {
                     setUserDataConsent(event.target.checked);
                   }}
-                  className="cursor-pointer"
+                  className="consent-popup-input-checkbox cursor-pointer"
                   name=""
                 />
                 Akzeptieren
               </div>
             </div>
 
-            <div className="w-full mb-10 pr-10 flex justify-end item gap-x-3">
+            <div className="consent-popup-button-div w-full mb-10 pr-10 flex justify-end item gap-x-3">
               {" "}
               <button
                 onClick={() => {
@@ -840,8 +861,8 @@ export default function Overview() {
             </p>{" "}
             <br />
             <p className="no-support-content-popup-text text-xl">
-              In deinem Beitrag wurde problematischer Inhalt entdeckt. Bitte
-              überprüfe und korriege ihn.
+              In deinem Beitrag wurde problematischer Inhalt gefunden, bitte
+              überprüfe deine Eingabe und korrigiere sie gegebenenfalls.
             </p>
             <button
               onClick={() => {
@@ -1043,7 +1064,7 @@ export default function Overview() {
               {messageCount > 0 ? messageCount : ""}
             </span>
 
-            <span className="interaction-label"> Mitteilungen</span>
+            <span className="interaction-label">Mitteilungen</span>
           </Link>
           <Link
             to={`/private-route/user/${publicUserObject.userId}`}
