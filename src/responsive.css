@@ -32,6 +32,18 @@
 
   /*Overview*/
 
+  .consent-popup-agb-div,
+  .consent-popup-data-protection-div,
+  .consent-popup-user-consent-div {
+    width: 75%;
+    margin: 0 auto;
+  }
+
+  .consent-popup-data-protection {
+    width: 100%;
+    margin: 0 auto;
+  }
+
   .search-user-popup-input-button-div {
     width: 29.7rem;
   }
@@ -325,6 +337,18 @@
   }
 
   /*Overview*/
+
+  .consent-popup-agb-div,
+  .consent-popup-data-protection-div,
+  .consent-popup-user-consent-div {
+    width: 75%;
+    margin: 0 auto;
+  }
+
+  .consent-popup-data-protection {
+    width: 100%;
+    margin: 0 auto;
+  }
 
   .search-user-popup-input-button-div {
     width: 29.7rem;
@@ -648,18 +672,6 @@
 
   .consent-popup-agb-div {
     padding-top: 65rem;
-  }
-
-  .consent-popup-agb-div,
-  .consent-popup-data-protection-div,
-  .consent-popup-user-consent-div {
-    width: 75%;
-    margin: 0 auto;
-  }
-
-  .consent-popup-data-protection {
-    width: 100%;
-    margin: 0 auto;
   }
 
   .search-user-popup-input-button-div {
