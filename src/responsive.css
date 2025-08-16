@@ -785,7 +785,7 @@
   .post-overview {
     width: 50%;
     height: 29rem;
-    margin: 1rem auto;
+    margin: 1rem auto 0 auto;
     padding: 1rem 0;
   }
 
@@ -841,7 +841,7 @@
   /*Chat*/
 
   .comment-overview-popup {
-    height: 40rem;
+    height: 37rem;
   }
 
   /*User*/
