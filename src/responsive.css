@@ -32,10 +32,6 @@
 
   /*Overview*/
 
-  .consent-popup-agb-div {
-    padding-top: 75rem;
-  }
-
   .consent-popup-agb-div,
   .consent-popup-data-protection-div,
   .consent-popup-user-consent-div {
@@ -320,10 +316,6 @@
 @media screen and (max-width: 1650px) {
   /*SignIn*/
 
-  .head-div {
-    margin-top: 10rem;
-  }
-
   .logo-img {
     width: 8rem;
   }
@@ -354,10 +346,6 @@
   }
 
   /*Overview*/
-
-  .consent-popup-agb-div {
-    padding-top: 75rem;
-  }
 
   .consent-popup-agb-div,
   .consent-popup-data-protection-div,
@@ -664,10 +652,6 @@
 @media screen and (max-width: 1400px) {
   /*SignIn*/
 
-  .head-div {
-    margin-top: 10rem;
-  }
-
   .logo-img {
     width: 7rem;
   }
@@ -701,10 +685,6 @@
   }
 
   /*Overview*/
-
-  .consent-popup-agb-div {
-    padding-top: 83rem;
-  }
 
   .consent-popup-button-div {
     padding-right: 13%;
@@ -883,10 +863,6 @@
 @media screen and (max-width: 1000px) {
   /*SignIn*/
 
-  .head-div {
-    margin-top: 1rem;
-  }
-
   .logo-img {
     width: 6rem;
   }
@@ -916,10 +892,6 @@
 
   .consent-popup {
     padding: 1.5rem 0.5rem;
-  }
-
-  .consent-popup-agb-div {
-    padding-top: 77rem;
   }
 
   .consent-popup-input-checkbox {
