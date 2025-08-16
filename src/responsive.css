@@ -317,7 +317,7 @@
   /*SignIn*/
 
   .head-div {
-    margin-top: 7rem;
+    margin-top: 10rem;
   }
 
   .logo-img {
@@ -424,7 +424,7 @@
   }
 
   .nav-content-div {
-    margin-top: 3.1rem;
+    margin-top: 2.7rem;
     flex-direction: column;
   }
 
@@ -664,7 +664,7 @@
   /*SignIn*/
 
   .head-div {
-    margin-top: 7rem;
+    margin-top: 10rem;
   }
 
   .logo-img {
@@ -737,7 +737,7 @@
   }
 
   .nav-content-div {
-    margin-top: 5.1rem;
+    margin-top: 4.5rem;
     flex-direction: column;
   }
 
@@ -787,7 +787,7 @@
 
   .post-overview {
     width: 50%;
-    height: 40rem;
+    height: 37rem;
     margin: 0 auto;
     padding: 1rem 0;
   }
@@ -851,6 +851,7 @@
 
   .user-post-overview {
     width: 85%;
+    height: 20rem;
   }
 
   /*Settings*/
