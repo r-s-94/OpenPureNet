@@ -420,7 +420,7 @@ export default function Overview() {
   }
 
   return (
-    <div className="overview-section h-screen flex flex-col items-center justify-center">
+    <div className="overview-section flex flex-col items-center justify-center">
       <Dialog open={consentPopUp} onOpenChange={setConsentPopUp}>
         <DialogContent
           onInteractOutside={(e) => {
@@ -1104,7 +1104,7 @@ export default function Overview() {
         <div className="show-content w-full h-190.7 pt-3 grid grid-cols-3 bg-white">
           <div className="overview-placeholder"></div>
 
-          <div className="post-overview w-full h-170 mt-3 pt-1 px-3 flex flex-col gap-y-1 bg-gray-50 border-l-gray-300 border-r-gray-300 border-t-white border-b-white shadow-[inset_-1px_-12px_6px_-1px_rgba(0,_0,_0,_0.1)] overflow-y-scroll">
+          <div className="post-overview w-full h-170 mt-3 pt-1 px-3 flex flex-col gap-y-1 bg-gray-50 border-l-gray-300 border-r-gray-300 border-t-white border-b-white  overflow-y-scroll">
             {postsArray.map((post) => {
               return (
                 <>

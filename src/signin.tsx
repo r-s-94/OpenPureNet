@@ -69,7 +69,7 @@ export default function SignIn() {
   }
 
   return (
-    <div className="signin-section w-full h-screen flex flex-col items-center justify-center gap-y-5">
+    <div className="signin-section w-full flex flex-col items-center justify-center gap-y-5">
       <Toaster
         position="top-center"
         richColors

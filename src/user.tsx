@@ -754,7 +754,7 @@ export default function User() {
   }
 
   return (
-    <section className="user-section w-full h-screen">
+    <section className="user-section w-full">
       <Dialog open={createPostPopUp} onOpenChange={setCreatePostPopUp}>
         <DialogContent
           onInteractOutside={(e) => {
@@ -1335,7 +1335,7 @@ export default function User() {
         <div
           className={`user-post-overview ${
             publicUserObject.Statustext === "" ? "h-153" : "h-110"
-          } mt-3 px-5 bg-gray-100 rounded-sm shadow-[inset_-1px_-12px_6px_-1px_rgba(0,_0,_0,_0.1)] overflow-y-scroll`}
+          } mt-3 px-5 bg-gray-100 rounded-sm overflow-y-scroll`}
         >
           {postsArray.map((post) => {
             return (

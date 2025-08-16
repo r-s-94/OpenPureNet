@@ -555,7 +555,7 @@ export default function Settings() {
   }
 
   return (
-    <section className="settings-section h-screen">
+    <section className="settings-section">
       {" "}
       <Toaster
         position="top-center"
@@ -1241,7 +1241,7 @@ export default function Settings() {
         onClick={() => {
           setDeleteAccountPopUp(true);
         }}
-        className="settings-delete-user-account ml-[13rem] my-15 px-5 py-1 text-lg flex justify-center items-center gap-x-1 bg-red-500 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500"
+        className="settings-delete-user-account ml-[15rem] my-15 px-5 py-1 text-lg flex justify-center items-center gap-x-1 bg-red-500 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500"
       >
         Account löschen
       </button>
