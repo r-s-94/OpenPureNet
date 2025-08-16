@@ -481,8 +481,7 @@
   .post-overview {
     height: 35rem;
     margin-top: 0;
-    padding-top: 0;
-    padding-bottom: 1rem;
+    padding: 1rem 0;
     border-left-width: 1px;
     border-right-width: 1px;
     border-left-color: #bdbdbd;
@@ -2122,7 +2121,7 @@
   }
 
   .overview-nav-bar {
-    margin-top: 40.4rem;
+    margin-top: 40.5rem;
     position: fixed;
   }
 
