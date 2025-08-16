@@ -1696,7 +1696,11 @@
 
   /*Chat*/
   .comment-overview-popup {
-    height: 27rem;
+    height: 33rem;
+  }
+
+  .comment-overview-popup-header {
+    height: 23rem;
   }
 
   .create-comment-popup,
