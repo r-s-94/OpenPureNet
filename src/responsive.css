@@ -1688,6 +1688,7 @@
 
   .comment-overview-popup {
     height: 33rem;
+    padding: 1.5rem 0.7rem;
   }
 
   .comment-overview-popup-header {
@@ -2120,7 +2121,7 @@
   }
 
   .overview-nav-bar {
-    margin-top: 43rem;
+    margin-top: 42rem;
     position: fixed;
   }
 
@@ -2169,7 +2170,7 @@
   }
 
   .post-overview {
-    height: 21.5rem;
+    height: 21rem;
     padding: 0.5rem 0 1rem 0;
   }
 
@@ -2219,6 +2220,10 @@
   }
 
   /*Chat*/
+
+  .comment-overview-popup {
+    padding: 1.5rem 0.5rem;
+  }
 
   .comment-overview-popup-description {
     width: 15.5rem;
