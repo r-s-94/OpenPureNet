@@ -268,7 +268,7 @@ export default function Comment({
                 prevLikeDislikeCommentType
               );
             }}
-            className="comment-dislike-button px-2 py-0.5 flex justify-center items-center gap-x-1 bg-gray-50 hover:bg-white border border-white rounded-sm cursor-pointer"
+            className="comment-dislike-button px-2 py-0.5 flex justify-center items-center gap-x-1 bg-gray-50 hover:bg-white border border-gray-200 rounded-sm cursor-pointer"
           >
             {" "}
             <svg
