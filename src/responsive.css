@@ -734,6 +734,7 @@
   }
 
   .nav-content-div {
+    margin-top: -1rem;
     flex-direction: column;
   }
 
