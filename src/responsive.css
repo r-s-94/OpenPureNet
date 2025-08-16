@@ -844,6 +844,14 @@
     height: 37rem;
   }
 
+  .comment-overview-popup-header {
+    height: 75%;
+  }
+
+  .comment-overview-popup-description {
+    height: 25%;
+  }
+
   /*User*/
 
   .user-post-overview {
