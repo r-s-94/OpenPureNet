@@ -1700,6 +1700,10 @@
     height: 30rem;
   }
 
+  .comment-overview-popup-header {
+    height: 25rem;
+  }
+
   .create-comment-popup,
   .update-comment-popup {
     padding: 1.5rem 0.7rem;
@@ -1819,7 +1823,7 @@
 
   .user-post-overview {
     height: 36.3rem;
-    padding: 1rem 0.5rem;
+    padding: 1rem auto;
   }
 
   /*Settings*/
@@ -2372,7 +2376,7 @@
   .user-post-overview {
     width: 95%;
     height: 18rem;
-    padding: 0.5rem 0.3rem;
+    padding: 0.5rem auto;
   }
 
   /*Settings*/
