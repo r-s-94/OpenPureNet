@@ -424,7 +424,7 @@
   }
 
   .nav-content-div {
-    margin-top: 5.1rem;
+    margin-top: 3.1rem;
     flex-direction: column;
   }
 
@@ -549,7 +549,7 @@
   /*Chat*/
 
   .comment-overview-popup-header {
-    height: 40rem;
+    height: 35rem;
   }
 
   .comment-overview-popup-close-button {
@@ -654,7 +654,7 @@
   }
 
   .settings-delete-user-account {
-    margin-bottom: 5rem;
+    margin-bottom: 20rem;
   }
 
   /*AGB*/
