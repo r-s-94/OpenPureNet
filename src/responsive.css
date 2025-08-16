@@ -730,7 +730,6 @@
   }
 
   .nav-content-div {
-    margin-top: -6rem;
     flex-direction: column;
   }
 
@@ -2166,8 +2165,8 @@
   }
 
   .post-overview {
-    height: 21rem;
-    margin-top: -1.5rem;
+    height: 30rem;
+    margin-top: 0.5rem;
     padding: 1rem 0;
   }
 
@@ -2356,6 +2355,7 @@
   .user-post-overview {
     width: 95%;
     height: 18rem;
+    margin-top: 1rem;
     padding: 0.5rem auto;
   }
 
