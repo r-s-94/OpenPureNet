@@ -424,7 +424,7 @@
   }
 
   .nav-content-div {
-    margin-top: 2.5rem;
+    margin-top: 1rem;
     flex-direction: column;
   }
 
@@ -627,14 +627,10 @@
     height: 2.3rem;
   }
 
-  .user-section {
-    padding-bottom: 5rem;
-  }
-
   .user-post-overview {
     width: 75%;
-    height: 30rem;
-    margin: 1rem auto 0 auto;
+    height: 27rem;
+    margin: 1rem auto;
     padding-bottom: 1rem;
   }
 
@@ -739,7 +735,7 @@
   }
 
   .nav-content-div {
-    margin-top: 3rem;
+    margin-top: 1rem;
     flex-direction: column;
   }
 
@@ -789,7 +785,7 @@
 
   .post-overview {
     width: 50%;
-    height: 35rem;
+    height: 33rem;
     margin: 0 auto;
     padding: 1rem 0;
   }
@@ -854,6 +850,7 @@
   .user-post-overview {
     width: 85%;
     height: 50rem;
+    margin: 1rem 0;
     padding-bottom: 1rem;
   }
 
