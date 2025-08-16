@@ -506,7 +506,7 @@ export default function Overview() {
                   setConsentPopUp(false);
                   toSignIn();
                 }}
-                className="px-3 py-1 text-base flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 rounded-sm cursor-pointer hover:bg-white"
+                className="px-5 py-1 text-base flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 rounded-sm cursor-pointer hover:bg-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -526,7 +526,7 @@ export default function Overview() {
               </button>{" "}
               <button
                 onClick={acceptConsent}
-                className={`px-5 py-1 text-base flex justify-center items-center gap-x-1 rounded-sm ${
+                className={`px-7 py-1 text-base flex justify-center items-center gap-x-1 rounded-sm ${
                   agbConsent === true &&
                   dataprotectionConsent === true &&
                   userDataConsent === true

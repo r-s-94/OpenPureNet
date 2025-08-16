@@ -44,6 +44,10 @@
     margin: 0 auto;
   }
 
+  .consent-popup-button-div {
+    padding-right: 13%;
+  }
+
   .search-user-popup-input-button-div {
     width: 29.7rem;
   }
@@ -348,6 +352,10 @@
   .consent-popup-data-protection {
     width: 100%;
     margin: 0 auto;
+  }
+
+  .consent-popup-button-div {
+    padding-right: 13%;
   }
 
   .search-user-popup-input-button-div {
@@ -672,6 +680,10 @@
 
   .consent-popup-agb-div {
     padding-top: 65rem;
+  }
+
+  .consent-popup-button-div {
+    padding-right: 13%;
   }
 
   .search-user-popup-input-button-div {
