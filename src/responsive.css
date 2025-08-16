@@ -1695,6 +1695,9 @@
   }
 
   /*Chat*/
+  .comment-overview-popup {
+    height: 20rem;
+  }
 
   .create-comment-popup,
   .update-comment-popup {
@@ -2225,10 +2228,6 @@
   }
 
   /*Chat*/
-
-  .comment-overview-popup {
-    height: 20rem;
-  }
 
   .comment-overview-popup-description {
     width: 15.5rem;
