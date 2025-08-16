@@ -845,11 +845,7 @@
   }
 
   .comment-overview-popup-header {
-    height: 75%;
-  }
-
-  .comment-overview-popup-description {
-    height: 25%;
+    height: 33rem;
   }
 
   /*User*/
