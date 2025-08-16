@@ -342,6 +342,10 @@
 
   /*Overview*/
 
+  .consent-popup-agb-div {
+    padding-top: 90rem;
+  }
+
   .consent-popup-agb-div,
   .consent-popup-data-protection-div,
   .consent-popup-user-consent-div {
@@ -679,7 +683,7 @@
   /*Overview*/
 
   .consent-popup-agb-div {
-    padding-top: 90rem;
+    padding-top: 65rem;
   }
 
   .consent-popup-button-div {
