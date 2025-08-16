@@ -1696,14 +1696,6 @@
 
   /*Chat*/
 
-  .comment-overview-popup {
-    height: 27rem;
-  }
-
-  .comment-overview-popup-header {
-    height: 20rem;
-  }
-
   .create-comment-popup,
   .update-comment-popup {
     padding: 1.5rem 0.7rem;
