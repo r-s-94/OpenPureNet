@@ -317,7 +317,7 @@
   /*SignIn*/
 
   .head-div {
-    margin-top: 1rem;
+    margin-top: 3rem;
   }
 
   .logo-img {
@@ -424,7 +424,7 @@
   }
 
   .nav-content-div {
-    margin-top: 5rem;
+    margin-top: 5.3rem;
     flex-direction: column;
   }
 
@@ -480,7 +480,7 @@
   }
 
   .post-overview {
-    height: 42rem;
+    height: 40rem;
     padding-top: 0;
     border-left-width: 1px;
     border-right-width: 1px;
@@ -549,7 +549,7 @@
   /*Chat*/
 
   .comment-overview-popup-header {
-    height: 690px;
+    height: 50rem;
   }
 
   .comment-overview-popup-close-button {
@@ -634,10 +634,6 @@
 
   /*Settings*/
 
-  .settings-section {
-    padding-bottom: 5rem;
-  }
-
   .settings-generally-data-main-div,
   .private-data-overview-div {
     margin-top: 3rem;
@@ -657,6 +653,10 @@
     font-size: 17px;
   }
 
+  .settings-delete-user-account {
+    margin-bottom: 5rem;
+  }
+
   /*AGB*/
 }
 
@@ -664,7 +664,7 @@
   /*SignIn*/
 
   .head-div {
-    margin-top: 1rem;
+    margin-top: 3rem;
   }
 
   .logo-img {
@@ -787,7 +787,7 @@
 
   .post-overview {
     width: 50%;
-    height: 43srem;
+    height: 43rem;
     margin: 0 auto;
     padding: 1rem 0;
   }
@@ -844,7 +844,7 @@
   /*Chat*/
 
   .comment-overview-popup {
-    height: 50rem;
+    height: 43rem;
   }
 
   /*User*/
@@ -855,8 +855,8 @@
 
   /*Settings*/
 
-  .settings-section {
-    padding-bottom: 3rem;
+  .settings-delete-user-account {
+    margin-bottom: 5rem;
   }
 
   /*AGB*/
