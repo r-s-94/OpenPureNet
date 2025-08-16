@@ -1119,6 +1119,10 @@
 
   /*Chat*/
 
+  .comment-overview-popup {
+    height: 37rem;
+  }
+
   /*User*/
 
   .update-post-popup-input-button-div {
