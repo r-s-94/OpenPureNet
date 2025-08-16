@@ -1695,12 +1695,13 @@
   }
 
   /*Chat*/
+
   .comment-overview-popup {
     height: 33rem;
   }
 
   .comment-overview-popup-header {
-    height: 23rem;
+    height: 13rem;
   }
 
   .create-comment-popup,
