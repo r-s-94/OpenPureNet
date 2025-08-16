@@ -175,8 +175,6 @@
 
   /*Post*/
 
-  /**/
-
   .post {
     margin: 0;
     padding: 0 3px;
@@ -2024,10 +2022,6 @@
 @media screen and (max-width: 400px) {
   /*SignIn*/
 
-  .head-div {
-    margin-top: 20rem;
-  }
-
   .logo-img {
     width: 4rem;
   }
@@ -2061,10 +2055,6 @@
   }
 
   /*Overview*/
-
-  .consent-popup-agb-div {
-    padding-top: 80rem;
-  }
 
   .search-user-popup-input-button-div {
     width: 16rem;
@@ -2139,7 +2129,6 @@
   }
 
   .overview-nav-bar {
-    margin-top: 39rem;
     position: fixed;
   }
 
