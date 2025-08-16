@@ -1696,6 +1696,10 @@
 
   /*Chat*/
 
+  .comment-overview-popup {
+    height: 30rem;
+  }
+
   .create-comment-popup,
   .update-comment-popup {
     padding: 1.5rem 0.7rem;
@@ -2225,10 +2229,6 @@
   }
 
   /*Chat*/
-
-  .comment-overview-popup {
-    height: 30rem;
-  }
 
   .comment-overview-popup-description {
     width: 15.5rem;
