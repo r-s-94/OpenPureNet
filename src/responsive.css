@@ -846,8 +846,9 @@
   /*User*/
 
   .user-section {
-    padding-bottom: 3rem;
+    padding-bottom: 1rem;
   }
+
   .user-post-overview {
     width: 85%;
     height: 30rem;
@@ -2168,8 +2169,8 @@
   }
 
   .post-overview {
-    height: 23rem;
-    padding: 1rem 0;
+    height: 21.5rem;
+    padding: 0.5rem 0 1rem 0;
   }
 
   .overview-footer {
