@@ -480,6 +480,7 @@
 
   .post-overview {
     height: 35rem;
+    margin-top: 0;
     padding-top: 0;
     padding-bottom: 1rem;
     border-left-width: 1px;
