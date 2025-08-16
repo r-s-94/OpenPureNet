@@ -734,7 +734,7 @@
   }
 
   .nav-content-div {
-    margin-top: -6.7rem;
+    margin-top: -6rem;
     flex-direction: column;
   }
 
@@ -784,8 +784,8 @@
 
   .post-overview {
     width: 50%;
-    height: 29.3rem;
-    margin: 0 auto;
+    height: 29rem;
+    margin: 1rem auto;
     padding: 1rem 0;
   }
 
