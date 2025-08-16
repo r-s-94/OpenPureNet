@@ -404,6 +404,7 @@ export default function Overview() {
     setPublicUserObject({
       ...publicUserObject,
       Profilname: "",
+      profilPicture: "",
       userId: "",
       AGBConsent: false,
       dataProtectionConsent: false,
