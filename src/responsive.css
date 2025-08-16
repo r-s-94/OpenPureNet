@@ -1697,7 +1697,7 @@
   /*Chat*/
 
   .comment-overview-popup {
-    height: 25rem;
+    height: 27rem;
   }
 
   .comment-overview-popup-header {
@@ -2233,6 +2233,10 @@
   }
 
   /*Chat*/
+
+  .comment-overview-popup {
+    height: 25rem;
+  }
 
   .comment-overview-popup-header {
     height: 23rem;
