@@ -1120,7 +1120,7 @@
   /*Chat*/
 
   .comment-overview-popup {
-    height: 37rem;
+    height: 30rem;
   }
 
   /*User*/
@@ -1694,6 +1694,10 @@
   }
 
   /*Chat*/
+
+  .comment-overview-popup {
+    height: 30rem;
+  }
 
   .comment-overview-popup-header {
     height: 675px;
