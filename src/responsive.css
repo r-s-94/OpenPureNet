@@ -317,7 +317,7 @@
   /*SignIn*/
 
   .head-div {
-    margin-top: 5rem;
+    margin-top: 7rem;
   }
 
   .logo-img {
@@ -664,7 +664,7 @@
   /*SignIn*/
 
   .head-div {
-    margin-top: 3rem;
+    margin-top: 7rem;
   }
 
   .logo-img {
@@ -737,7 +737,7 @@
   }
 
   .nav-content-div {
-    margin-top: 5rem;
+    margin-top: 5.1rem;
     flex-direction: column;
   }
 
@@ -787,7 +787,7 @@
 
   .post-overview {
     width: 50%;
-    height: 43rem;
+    height: 40rem;
     margin: 0 auto;
     padding: 1rem 0;
   }
