@@ -424,6 +424,7 @@
   }
 
   .nav-content-div {
+    margin-top: 5rem;
     flex-direction: column;
   }
 
@@ -479,7 +480,7 @@
   }
 
   .post-overview {
-    height: 43.3rem;
+    height: 42rem;
     padding-top: 0;
     border-left-width: 1px;
     border-right-width: 1px;
@@ -548,7 +549,7 @@
   /*Chat*/
 
   .comment-overview-popup-header {
-    height: 725px;
+    height: 690px;
   }
 
   .comment-overview-popup-close-button {
@@ -627,11 +628,15 @@
 
   .user-post-overview {
     width: 75%;
-    height: 33rem;
+    height: 30rem;
     margin: 1rem auto 0 auto;
   }
 
   /*Settings*/
+
+  .settings-section {
+    padding-bottom: 5rem;
+  }
 
   .settings-generally-data-main-div,
   .private-data-overview-div {
@@ -732,6 +737,7 @@
   }
 
   .nav-content-div {
+    margin-top: 5rem;
     flex-direction: column;
   }
 
@@ -781,7 +787,7 @@
 
   .post-overview {
     width: 50%;
-    height: 44rem;
+    height: 43srem;
     margin: 0 auto;
     padding: 1rem 0;
   }
@@ -837,10 +843,20 @@
 
   /*Chat*/
 
+  .comment-overview-popup {
+    height: 50rem;
+  }
+
   /*User*/
 
   .user-post-overview {
     width: 85%;
+  }
+
+  /*Settings*/
+
+  .settings-section {
+    padding-bottom: 3rem;
   }
 
   /*AGB*/
