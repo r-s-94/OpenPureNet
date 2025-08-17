@@ -1335,22 +1335,24 @@ export default function User() {
         <div
           className={`user-post-overview ${
             publicUserObject.Statustext === "" ? "h-153" : "h-110"
-          } mt-3 px-5 bg-gray-100 rounded-sm overflow-y-scroll`}
+          } mt-3 px-5 bg-gray-100 rounded-sm overflow-hidden`}
         >
-          {postsArray.map((post) => {
-            return (
-              <>
-                <Post
-                  post={post}
-                  openEditPostPopUp={openEditPostPopUp}
-                  openDeletePostPopUp={openDeletePostPopUp}
-                  hiddenPostOptions={hiddenPostOptions}
-                  postKebabMenuId={postKebabMenuId}
-                  openPostKebabMenu={openPostKebabMenu}
-                />
-              </>
-            );
-          })}
+          <div className="w-full h-full overflow-y-scroll">
+            {postsArray.map((post) => {
+              return (
+                <>
+                  <Post
+                    post={post}
+                    openEditPostPopUp={openEditPostPopUp}
+                    openDeletePostPopUp={openDeletePostPopUp}
+                    hiddenPostOptions={hiddenPostOptions}
+                    postKebabMenuId={postKebabMenuId}
+                    openPostKebabMenu={openPostKebabMenu}
+                  />
+                </>
+              );
+            })}{" "}
+          </div>
         </div>
       </div>
     </section>

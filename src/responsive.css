@@ -158,8 +158,9 @@
   }
 
   .post-overview {
-    padding: 1rem;
     height: 48.3rem;
+    padding: 1rem;
+    position: relative;
     border-left-width: 1px;
     border-right-width: 1px;
     border-left-color: #bdbdbd;
@@ -309,9 +310,6 @@
   .delete-account-popup-delete-button {
     width: 13rem;
     font-size: 17px;
-  }
-
-  .settings-delete-user-account {
   }
 
   /*Impressum*/
@@ -482,6 +480,7 @@
     height: 35.5rem;
     margin-top: 0;
     padding: 1rem 0;
+    position: relative;
     border-left-width: 1px;
     border-right-width: 1px;
     border-left-color: #bdbdbd;
@@ -1815,7 +1814,7 @@
   .user-post-overview {
     height: 36.3rem;
     margin: 0 auto;
-    padding: 1rem auto;
+    padding: 1rem 0.3rem;
   }
 
   /*Settings*/
@@ -2361,10 +2360,10 @@
   }
 
   .user-post-overview {
-    width: 95%;
+    width: 97%;
     height: 23rem;
     margin-top: 1rem;
-    padding: 0.5rem auto;
+    padding: 0.5rem;
   }
 
   /*Settings*/

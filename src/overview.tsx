@@ -1104,21 +1104,23 @@ export default function Overview() {
         <div className="show-content w-full h-190.7 pt-3 grid grid-cols-3 bg-white">
           <div className="overview-placeholder"></div>
 
-          <div className="post-overview w-full h-170 mt-3 pt-1 px-3 flex flex-col gap-y-1 bg-gray-50 border-l-gray-300 border-r-gray-300 border-t-white border-b-white  overflow-y-scroll">
-            {postsArray.map((post) => {
-              return (
-                <>
-                  <Post
-                    post={post}
-                    openEditPostPopUp={() => {}}
-                    openDeletePostPopUp={() => {}}
-                    hiddenPostOptions={hiddenPostOptions}
-                    postKebabMenuId={0}
-                    openPostKebabMenu={() => {}}
-                  />
-                </>
-              );
-            })}
+          <div className="post-overview w-full h-170 mt-3 bg-gray-50 border-l-gray-300 border-r-gray-300 border-t-white border-b-white overflow-hidden">
+            <div className="post-overview-scroll-div w-full h-full pt-1 px-3 flex flex-col gap-y-1 overflow-y-scroll">
+              {postsArray.map((post) => {
+                return (
+                  <>
+                    <Post
+                      post={post}
+                      openEditPostPopUp={() => {}}
+                      openDeletePostPopUp={() => {}}
+                      hiddenPostOptions={hiddenPostOptions}
+                      postKebabMenuId={0}
+                      openPostKebabMenu={() => {}}
+                    />
+                  </>
+                );
+              })}
+            </div>
           </div>
 
           <div className="overview-placeholder2"></div>

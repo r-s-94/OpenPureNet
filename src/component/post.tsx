@@ -15,7 +15,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import type { PostObject } from "@/postContext";
 import type { PublicUserObject } from "@/postContext";
-//import "../responsive.css";
+import "../responsive.css";
+import "./post.css";
 
 export interface CommentObject {
   comment: string;
@@ -414,8 +415,8 @@ export default function Post({
           }}
           className="comment-overview-popup !max-w-xl"
         >
-          <DialogHeader className="comment-overview-popup-header h-[800px] py-1 px-3 border border-gray-400 rounded-sm overflow-y-scroll">
-            <div className="">
+          <DialogHeader className="comment-overview-popup-header h-[800px] border border-gray-400 rounded-sm overflow-hidden">
+            <div className="w-full h-full py-1 px-3 overflow-y-scroll">
               {commentsArray
                 .filter((comment) => comment.postId === currentPostId)
                 .map((comment) => {

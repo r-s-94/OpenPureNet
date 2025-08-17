@@ -1,10 +1,8 @@
-@import "tailwindcss";
-
-.user-post-overview {
+.comment-overview-popup-header {
   position: relative;
 }
 
-.user-post-overview::after {
+.comment-overview-popup-header::after {
   content: "";
   position: absolute;
   bottom: 0;
