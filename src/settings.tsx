@@ -1130,8 +1130,10 @@ export default function Settings() {
           <h2 className="settings-agb-div-headline ml-[15rem] mt-10 mb-5 text-2xl">
             Allgemine Geschäftsbedingungen
           </h2>
-          <div className="settings-agb-overview w-[75%] h-[500px] mx-auto px-7 py-5 border border-gray-400 rounded-sm overflow-y-scroll">
-            <AGBComponent />
+          <div className="settings-agb-overview w-[75%] h-[500px] mx-auto border border-gray-400 rounded-sm overflow-hidden">
+            <div className="settings-agb-overview-scroll-div w-full h-full px-7 py-5 overflow-y-scroll">
+              <AGBComponent />
+            </div>
           </div>
           <div className="settings-agb-accept-div w-ful mt-1 text-lg flex justify-start items-center gap-x-3">
             <input

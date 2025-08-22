@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+.settings-agb-overview {
+  position: relative;
+}
+
+.settings-agb-overview:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  pointer-events: none;
+  box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.7) inset;
+}
