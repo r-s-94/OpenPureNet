@@ -76,7 +76,6 @@ export default function Overview() {
         setCurrentSessionUserId(sessionUserId);
       }
 
-      acceptConsent();
       loadPosts();
     };
 
