@@ -69,60 +69,55 @@ function App() {
     checkUserSession();
   }, []);
 
-  const router = createBrowserRouter(
-    [
-      {
-        path: "/",
-        element: <SignIn />,
-      },
-      {
-        path: "private-route",
-        element: <PrivateRoute />,
-        children: [
-          {
-            path: "overview",
-            element: <Overview />,
-          },
-          {
-            path: "user/:userId",
-            element: <User />,
-          },
-          {
-            path: "settings",
-            element: <Settings />,
-          },
-          {
-            path: "message",
-            element: <Message />,
-          },
-        ],
-      },
-
-      {
-        path: "impressum",
-        element: <Impressum />,
-      },
-      {
-        path: "agb",
-        element: <AGB />,
-      },
-      {
-        path: "data-protection",
-        element: <DataProtection />,
-      },
-      {
-        path: "forget-password",
-        element: <ForgotPassword />,
-      },
-      {
-        path: "update-password",
-        element: <UpadatePassword />,
-      },
-    ],
+  const router = createBrowserRouter([
     {
-      basename: "/OpenPureNet/",
-    }
-  );
+      path: "/",
+      element: <SignIn />,
+    },
+    {
+      path: "private-route",
+      element: <PrivateRoute />,
+      children: [
+        {
+          path: "overview",
+          element: <Overview />,
+        },
+        {
+          path: "user/:userId",
+          element: <User />,
+        },
+        {
+          path: "settings",
+          element: <Settings />,
+        },
+        {
+          path: "message",
+          element: <Message />,
+        },
+      ],
+    },
+
+    {
+      path: "impressum",
+      element: <Impressum />,
+    },
+    {
+      path: "agb",
+      element: <AGB />,
+    },
+    {
+      path: "data-protection",
+      element: <DataProtection />,
+    },
+    {
+      path: "forget-password",
+      element: <ForgotPassword />,
+    },
+    {
+      path: "update-password",
+      element: <UpadatePassword />,
+    },
+  ]);
 
   async function checkUserSession() {
     const { data: session } = await supabase.auth.getSession();
