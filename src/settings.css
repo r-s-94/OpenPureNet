@@ -1,10 +1,12 @@
 @import "tailwindcss";
 
-.settings-agb-overview {
+.settings-agb-overview,
+.settings-data-protection-overview {
   position: relative;
 }
 
-.settings-agb-overview:after {
+.settings-agb-overview:after,
+.settings-data-protection-overview:after {
   content: "";
   position: absolute;
   bottom: 0;

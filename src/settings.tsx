@@ -1154,8 +1154,10 @@ export default function Settings() {
           <h2 className="settings-data-protection-headline ml-[15rem] mt-10 mb-5 text-2xl">
             Datenschutzerklärung
           </h2>
-          <div className="settings-data-protection-overview w-[75%] h-[500px] mx-auto px-7 py-5 border border-gray-400 rounded-sm overflow-y-scroll">
-            <DataprotectionComponent />
+          <div className="settings-data-protection-overview w-[75%] h-[500px] mx-auto px-7 py-5 border border-gray-400 rounded-sm overflow-hidden">
+            <div className="settings-data-protection-overview-scroll-div w-full h-full px-7 py-5 overflow-y-scroll">
+              <DataprotectionComponent />
+            </div>
           </div>
           <div className="settings-data-protection-accept-div w-ful mt-1 text-lg flex justify-start items-center gap-x-3">
             <input
