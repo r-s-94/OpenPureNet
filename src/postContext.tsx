@@ -1,10 +1,10 @@
 import { createContext } from "react";
 
 export interface PublicUserObject {
-  Profilname: string;
   id: number;
-  profilPicture: string;
   userId: string;
+  profilName: string;
+  profilPicture: string;
 }
 
 export interface PostObject {
@@ -12,7 +12,7 @@ export interface PostObject {
   medium: string;
   public_user: PublicUserObject;
   text: string;
-  timestamp: string;
+  timeStamp: string;
   userId: string;
 }
 

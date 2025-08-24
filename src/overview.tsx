@@ -53,7 +53,7 @@ export default function Overview() {
   const [hiddenPostOptions] = useState<string>("hiddenPostOptions");
   const [currentSessionUserId, setCurrentSessionUserId] = useState<string>("");
   const [searchUserArray, setSerachUserArray] = useState<
-    Tables<"public-user">[]
+    Tables<"public_user">[]
   >([]);
   const [noticePopUp, setNoticePopUp] = useState<boolean>(false);
   const { consentPopUp, setConsentPopUp } = useContext(functionContext);
@@ -72,8 +72,35 @@ export default function Overview() {
       const { data: session } = await supabase.auth.getSession();
 
       if (session.session) {
-        const sessionUserId = session.session.user.id;
-        setCurrentSessionUserId(sessionUserId);
+        const { data: public_user } = await supabase
+          .from("public_user")
+          .select()
+          .eq("userId", session.session.user.id);
+
+        console.log(public_user);
+
+        setCurrentSessionUserId(session.session.user.id);
+
+        if (public_user && public_user[0] !== undefined) {
+          const publicUserData = public_user[0];
+
+          if (
+            publicUserData.agbConsent === false ||
+            publicUserData.dataProtectionConsent === false ||
+            publicUserData.userConsent === false
+          ) {
+            setConsentPopUp(true);
+          }
+
+          setPublicUserObject({
+            ...publicUserObject,
+            profilName: publicUserData.profilName,
+            profilPicture: publicUserData.profilPicture,
+            statusText: publicUserData.statusText,
+          });
+        } else {
+          setConsentPopUp(true);
+        }
       }
 
       loadPosts();
@@ -85,27 +112,34 @@ export default function Overview() {
   async function acceptConsent() {
     const { data: session } = await supabase.auth.getSession();
     const { data } = await supabase
-      .from("public-user")
+      .from("public_user")
       .select()
       .eq("userId", session.session!.user.id);
 
     if (data?.length !== 0) {
       const {} = await supabase
-        .from("public-user")
+        .from("public_user")
         .update({
-          AGBConsent: agbConsent,
+          agbConsent: agbConsent,
           dataProtectionConsent: dataprotectionConsent,
-          userDataConsent: userDataConsent,
+          userConsent: userDataConsent,
         })
         .eq("userId", data![0].userId);
       setConsentPopUp(false);
     } else {
-      const {} = await supabase.from("public-user").insert({
+      setPublicUserObject({
+        ...publicUserObject,
         userId: currentSessionUserId,
-        Profilname: "",
-        AGBConsent: agbConsent,
+      });
+
+      const {} = await supabase.from("public_user").insert({
+        userId: currentSessionUserId,
+        profilName: "",
+        profilPicture: "",
+        agbConsent: agbConsent,
         dataProtectionConsent: dataprotectionConsent,
-        userDataConsent: userDataConsent,
+        userConsent: userDataConsent,
+        statusText: "",
       });
       setConsentPopUp(false);
     }
@@ -115,7 +149,7 @@ export default function Overview() {
     const { data: posts } = await supabase
       .from("posts")
       .select(
-        "id, userId, text, timestamp, medium, public_user: userId (id, userId, Profilname, profilPicture)"
+        "id, userId, text, timeStamp, medium, public_user: userId (id, userId, profilName, profilPicture)"
       );
     //.eq("userId", publicUserObject.userId)
 
@@ -129,9 +163,9 @@ export default function Overview() {
 
   async function searchUser() {
     const { data } = await supabase
-      .from("public-user")
+      .from("public_user")
       .select()
-      .ilike("Profilname", inputSearchUser);
+      .ilike("profilName", inputSearchUser);
 
     console.log(data);
 
@@ -257,7 +291,7 @@ export default function Overview() {
           const {} = await supabase.from("posts").insert({
             userId: publicUserObject.userId,
             text: createPost,
-            timestamp: currentTimestamp,
+            timeStamp: currentTimestamp,
             medium: mediumUrl?.path,
           });
 
@@ -279,7 +313,7 @@ export default function Overview() {
           const {} = await supabase.from("posts").insert({
             userId: publicUserObject.userId,
             text: createPost,
-            timestamp: currentTimestamp,
+            timeStamp: currentTimestamp,
             medium: "",
           });
 
@@ -322,7 +356,7 @@ export default function Overview() {
         const {} = await supabase.from("posts").insert({
           userId: publicUserObject.userId,
           text: "",
-          timestamp: currentTimestamp,
+          timeStamp: currentTimestamp,
           medium: mediumUrl?.path,
         });
 
@@ -377,7 +411,7 @@ export default function Overview() {
 
   async function toSearchUser(userId: string) {
     const { data } = await supabase
-      .from("public-user")
+      .from("public_user")
       .select()
       .eq("userId", userId);
 
@@ -387,9 +421,9 @@ export default function Overview() {
       setSearchUserObject({
         ...searchUserObject,
         userId: searchUserData.userId,
-        Profilname: searchUserData.Profilname,
+        profilName: searchUserObject.profilName,
         profilPicture: searchUserData.profilPicture,
-        Statustext: searchUserData.Statustext,
+        statusText: searchUserObject.statusText,
         searchStatus: true,
         fromMessage: false,
       });
@@ -398,17 +432,22 @@ export default function Overview() {
     }
   }
 
+  function toUser() {
+    setPostsArray([]);
+    navigation(`/private-route/user/${publicUserObject.userId}`);
+  }
+
   async function toSignIn() {
     const {} = await supabase.auth.signOut();
 
     setPublicUserObject({
       ...publicUserObject,
-      Profilname: "",
+      profilName: "",
       profilPicture: "",
       userId: "",
-      AGBConsent: false,
+      agbConsent: false,
       dataProtectionConsent: false,
-      userDataConsent: false,
+      userConsent: false,
     });
 
     setUserAuthObject({
@@ -433,8 +472,10 @@ export default function Overview() {
               <h2 className="consent-popup-headline text-lg">
                 Allgemine Geschäftsbedingungen (AGB) von OpenPureNet
               </h2>
-              <div className="consent-popup-agb h-[400px] p-3 border border-gray-400 rounded-sm overflow-y-scroll">
-                <AGBComponent />
+              <div className="consent-popup-agb h-[400px] border border-gray-400 rounded-sm overflow-hidden">
+                <div className="w-full h-full p-3 overflow-y-scroll">
+                  <AGBComponent />
+                </div>
               </div>
               <div className="consent-popup-accept-div mt-1 text-base flex justify-start items-center gap-x-3">
                 <input
@@ -454,8 +495,10 @@ export default function Overview() {
               <h2 className="consent-popup-headline text-lg">
                 Datenschutzerklärung für OpenPureNet
               </h2>
-              <div className="consent-popup-data-protection h-[400px] p-3 border border-gray-400 rounded-sm overflow-y-scroll">
-                <Dataprotection />
+              <div className="consent-popup-data-protection h-[400px] border border-gray-400 rounded-sm overflow-hidden">
+                <div className="w-full h-full p-3 overflow-y-scroll">
+                  <Dataprotection />
+                </div>
               </div>
               <div className="consent-popup-accept-div mt-1 text-base flex justify-start items-center gap-x-3">
                 <input
@@ -638,7 +681,7 @@ export default function Overview() {
                       </svg>
                     )}
                     <p className="search-user-popup-user-name text-lg">
-                      {searchUser.Profilname}
+                      {searchUser.profilName}
                     </p>
                   </div>
                 );
@@ -1067,8 +1110,8 @@ export default function Overview() {
 
             <span className="interaction-label">Mitteilungen</span>
           </Link>
-          <Link
-            to={`/private-route/user/${publicUserObject.userId}`}
+          <button
+            onClick={toUser}
             className="to-user-link to-user-link px-3.5 py-1 flex flex-col items-center justify-center hover:text-blue-400 rounded-sm cursor-pointer"
           >
             {publicUserObject.profilPicture !== "" ? (
@@ -1094,11 +1137,11 @@ export default function Overview() {
               </svg>
             )}{" "}
             <span className="interaction-label text-lg">
-              {publicUserObject.Profilname !== ""
-                ? publicUserObject.Profilname
+              {publicUserObject.profilName !== ""
+                ? publicUserObject.profilName
                 : "User"}
             </span>
-          </Link>
+          </button>
         </nav>
 
         <div className="show-content w-full h-190.7 pt-3 grid grid-cols-3 bg-white">

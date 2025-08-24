@@ -29,16 +29,16 @@ function App() {
   const [postsArray, setPostsArray] = useState<PostObject[]>([]);
 
   const [publicUserObject, setPublicUserObject] = useState<
-    Tables<"public-user">
+    Tables<"public_user">
   >({
     id: 0,
-    Profilname: "",
+    profilName: "",
     profilPicture: "",
-    Statustext: "",
+    statusText: "",
     userId: "",
-    AGBConsent: false,
+    agbConsent: false,
     dataProtectionConsent: false,
-    userDataConsent: false,
+    userConsent: false,
   });
 
   const [userAuthObject, setUserAuthObject] = useState<UserAuthObject>({
@@ -49,12 +49,12 @@ function App() {
   const [searchUserObject, setSearchUserObject] = useState<SearchUserObject>({
     id: 0,
     userId: "",
-    Profilname: "",
+    profilName: "",
     profilPicture: "",
-    AGBConsent: false,
+    agbConsent: false,
     dataProtectionConsent: false,
-    userDataConsent: false,
-    Statustext: "",
+    userConsent: false,
+    statusText: "",
     searchStatus: false,
     fromMessage: false,
   });
@@ -122,8 +122,10 @@ function App() {
   async function checkUserSession() {
     const { data: session } = await supabase.auth.getSession();
 
+    console.log(session.session?.user);
+
     const { data: public_user } = await supabase
-      .from("public-user")
+      .from("public_user")
       .select()
       .eq("userId", session.session!.user.id);
 
@@ -131,39 +133,31 @@ function App() {
       .from("follow")
       .select("*", { count: "exact" })
       .eq("follow", true)
-      .eq("FollowUserId", session.session!.user.id)
+      .eq("followUserId", session.session!.user.id)
       .is("followRequest", null)
       .eq("is_seen", false);
 
     if (session.session) {
+      const publicUserData = public_user![0];
+
+      if (public_user && public_user?.length > 0) {
+        setPublicUserObject({
+          ...publicUserObject,
+          id: publicUserData.id,
+          userId: session.session?.user.id,
+          profilName: publicUserData.profilName,
+          profilPicture: publicUserData.profilPicture,
+          statusText: publicUserData.statusText,
+          agbConsent: publicUserData.agbConsent,
+          dataProtectionConsent: publicUserData.dataProtectionConsent,
+          userConsent: publicUserData.userConsent,
+        });
+      }
+
       setUserAuthObject({
         ...userAuthObject,
         accessToken: session.session.access_token,
         isAuthenticated: true,
-      });
-    }
-
-    if (public_user && public_user[0] !== undefined) {
-      const publicUserData = public_user[0];
-
-      if (
-        publicUserData.AGBConsent === false ||
-        publicUserData.dataProtectionConsent === false ||
-        publicUserData.userDataConsent === false
-      ) {
-        setConsentPopUp(true);
-      }
-
-      setPublicUserObject({
-        ...publicUserObject,
-        id: publicUserData.id,
-        userId: publicUserData.userId,
-        Profilname: publicUserData.Profilname,
-        profilPicture: publicUserData.profilPicture,
-        Statustext: publicUserData.Statustext,
-        AGBConsent: publicUserData.AGBConsent,
-        dataProtectionConsent: publicUserData.dataProtectionConsent,
-        userDataConsent: publicUserData.userDataConsent,
       });
     }
 
@@ -179,12 +173,12 @@ function App() {
 
     setPublicUserObject({
       ...publicUserObject,
-      Profilname: "",
+      profilName: "",
       userId: "",
       profilPicture: "",
-      AGBConsent: false,
+      agbConsent: false,
       dataProtectionConsent: false,
-      userDataConsent: false,
+      userConsent: false,
     });
 
     setUserAuthObject({
@@ -194,14 +188,13 @@ function App() {
 
     setSearchUserObject({
       ...searchUserObject,
-      id: 0,
       userId: "",
-      Profilname: "",
+      profilName: "",
       profilPicture: "",
-      AGBConsent: false,
+      agbConsent: false,
       dataProtectionConsent: false,
-      userDataConsent: false,
-      Statustext: "",
+      userConsent: false,
+      statusText: "",
       searchStatus: false,
       fromMessage: false,
     });

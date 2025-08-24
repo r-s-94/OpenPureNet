@@ -3,12 +3,12 @@ import { createContext } from "react";
 export interface SearchUserObject {
   id: number;
   userId: string;
-  Profilname: string;
+  profilName: string;
   profilPicture: string;
-  AGBConsent: boolean;
+  agbConsent: boolean;
   dataProtectionConsent: boolean;
-  userDataConsent: boolean;
-  Statustext: string;
+  userConsent: boolean;
+  statusText: string;
   searchStatus: boolean;
   fromMessage: boolean;
 }
@@ -22,12 +22,12 @@ export const serachUserContext = createContext<SearchUserContext>({
   searchUserObject: {
     id: 0,
     userId: "",
-    Profilname: "",
+    profilName: "",
     profilPicture: "",
-    AGBConsent: false,
+    agbConsent: false,
     dataProtectionConsent: false,
-    userDataConsent: false,
-    Statustext: "",
+    userConsent: false,
+    statusText: "",
     searchStatus: false,
     fromMessage: false,
   },

@@ -19,11 +19,11 @@ import "../responsive.css";
 import "./post.css";
 
 export interface CommentObject {
-  comment: string;
+  text: string;
   id: number;
   postId: number;
   public_user: PublicUserObject;
-  timestamp: string;
+  timeStamp: string;
   userId: string;
 }
 
@@ -73,19 +73,19 @@ export default function Post({
       const { data: session } = await supabase.auth.getSession();
 
       const { data: like_dislike_post } = await supabase
-        .from("like-dislike-posts")
+        .from("like_dislike_posts")
         .select()
         .eq("userId", session.session!.user.id)
         .eq("postId", post.id);
 
       const { count: like_post_count } = await supabase
-        .from("like-dislike-posts")
+        .from("like_dislike_posts")
         .select("*", { count: "exact", head: true })
         .eq("postId", post.id)
         .eq("type", "like");
 
       const { count: dislike_post_count } = await supabase
-        .from("like-dislike-posts")
+        .from("like_dislike_posts")
         .select("*", { count: "exact", head: true })
         .eq("postId", post.id)
         .eq("type", "dislike");
@@ -93,7 +93,7 @@ export default function Post({
       const { data: comments } = await supabase
         .from("comments")
         .select(
-          "id, userId, comment, timestamp, postId, public_user: userId (id, userId, Profilname, profilPicture)"
+          "id, userId, text, timeStamp, postId, public_user: userId (id, userId, profilName, profilPicture)"
         );
 
       const { count: comment_count } = await supabase
@@ -139,7 +139,7 @@ export default function Post({
     const { data } = await supabase
       .from("comments")
       .select(
-        "id, userId, comment, timestamp, postId, public_user: userId (id, userId, Profilname, profilPicture)"
+        "id, userId, text, timeStamp, postId, public_user: userId (id, userId, profilName, profilPicture)"
       );
 
     if (data) {
@@ -170,7 +170,7 @@ export default function Post({
   ) {
     if (currentLikeDislike === prevLikeDislike) {
       const {} = await supabase
-        .from("like-dislike-posts")
+        .from("like_dislike_posts")
         .delete()
         .eq("id", id);
 
@@ -180,16 +180,16 @@ export default function Post({
     }
     if (currentLikeDislike !== prevLikeDislike) {
       const {} = await supabase
-        .from("like-dislike-posts")
+        .from("like_dislike_posts")
         .delete()
         .eq("id", id);
 
       const currentTimestamp = new Date().toLocaleString();
 
-      const {} = await supabase.from("like-dislike-posts").insert({
+      const {} = await supabase.from("like_dislike_posts").insert({
         userId: userId,
         type: currentLikeDislike,
-        timestampe: currentTimestamp,
+        timeStamp: currentTimestamp,
         postId: postId,
       });
 
@@ -202,7 +202,7 @@ export default function Post({
     const { data: session } = await supabase.auth.getSession();
 
     const { data: like_dislike_post } = await supabase
-      .from("like-dislike-posts")
+      .from("like_dislike_posts")
       .select()
       .eq("userId", session.session!.user.id)
       .eq("postId", postId);
@@ -217,13 +217,13 @@ export default function Post({
 
   async function loadLikeDislikePostCount(postId: number) {
     const { count: like_post_count } = await supabase
-      .from("like-dislike-posts")
+      .from("like_dislike_posts")
       .select("*", { count: "exact", head: true })
       .eq("postId", postId)
       .eq("type", "like");
 
     const { count: dislike_post_count } = await supabase
-      .from("like-dislike-posts")
+      .from("like_dislike_posts")
       .select("*", { count: "exact", head: true })
       .eq("postId", postId)
       .eq("type", "dislike");
@@ -290,8 +290,8 @@ export default function Post({
 
         const {} = await supabase.from("comments").insert({
           userId: publicUserObject.userId,
-          comment: createComment,
-          timestamp: currentTimestamp,
+          text: createComment,
+          timeStamp: currentTimestamp,
           postId: currentPostId,
         });
 
@@ -314,7 +314,7 @@ export default function Post({
     );
 
     if (findComment) {
-      setUpdateComment(findComment.comment);
+      setUpdateComment(findComment.text);
       setCurrentCommentId(commentId);
       setCheckTextContent(true);
       setUpdateCommentPopUp(true);
@@ -356,7 +356,7 @@ export default function Post({
 
         const {} = await supabase
           .from("comments")
-          .update({ comment: updateComment, timestamp: updateTimestamp })
+          .update({ text: updateComment, timeStamp: updateTimestamp })
           .eq("id", commentId);
 
         toast.success("Dein Kommentar wurde Erfolgreich bearbeitet.", {
@@ -792,7 +792,7 @@ export default function Post({
       <div className="post mx-3 my-10 px-10 pt-5 pb-1 bg-white shadow-lg rounded-sm">
         <div className="post-user-option-div my-3 flex justify-between items-center gap-x-3">
           <div className="post-user-div flex justify-center items-center gap-x-3">
-            {publicUserObject.profilPicture !== "" ? (
+            {post.public_user.profilPicture !== "" ? (
               <img
                 src={`https://eypauwdeqovcsrjwuxtj.supabase.co/storage/v1/object/public/profilepicture/${post.public_user.profilPicture}`}
                 className="profilpicture w-13 h-13 bg-cover rounded-full"
@@ -815,9 +815,7 @@ export default function Post({
               </svg>
             )}
             <p className="profilname text-[18px]">
-              {post.public_user.Profilname !== ""
-                ? post.public_user.Profilname
-                : "Profilname"}
+              {post.public_user.profilName || "Profilname"}
             </p>
           </div>
 
@@ -932,7 +930,7 @@ export default function Post({
         </div>
 
         <p className="timestamp mb-3 text-gray-400 text-base text-end">
-          {post.timestamp}
+          {post.timeStamp}
         </p>
         <div className="button-div w-full py-5 flex justify-around items-center border border-t-gray-200 border-l-white border-r-white border-b-white">
           <div

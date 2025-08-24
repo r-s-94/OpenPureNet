@@ -63,83 +63,88 @@ export default function User() {
     const fetchAllData = async () => {
       console.log(userId);
 
-      if (userId !== publicUserObject.userId) {
-        const { data } = await supabase
-          .from("public-user")
-          .select()
-          .eq("userId", userId!);
+      if (userId) {
+        const { data: posts } = await supabase
+          .from("posts")
+          .select(
+            "id, userId, text, timeStamp, medium, public_user: userId (id, userId, profilName, profilPicture)"
+          )
+          .eq("userId", userId);
 
-        if (data) {
-          const searchUserData = data[0];
+        console.log(posts);
 
-          setSearchUserObject({
-            ...searchUserObject,
-            userId: searchUserData.userId,
-            Profilname: searchUserData.Profilname,
-            profilPicture: searchUserData.profilPicture,
-            Statustext: searchUserData.Statustext,
-            searchStatus: true,
-          });
-        }
-      }
+        const { data: comments } = await supabase.from("comments").select();
 
-      const { data: posts } = await supabase
-        .from("posts")
-        .select(
-          "id, userId, text, timestamp, medium, public_user: userId (id, userId, Profilname, profilPicture)"
-        )
-        .eq("userId", userId!);
-
-      const { data: comments } = await supabase.from("comments").select();
-
-      if (searchUserObject.userId !== "") {
-        const { data: userFollowOptions } = await supabase
+        const { count: currentFollowCount } = await supabase
           .from("follow")
-          .select()
-          .eq("userId", publicUserObject.userId)
-          .eq("follow", true)
-          .eq("FollowUserId", searchUserObject.userId);
+          .select("*", { count: "exact", head: true })
+          .eq("followUserId", userId!)
+          .eq("follow", true);
 
-        if (userFollowOptions && userFollowOptions.length > 0) {
-          setFollowId(userFollowOptions[0].id);
-          setFollow(userFollowOptions[0].follow);
+        //console.log(currentFollowCount);
+
+        const { count: currentFollowed } = await supabase
+          .from("follow")
+          .select("*", { count: "exact", head: true })
+          .eq("userId", userId)
+          .eq("follow", true);
+
+        if (userId !== publicUserObject.userId) {
+          const { data } = await supabase
+            .from("public_user")
+            .select()
+            .eq("userId", userId!);
+
+          if (data) {
+            const searchUserData = data[0];
+
+            setSearchUserObject({
+              ...searchUserObject,
+              userId: searchUserData.userId,
+              profilName: searchUserObject.profilName,
+              profilPicture: searchUserData.profilPicture,
+              statusText: searchUserObject.statusText,
+              searchStatus: true,
+            });
+          }
         }
-      }
 
-      const { count: currentFollowCount } = await supabase
-        .from("follow")
-        .select("*", { count: "exact", head: true })
-        .eq("FollowUserId", userId!)
-        .eq("follow", true);
+        if (searchUserObject.userId !== "") {
+          const { data: userFollowOptions } = await supabase
+            .from("follow")
+            .select()
+            .eq("userId", publicUserObject.userId)
+            .eq("follow", true)
+            .eq("followUserId", searchUserObject.userId);
 
-      console.log(currentFollowCount);
+          if (userFollowOptions && userFollowOptions.length > 0) {
+            setFollowId(userFollowOptions[0].id);
+            setFollow(userFollowOptions[0].follow);
+          }
+        }
 
-      const { count: currentFollowed } = await supabase
-        .from("follow")
-        .select("*", { count: "exact", head: true })
-        .eq("userId", userId!)
-        .eq("follow", true);
+        if (posts && posts.length > 0) {
+          console.log(posts);
+          const sortedPosts = posts.sort((a, b) => b.id - a.id);
+          setPostsArray(sortedPosts);
+        }
 
-      if (posts && posts.length > 0) {
-        const sortedPosts = posts.sort((a, b) => b.id - a.id);
-        setPostsArray(sortedPosts);
-      }
+        if (comments) {
+          const sortedCommenst = comments.sort((a, b) => b.id - a.id);
+          setCommentsArray(sortedCommenst);
+        }
 
-      if (comments) {
-        const sortedCommenst = comments.sort((a, b) => b.id - a.id);
-        setCommentsArray(sortedCommenst);
-      }
+        if (currentFollowCount) {
+          setCurrentFollow(currentFollowCount);
+        } else {
+          setCurrentFollow(0);
+        }
 
-      if (currentFollowCount) {
-        setCurrentFollow(currentFollowCount);
-      } else {
-        setCurrentFollow(0);
-      }
-
-      if (currentFollowed) {
-        setCurrentFollowed(currentFollowed);
-      } else {
-        setCurrentFollowed(0);
+        if (currentFollowed) {
+          setCurrentFollowed(currentFollowed);
+        } else {
+          setCurrentFollowed(0);
+        }
       }
     };
 
@@ -150,7 +155,7 @@ export default function User() {
     const { data } = await supabase
       .from("posts")
       .select(
-        "id, userId, text, timestamp, medium, public_user: userId (id, userId, Profilname, profilPicture)"
+        "id, userId, text, timeStamp, medium, public_user: userId (id, userId, profilName, profilPicture)"
       )
       .eq("userId", publicUserObject.userId);
 
@@ -272,7 +277,7 @@ export default function User() {
           const {} = await supabase.from("posts").insert({
             userId: publicUserObject.userId,
             text: createPost,
-            timestamp: currentTimestamp,
+            timeStamp: currentTimestamp,
             medium: mediumUrl?.path,
           });
 
@@ -296,7 +301,7 @@ export default function User() {
           const {} = await supabase.from("posts").insert({
             userId: publicUserObject.userId,
             text: createPost,
-            timestamp: currentTimestamp,
+            timeStamp: currentTimestamp,
             medium: "",
           });
 
@@ -337,7 +342,7 @@ export default function User() {
         const {} = await supabase.from("posts").insert({
           userId: publicUserObject.userId,
           text: "",
-          timestamp: currentTimestamp,
+          timeStamp: currentTimestamp,
           medium: mediumUrl?.path,
         });
 
@@ -514,7 +519,7 @@ export default function User() {
             .from("posts")
             .update({
               text: updatePost,
-              timestamp: updateTimestamp,
+              timeStamp: updateTimestamp,
               medium: mediumUrl?.path,
             })
             .eq("id", postId);
@@ -540,7 +545,7 @@ export default function User() {
             .from("posts")
             .update({
               text: updatePost,
-              timestamp: updateTimestamp,
+              timeStamp: updateTimestamp,
             })
             .eq("id", postId);
 
@@ -592,7 +597,7 @@ export default function User() {
         const {} = await supabase
           .from("posts")
           .update({
-            timestamp: updateTimestamp,
+            timeStamp: updateTimestamp,
             medium: mediumUrl?.path,
           })
           .eq("id", postId);
@@ -716,9 +721,12 @@ export default function User() {
     } else {
       const {} = await supabase.from("follow").insert({
         userId: publicUserObject.userId,
-        follow: follow,
+        follow: true,
         followTimestamp: currentTimestamp,
-        FollowUserId: searchUserObject.userId,
+        followUserId: searchUserObject.userId,
+        followRequest: null,
+        followRequestTimestamp: "",
+        is_seen: false,
       });
     }
 
@@ -731,9 +739,9 @@ export default function User() {
         ...searchUserObject,
         id: 0,
         userId: "",
-        Profilname: "",
+        profilName: "",
         profilPicture: "",
-        Statustext: "",
+        statusText: "",
         searchStatus: false,
         fromMessage: false,
       });
@@ -743,9 +751,9 @@ export default function User() {
         ...searchUserObject,
         id: 0,
         userId: "",
-        Profilname: "",
+        profilName: "",
         profilPicture: "",
-        Statustext: "",
+        statusText: "",
         searchStatus: false,
         fromMessage: false,
       });
@@ -1205,13 +1213,15 @@ export default function User() {
         <h1 className="user-headline text-4xl flex justify-center items-center gap-x-5">
           <div className="user-headline-div flex justify-center items-center gap-x-3">
             User{" "}
-            {userId === searchUserObject.userId ? (
+            {userId === searchUserObject.userId &&
+            publicUserObject.profilPicture !== "" ? (
               <img
                 src={`https://eypauwdeqovcsrjwuxtj.supabase.co/storage/v1/object/public/profilepicture/${searchUserObject.profilPicture}`}
                 className="search-user-picture w-20 h-20 bg-cover rounded-full"
                 alt=""
               />
-            ) : userId === publicUserObject.userId ? (
+            ) : userId === publicUserObject.userId &&
+              publicUserObject.profilPicture !== "" ? (
               <img
                 src={`https://eypauwdeqovcsrjwuxtj.supabase.co/storage/v1/object/public/profilepicture/${publicUserObject.profilPicture}`}
                 className="public-user-picture w-20 h-20 bg-cover rounded-full"
@@ -1236,8 +1246,8 @@ export default function User() {
           </div>
           <span className="user-name">
             {userId === publicUserObject.userId
-              ? publicUserObject.Profilname
-              : searchUserObject.Profilname}
+              ? publicUserObject.profilName
+              : searchUserObject.profilName}
           </span>
         </h1>
 
@@ -1271,9 +1281,9 @@ export default function User() {
         )}
       </nav>
 
-      {publicUserObject.Statustext !== "" ? (
+      {publicUserObject.statusText !== "" ? (
         <div className="user-status-text-div w-[50rem] h-[10rem] mx-auto px-3 py-2 text-lg border border-gray-300 rounded-sm">
-          {publicUserObject.Statustext}
+          {publicUserObject.statusText}
         </div>
       ) : null}
 
@@ -1334,7 +1344,7 @@ export default function User() {
 
         <div
           className={`user-post-overview ${
-            publicUserObject.Statustext === "" ? "h-153" : "h-110"
+            publicUserObject.statusText === "" ? "h-153" : "h-110"
           } mt-3 px-5 bg-gray-100 rounded-sm overflow-hidden`}
         >
           <div className="w-full h-full overflow-y-scroll">

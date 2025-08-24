@@ -1,10 +1,14 @@
 @import "tailwindcss";
 
-.post-overview {
+.post-overview,
+.consent-popup-agb,
+.consent-popup-data-protection {
   position: relative;
 }
 
-.post-overview::after {
+.post-overview::after,
+.consent-popup-agb:after,
+.consent-popup-data-protection:after {
   content: "";
   position: absolute;
   bottom: 0;

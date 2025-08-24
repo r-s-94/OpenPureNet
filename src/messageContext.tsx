@@ -1,14 +1,9 @@
 import { createContext } from "react";
+import type { PublicUserObject } from "./postContext";
 
 export interface MessageObject {
-  public_user: FollowerInfoObject;
-}
-
-export interface FollowerInfoObject {
   id: number;
-  userId: string;
-  Profilname: string;
-  profilPicture: string;
+  public_user: PublicUserObject;
 }
 
 interface MessageContext {

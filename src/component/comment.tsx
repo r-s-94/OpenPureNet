@@ -25,19 +25,19 @@ export default function Comment({
       const { data: session } = await supabase.auth.getSession();
 
       const { data: like_dislike_comment } = await supabase
-        .from("like-dislike-comments")
+        .from("like_dislike_comments")
         .select()
         .eq("userId", session.session!.user.id)
         .eq("commentId", comment.id);
 
       const { count: like_comment_count } = await supabase
-        .from("like-dislike-comments")
+        .from("like_dislike_comments")
         .select("*", { count: "exact", head: true })
         .eq("commentId", comment.id)
         .eq("type", "like");
 
       const { count: dislike_comment_count } = await supabase
-        .from("like-dislike-comments")
+        .from("like_dislike_comments")
         .select("*", { count: "exact", head: true })
         .eq("commentId", comment.id)
         .eq("type", "dislike");
@@ -74,7 +74,7 @@ export default function Comment({
   ) {
     if (currentLikeDislike === prevLikeDislike) {
       const {} = await supabase
-        .from("like-dislike-comments")
+        .from("like_dislike_comments")
         .delete()
         .eq("id", id);
 
@@ -85,16 +85,16 @@ export default function Comment({
 
     if (currentLikeDislike !== prevLikeDislike) {
       const {} = await supabase
-        .from("like-dislike-comments")
+        .from("like_dislike_comments")
         .delete()
         .eq("id", id);
 
       const currentTimestamp = new Date().toLocaleString();
 
-      const {} = await supabase.from("like-dislike-comments").insert({
+      const {} = await supabase.from("like_dislike_comments").insert({
         userId: userId,
         type: currentLikeDislike,
-        timestampe: currentTimestamp,
+        timeStamp: currentTimestamp,
         commentId: commentId,
       });
 
@@ -107,7 +107,7 @@ export default function Comment({
     const { data: session } = await supabase.auth.getSession();
 
     const { data: like_dislike_comment } = await supabase
-      .from("like-dislike-comments")
+      .from("like_dislike_comments")
       .select()
       .eq("userId", session.session!.user.id)
       .eq("commentId", commentId);
@@ -122,13 +122,13 @@ export default function Comment({
 
   async function loadCommentCount(commentId: number) {
     const { count: like_comment_count } = await supabase
-      .from("like-dislike-comments")
+      .from("like_dislike_comments")
       .select("*", { count: "exact", head: true })
       .eq("commentId", commentId)
       .eq("type", "like");
 
     const { count: dislike_comment_count } = await supabase
-      .from("like-dislike-comments")
+      .from("like_dislike_comments")
       .select("*", { count: "exact", head: true })
       .eq("commentId", commentId)
       .eq("type", "dislike");
@@ -149,7 +149,7 @@ export default function Comment({
   return (
     <div className="comment-div my-3 p-4 border border-gray-300 shadow-lg rounded-sm ">
       <div className="comment-user-div flex justify-start items-center gap-x-3">
-        {publicUserObject.profilPicture !== "" ? (
+        {comment.public_user.profilPicture !== "" ? (
           <img
             src={`https://eypauwdeqovcsrjwuxtj.supabase.co/storage/v1/object/public/profilepicture/${comment.public_user.profilPicture}`}
             className="comment-user-picture w-13 h-13 bg-cover rounded-[50%]"
@@ -171,11 +171,11 @@ export default function Comment({
             />
           </svg>
         )}
-        <p className="comment-user-name">{comment.public_user.Profilname}</p>
+        <p className="comment-user-name">{comment.public_user.profilName}</p>
       </div>
 
-      <p className="comment-text">{comment.comment}</p>
-      <p className="comment-timestamp text-end">{comment.timestamp}</p>
+      <p className="comment-text">{comment.text}</p>
+      <p className="comment-timestamp text-end">{comment.timeStamp}</p>
       <div className="comment-option-button-div pt-3 flex justify-around items-center border border-t-gray-200 border-l-white border-r-white border-b-white">
         <div className="comment-edit-delete-button-div flex justify-center items-center gap-x-5">
           <button

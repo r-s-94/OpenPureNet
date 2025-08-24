@@ -8,7 +8,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { userAuthContext } from "./userAuthContext";
+//import { userAuthContext } from "./userAuthContext";
 import { functionContext } from "./functionContext";
 import { Toaster } from "./components/ui/sonner";
 import { toast } from "sonner";
@@ -19,6 +19,7 @@ import {
   DialogContent,
   DialogDescription,
 } from "./components/ui/dialog";
+import { publicUserContext } from "./publicUserContext";
 
 export default function SignIn() {
   const [userMail, setUserMail] = useState<string>("");
@@ -27,7 +28,9 @@ export default function SignIn() {
   const [, setNoticePopUpMessage] = useState<string>("");
   const navigation = useNavigate();
   const { checkUserSession } = useContext(functionContext);
-  const { userAuthObject, setUserAuthObject } = useContext(userAuthContext);
+  const { publicUserObject, setPublicUserObject } =
+    useContext(publicUserContext);
+  //const { userAuthObject, setUserAuthObject } = useContext(userAuthContext);
 
   async function signIn() {
     if (userMail !== "" && userPassword !== "") {
@@ -50,11 +53,12 @@ export default function SignIn() {
         );
         setUserPassword("");
       } else {
-        setUserAuthObject({
+        /*setUserAuthObject({
           ...userAuthObject,
           accessToken: data.session!.access_token,
           isAuthenticated: true,
-        });
+        });*/
+        setPublicUserObject({ ...publicUserObject, userId: data.user!.id });
         checkUserSession();
         navigation("/private-route/overview");
         setUserMail("");

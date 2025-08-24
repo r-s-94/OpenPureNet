@@ -5,7 +5,7 @@ import { supabase } from "@/supabase";
 import { serachUserContext } from "@/searchUserContext";
 import { publicUserContext } from "@/publicUserContext";
 import { functionContext } from "@/functionContext";
-//import "../responsive.css";
+import "../responsive.css";
 
 export default function Message() {
   //const [followRequestId, setFollowRequestId] = useState<number>(0);
@@ -23,9 +23,9 @@ export default function Message() {
       const { data: follow } = await supabase
         .from("follow")
         .select(
-          "id, public_user: userId (id, userId, Profilname, profilPicture)"
+          "id, public_user: userId (id, userId, profilName, profilPicture)"
         )
-        .eq("FollowUserId", publicUserObject.userId)
+        .eq("followUserId", publicUserObject.userId)
         .is("followRequest", null);
 
       console.log(follow);
@@ -48,9 +48,9 @@ export default function Message() {
             .update({ is_seen: true })
             .eq("id", followId);
         }
-
-        followId = 0;
       }
+
+      followId = 0;
     };
 
     loadMessageData();
@@ -75,7 +75,7 @@ export default function Message() {
       .eq("id", id);
 
     const filteredMessageArray = messageArray.filter((message) => {
-      return message.public_user.id !== id;
+      return message.id !== id;
     });
 
     setMessageArray(filteredMessageArray);
@@ -126,14 +126,14 @@ export default function Message() {
                   className="message-user-picture w-13 h-13 bg-cover rounded-full"
                   alt=""
                 />{" "}
-                {message.public_user.Profilname} folgt dir, möchtest du ihm auch
+                {message.public_user.profilName} folgt dir, möchtest du ihm auch
                 folgen?
               </div>
 
               <div className="message-button-div flex justify-center items-center gap-x-5">
                 <button
                   onClick={() => {
-                    checkFollowRequest(message.public_user.id, false);
+                    checkFollowRequest(message.id, false);
                   }}
                   className="message-follow-false-button px-5 py-2 text-[17px] text-black flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 rounded-sm cursor-pointer hover:bg-white"
                 >
@@ -141,7 +141,7 @@ export default function Message() {
                 </button>
                 <button
                   onClick={() => {
-                    checkFollowRequest(message.public_user.id, true);
+                    checkFollowRequest(message.id, true);
                   }}
                   className="message-follow-true-button px-5 py-2 text-lg flex justify-center items-center gap-x-3 bg-blue-400 text-white border border-white rounded-sm cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-400"
                 >

@@ -20,18 +20,18 @@ import "./responsive.css";
 
 export default function Settings() {
   const [privateUserObject, setPrivateUserObject] = useState<
-    Tables<"private-user">
+    Tables<"private_user">
   >({
     city: "",
     country: "",
     id: 0,
-    PLZ: "",
+    PLZ: 0,
     street: "",
     houseNumber: 0,
     userId: "",
   });
   const [privateUserArray, setPrivateUserArray] = useState<
-    Tables<"private-user">[]
+    Tables<"private_user">[]
   >([]);
   const [statusText, setStatusText] = useState<string>("");
   const [privateDataExist, setPrivateDataExist] = useState<boolean>();
@@ -81,10 +81,10 @@ export default function Settings() {
         setCurrentSessionUserId(sessionUserId);
       }
 
-      setStatusText(publicUserObject.Statustext);
-      setAGBConsent(publicUserObject.AGBConsent);
+      setStatusText(publicUserObject.statusText);
+      setAGBConsent(publicUserObject.agbConsent);
       setDataprotectionConsent(publicUserObject.dataProtectionConsent);
-      setUserDataConsent(publicUserObject.userDataConsent);
+      setUserDataConsent(publicUserObject.userConsent);
     };
 
     fetchData();
@@ -92,10 +92,10 @@ export default function Settings() {
 
   async function updateStatustext() {
     if (statusText !== "") {
-      if (publicUserObject.Statustext === "") {
+      if (publicUserObject.statusText === "") {
         const {} = await supabase
-          .from("public-user")
-          .update({ Statustext: statusText })
+          .from("public_user")
+          .update({ statusText: statusText })
           .eq("userId", publicUserObject.userId);
 
         toast.success("Dein Statustext wurde erfolgreich erstellt.", {
@@ -105,8 +105,8 @@ export default function Settings() {
         setStatusText("");
       } else {
         const {} = await supabase
-          .from("public-user")
-          .update({ Statustext: statusText })
+          .from("public_user")
+          .update({ statusText: statusText })
           .eq("userId", publicUserObject.userId);
 
         toast.success("Dein Statustext wurde erfolgreich aktualisiert.", {
@@ -122,8 +122,8 @@ export default function Settings() {
 
   async function delteStatustext() {
     const {} = await supabase
-      .from("public-user")
-      .update({ Statustext: "" })
+      .from("public_user")
+      .update({ statusText: "" })
       .eq("userId", publicUserObject.userId);
 
     toast.success("Dein Statustext wurde erfolgreich gelöscht.", {
@@ -136,11 +136,12 @@ export default function Settings() {
   }
 
   async function editProfilname(id: number, userId: string) {
+    console.log(id);
     if (id) {
       if (updateProfilname !== "") {
         const {} = await supabase
-          .from("public-user")
-          .update({ Profilname: updateProfilname })
+          .from("public_user")
+          .update({ profilName: updateProfilname })
           .eq("userId", userId);
 
         setUpdateProfilname("");
@@ -156,12 +157,14 @@ export default function Settings() {
       }
     } else {
       if (updateProfilname !== "") {
-        const {} = await supabase.from("public-user").insert({
-          userId: currentSessionUserId,
-          Profilname: updateProfilname,
-          AGBConsent: true,
-          dataProtectionConsent: true,
-          userDataConsent: true,
+        const {} = await supabase.from("public_user").insert({
+          userId: publicUserObject.userId,
+          profilName: updateProfilname,
+          profilPicture: publicUserObject.profilPicture,
+          statusText: publicUserObject.statusText,
+          agbConsent: publicUserObject.agbConsent,
+          dataProtectionConsent: publicUserObject.dataProtectionConsent,
+          userConsent: publicUserObject.userConsent,
         });
 
         toast.success("Dein Profilname wurde erfolgreich erstellt.", {
@@ -208,7 +211,7 @@ export default function Settings() {
       });
 
     const {} = await supabase
-      .from("public-user")
+      .from("public_user")
       .update({ profilPicture: data?.path })
       .eq("userId", publicUserObject.userId);
 
@@ -224,7 +227,7 @@ export default function Settings() {
       .remove([publicUserObject.profilPicture]);
 
     const {} = await supabase
-      .from("public-user")
+      .from("public_user")
       .update({
         profilPicture: "",
       })
@@ -237,7 +240,7 @@ export default function Settings() {
   }
 
   async function loadPrivateUserData() {
-    const { data } = await supabase.from("private-user").select();
+    const { data } = await supabase.from("private_user").select();
 
     if (data?.length !== 0) {
       setPrivateDataExist(true);
@@ -325,7 +328,7 @@ export default function Settings() {
       setMinimumSignStreetName(true);
       setUpdateHousenumber(privateUserObject.houseNumber);
       setMinimumSignHousenumber(true);
-      setUpdatePLZ(privateUserObject.PLZ);
+      setUpdatePLZ(String(privateUserObject.PLZ));
       setMinimumSignPLZ(true);
       setUpdateCountry(privateUserObject.country);
       setMinimumSignCountry(true);
@@ -347,12 +350,12 @@ export default function Settings() {
 
     if (findUser) {
       const {} = await supabase
-        .from("private-user")
+        .from("private_user")
         .update({
           city: updateCityName,
           street: updateStreetName,
           houseNumber: updateHousenumber,
-          PLZ: updatePLZ,
+          PLZ: Number(updatePLZ),
           country: updateCountry,
         })
         .eq("id", currentPrivateUserId);
@@ -371,12 +374,12 @@ export default function Settings() {
       setMinimumSignPLZ(false);
       setMinimumSignCountry(false);
     } else {
-      const {} = await supabase.from("private-user").insert({
+      const {} = await supabase.from("private_user").insert({
         userId: currentSessionUserId,
         city: updateCityName,
         street: updateStreetName,
         houseNumber: updateHousenumber,
-        PLZ: updatePLZ,
+        PLZ: Number(updatePLZ),
         country: updateCountry,
       });
       loadPrivateUserData();
@@ -399,7 +402,7 @@ export default function Settings() {
   }
 
   async function opendeletePrivateUserDataPopUp() {
-    const { data } = await supabase.from("private-user").select();
+    const { data } = await supabase.from("private_user").select();
 
     if (data?.length !== 0) {
       setDeletePrivateUserDataPopUp(true);
@@ -407,7 +410,7 @@ export default function Settings() {
   }
 
   async function deletePrivateUserData(id: number) {
-    const {} = await supabase.from("private-user").delete().eq("id", id);
+    const {} = await supabase.from("private_user").delete().eq("id", id);
 
     toast.success(
       "Deine Adressdaten wurden erfolgreich aus der Datenbank entfernt.",
@@ -429,7 +432,7 @@ export default function Settings() {
       city: "",
       country: "",
       id: 0,
-      PLZ: "",
+      PLZ: 0,
       street: "",
       houseNumber: 0,
       userId: "",
@@ -442,7 +445,7 @@ export default function Settings() {
       city: "",
       country: "",
       id: 0,
-      PLZ: "",
+      PLZ: 0,
       street: "",
       houseNumber: 0,
       userId: "",
@@ -450,12 +453,13 @@ export default function Settings() {
     setPrivateUserArray([]);
     setCurrentPrivateUserId(0);
     setCurrentSessionUserId("");
+    checkUserSession();
     navigation(`/private-route/user/${publicUserObject.userId}`);
   }
 
   async function deleteAccount() {
     const {} = await supabase
-      .from("public-user")
+      .from("public_user")
       .delete()
       .eq("userId", publicUserObject.userId);
 
@@ -470,44 +474,46 @@ export default function Settings() {
       .eq("userId", publicUserObject.userId);
 
     const {} = await supabase
-      .from("private-user")
+      .from("private_user")
       .delete()
       .eq("userId", publicUserObject.userId);
 
     const {} = await supabase
-      .from("like-dislike-posts")
+      .from("like_dislike_posts")
       .delete()
       .eq("userId", publicUserObject.userId);
 
     const {} = await supabase
-      .from("like-dislike-comments")
-      .delete()
-      .eq("userId", publicUserObject.userId);
-
-    const {} = await supabase
-      .from("follow")
+      .from("like_dislike_comments")
       .delete()
       .eq("userId", publicUserObject.userId);
 
     const {} = await supabase
       .from("follow")
       .delete()
-      .eq("FollowUserId", publicUserObject.userId);
+      .eq("userId", publicUserObject.userId);
+
+    const {} = await supabase
+      .from("follow")
+      .delete()
+      .eq("followUserId", publicUserObject.userId);
 
     const {} = await supabase.storage
       .from("profilepicture")
       .remove([publicUserObject.profilPicture]);
 
+    const {} = await supabase.auth.admin.deleteUser(publicUserObject.userId);
+
     const {} = await supabase.auth.signOut();
 
     setPublicUserObject({
       ...publicUserObject,
-      Profilname: "",
+      profilName: "",
       profilPicture: "",
       userId: "",
-      AGBConsent: false,
+      agbConsent: false,
       dataProtectionConsent: false,
-      userDataConsent: false,
+      userConsent: false,
     });
 
     setUserAuthObject({
@@ -518,17 +524,15 @@ export default function Settings() {
     setDeleteAccountPopUp(false);
 
     navigation("/");
-
-    const {} = await supabase.auth.admin.deleteUser(publicUserObject.userId);
   }
 
   async function logOutReturnConsent() {
     const {} = await supabase
-      .from("public-user")
+      .from("public_user")
       .update({
-        AGBConsent: false,
+        agbConsent: false,
         dataProtectionConsent: false,
-        userDataConsent: false,
+        userConsent: false,
       })
       .eq("userId", publicUserObject.userId);
 
@@ -536,11 +540,11 @@ export default function Settings() {
 
     setPublicUserObject({
       ...publicUserObject,
-      Profilname: "",
+      profilName: "",
       userId: "",
-      AGBConsent: false,
+      agbConsent: false,
       dataProtectionConsent: false,
-      userDataConsent: false,
+      userConsent: false,
     });
 
     setUserAuthObject({
@@ -982,7 +986,9 @@ export default function Settings() {
                   : ""}
               </td>
               <td className="private-data-div-info number w-[200px] px-3 text-[17px] text-right bg-white border border-gray-400">
-                {privateUserObject.PLZ}
+                {privateUserObject.PLZ !== 0
+                  ? privateUserObject.houseNumber
+                  : ""}
               </td>
               <td className="private-data-div-info w-[200px] px-3 text-[17px] bg-white border border-gray-400">
                 {privateUserObject.country}

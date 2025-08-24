@@ -2,20 +2,20 @@ import { createContext } from "react";
 import type { Tables } from "./database.types";
 
 interface PublicUserContext {
-  publicUserObject: Tables<"public-user">;
-  setPublicUserObject: (value: Tables<"public-user">) => void;
+  publicUserObject: Tables<"public_user">;
+  setPublicUserObject: (value: Tables<"public_user">) => void;
 }
 
 export const publicUserContext = createContext<PublicUserContext>({
   publicUserObject: {
     id: 0,
     userId: "",
-    Profilname: "",
+    profilName: "",
     profilPicture: "",
-    Statustext: "",
-    AGBConsent: false,
+    statusText: "",
+    agbConsent: false,
     dataProtectionConsent: false,
-    userDataConsent: false,
+    userConsent: false,
   },
   setPublicUserObject: () => {},
 });
