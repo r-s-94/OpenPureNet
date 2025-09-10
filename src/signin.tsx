@@ -178,7 +178,8 @@ export default function SignIn() {
           <span className="mr-3 text-red-500">Hinweis!</span>Die
           Social-Media-Plattform OpenPureNet befindet sich noch in einer
           Testphase. Solange wie die Testphase läuft, ist die Nutzung kostenlos.
-          Registrierungen laufen über die E-Mail-Adresse open-pure-net@web.de.
+          Wer sich Registrieren möchte sendet bitte eine E-Mail an
+          open-pure-net@web.de.
         </div>
       </div>
 
