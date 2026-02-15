@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { userAuthContext } from "./userAuthContext";
 import { Navigate, Outlet } from "react-router-dom";
 import ErrorPage from "./errorPage";

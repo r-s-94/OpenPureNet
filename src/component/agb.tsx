@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import AGBComponent from "./agbComponent";
-import { useContext } from "react";
-import { userAuthContext } from "@/userAuthContext";
+//import { useContext } from "react";
+//import { userAuthContext } from "@/userAuthContext";
 import { supabase } from "@/supabase";
 //import "../responsive.css";
 
 export default function AGB() {
-  const { userAuthObject } = useContext(userAuthContext);
+  //const { userAuthObject } = useContext(userAuthContext);
   const navigation = useNavigate();
 
   async function checkUserSession() {

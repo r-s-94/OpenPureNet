@@ -20,7 +20,6 @@ import {
   DialogDescription,
 } from "./components/ui/dialog";
 import { publicUserContext } from "./publicUserContext";
-import { userAuthContext } from "./userAuthContext";
 import { navContext } from "./navContext";
 
 export default function SignIn() {

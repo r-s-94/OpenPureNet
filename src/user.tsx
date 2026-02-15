@@ -17,7 +17,6 @@ import { alphabeta_zA_ZArray } from "./alphabet";
 import "./responsive.css";
 import Nav from "./nav";
 import { navContext } from "./navContext";
-import { functionContext } from "./functionContext";
 import { mediumCategoryArray } from "./mediumCategory";
 
 export default function User() {
@@ -67,7 +66,6 @@ export default function User() {
   const { globalSearchUserObject, setGlobalSearchUserObject } =
     useContext(searchUserContext);
   const { setCurrentActiveNavArea } = useContext(navContext);
-  const navigation = useNavigate();
   const { userId } = useParams();
   const resetInputFile = useRef<HTMLInputElement | null>(null);
   /*const [searchUserObject, setSearchUserObject] = useState<SearchUserDatatype>({
