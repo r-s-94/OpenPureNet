@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./user.css";
 import { useEffect, useContext, useState, useRef } from "react";
 import { publicUserContext } from "./publicUserContext";
