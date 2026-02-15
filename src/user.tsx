@@ -76,6 +76,8 @@ export default function User() {
     status: false,
   });*/
 
+  /**/
+
   useEffect(() => {
     console.log(publicUserObject);
     const fetchAllUserData = async () => {
