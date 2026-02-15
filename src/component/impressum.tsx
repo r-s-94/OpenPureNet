@@ -8,7 +8,7 @@ export default function Impressum() {
   const navigation = useNavigate();
 
   function checkUserSession() {
-    if (userAuthObject.accessToken) {
+    if (userAuthObject !== null) {
       navigation("/private-route/overview");
     } else {
       navigation("/");

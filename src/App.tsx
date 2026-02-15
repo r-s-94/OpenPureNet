@@ -10,12 +10,10 @@ import { publicUserContext } from "./publicUserContext";
 import Impressum from "./component/impressum";
 import AGB from "./component/agb";
 import DataProtection from "./component/dataProtection";
-import type { UserAuthObject } from "./userAuthContext";
 import { userAuthContext } from "./userAuthContext";
 import PrivateRoute from "./privateRoute";
 import { supabase } from "./supabase";
-import { serachUserContext } from "./searchUserContext";
-import type { SearchUserObject } from "./searchUserContext";
+import { searchUserContext, type SearchUserObject } from "./searchUserContext";
 import Message from "./component/message";
 import { messageContext } from "./messageContext";
 import type { MessageObject } from "./messageContext";
@@ -24,40 +22,45 @@ import { functionContext } from "./functionContext";
 import UpadatePassword from "./updatePassword";
 import type { PostObject } from "./postContext";
 import ForgotPassword from "./forgotPassword";
+import Users from "./users";
+import { navContext } from "./navContext";
+import NewPost from "./newPost";
+import type { Session } from "@supabase/supabase-js";
+import ErrorPage from "./errorPage";
 
 function App() {
+  //const navigation = useNavigate();
+
   const [postsArray, setPostsArray] = useState<PostObject[]>([]);
 
   const [publicUserObject, setPublicUserObject] = useState<
     Tables<"public_user">
   >({
     id: 0,
-    profilName: "",
-    profilPicture: "",
-    statusText: "",
-    userId: "",
-    agbConsent: false,
-    dataProtectionConsent: false,
-    userConsent: false,
+    profil_name: "",
+    profil_picture: "",
+    status_text: "",
+    user_id: "",
+    agb_consent: false,
+    data_protection_consent: false,
+    user_consent: false,
   });
 
-  const [userAuthObject, setUserAuthObject] = useState<UserAuthObject>({
-    accessToken: "",
-    isAuthenticated: false,
-  });
+  const [userAuthObject, setUserAuthObject] = useState<Session | null>(null);
 
-  const [searchUserObject, setSearchUserObject] = useState<SearchUserObject>({
-    id: 0,
-    userId: "",
-    profilName: "",
-    profilPicture: "",
-    agbConsent: false,
-    dataProtectionConsent: false,
-    userConsent: false,
-    statusText: "",
-    searchStatus: false,
-    fromMessage: false,
-  });
+  const [globalSearchUserObject, setGlobalSearchUserObject] =
+    useState<SearchUserObject>({
+      id: 0,
+      user_id: "",
+      profil_name: "",
+      profil_picture: "",
+      agb_consent: false,
+      data_protection_consent: false,
+      user_consent: false,
+      status_text: "",
+      search_status: false,
+      from_message: false,
+    });
 
   const [messageArray, setMessageArray] = useState<MessageObject[]>([]);
 
@@ -65,9 +68,183 @@ function App() {
 
   const [consentPopUp, setConsentPopUp] = useState<boolean>(false);
 
+  const [currentActiveNavArea, setCurrentActiveNavArea] = useState<string>("");
+
   useEffect(() => {
     checkUserSession();
+    loadFirstUserData();
   }, []);
+
+  async function checkUserSession() {
+    const { data: session } = await supabase.auth.getSession();
+
+    console.log(session);
+    //console.log(session.session?.user);
+
+    if (session.session) {
+      /*const currentSession = session.session;
+      const currentSessionUser = session.session.user;
+      const currentSessionAppMetadata = session.session.user.app_metadata;*/
+
+      setUserAuthObject(session.session);
+
+      /*setUserAuthObject({
+        ...userAuthObject,
+        access_token: currentSession.access_token,
+        expires_at: currentSession.expires_at!,
+        refresh_token: currentSession.refresh_token,
+        user: {
+          app_metadata: {
+            provider: currentSessionAppMetadata.provider!,
+            providers: [""],
+          },
+          aud: currentSessionUser.aud,
+          confirmed_at: currentSessionUser.confirmed_at!,
+          created_at: currentSessionUser.created_at,
+          email: currentSessionUser.email!,
+          email_confirmed_at: currentSessionUser.email_confirmed_at!,
+          id: currentSessionUser.id,
+          identities: [],
+          is_anonymous: currentSessionUser.is_anonymous!,
+          last_sign_in_at: currentSessionUser.last_sign_in_at!,
+          phone: currentSessionUser.phone!,
+          role: currentSessionUser.role!,
+          updated_at: currentSessionUser.updated_at!,
+          user_metadata: {
+            email_verified: false,
+          },
+        },
+      });*/
+    }
+  }
+
+  async function loadFirstUserData() {
+    console.log("Check");
+    const { data: session } = await supabase.auth.getSession();
+
+    const { data: public_user } = await supabase
+      .from("public_user")
+      .select()
+      .eq("user_id", session.session!.user.id);
+
+    const { count: followCount } = await supabase
+      .from("follow")
+      .select("*", { count: "exact" })
+      .eq("follow", true)
+      .eq("follow_user_id", session.session!.user.id)
+      .is("follow_request", false)
+      .eq("is_seen", false);
+
+    //console.log(followCount);
+    //
+    if (public_user && public_user?.length > 0) {
+      const publicUserData = public_user![0];
+
+      setPublicUserObject({
+        ...publicUserObject,
+        id: publicUserData.id,
+        user_id: session.session!.user.id,
+        profil_name: publicUserData.profil_name,
+        profil_picture: publicUserData.profil_picture,
+        status_text: publicUserData.status_text,
+        agb_consent: publicUserData.agb_consent,
+        data_protection_consent: publicUserData.data_protection_consent,
+        user_consent: publicUserData.user_consent,
+      });
+    }
+
+    if (followCount) {
+      setMessageCount(followCount);
+    } else {
+      setMessageCount(0);
+    }
+  }
+
+  /*async function loadAllUserData() {
+    console.log("Check");
+    const { data: session } = await supabase.auth.getSession();
+
+    const { data: public_user } = await supabase
+      .from("public_user")
+      .select()
+      .eq("user_id", session.session!.user.id);
+
+    if (public_user && public_user?.length > 0) {
+      const publicUserData = public_user![0];
+
+      setPublicUserObject({
+        ...publicUserObject,
+        id: publicUserData.id,
+        user_id: session.session!.user.id,
+        profil_name: publicUserData.profil_name,
+        profil_picture: publicUserData.profil_picture,
+        status_text: publicUserData.status_text,
+        agb_consent: publicUserData.agb_consent,
+        data_protection_consent: publicUserData.data_protection_consent,
+        user_consent: publicUserData.user_consent,
+      });
+    }
+  }*/
+
+  async function logOut() {
+    const {} = await supabase.auth.signOut();
+
+    setPublicUserObject({
+      ...publicUserObject,
+      profil_name: "",
+      user_id: "",
+      profil_picture: "",
+      agb_consent: false,
+      data_protection_consent: false,
+      user_consent: false,
+    });
+
+    /*setUserAuthObject({
+      ...userAuthObject,
+      access_token: "",
+      expires_at: 0,
+      refresh_token: "",
+      user: {
+        app_metadata: {
+          provider: "",
+          providers: [""],
+        },
+        aud: "",
+        confirmed_at: "",
+        created_at: "",
+        email: "",
+        email_confirmed_at: "",
+        id: "",
+        identities: [],
+        is_anonymous: false,
+        last_sign_in_at: "",
+        phone: "",
+        role: "",
+        updated_at: "",
+        user_metadata: {
+          email_verified: false,
+        },
+      },
+      weak_password: null,
+    });*/
+
+    setGlobalSearchUserObject({
+      ...globalSearchUserObject,
+      user_id: "",
+      profil_name: "",
+      profil_picture: "",
+      agb_consent: false,
+      data_protection_consent: false,
+      user_consent: false,
+      status_text: "",
+      search_status: false,
+      from_message: false,
+    });
+
+    setMessageArray([]);
+
+    //navigation("/");
+  }
 
   const router = createBrowserRouter([
     {
@@ -87,8 +264,16 @@ function App() {
           element: <User />,
         },
         {
-          path: "settings",
+          path: "post",
+          element: <NewPost />,
+        },
+        {
+          path: "settings/:userId",
           element: <Settings />,
+        },
+        {
+          path: "users",
+          element: <Users />,
         },
         {
           path: "message",
@@ -117,120 +302,54 @@ function App() {
       path: "update-password",
       element: <UpadatePassword />,
     },
+    {
+      path: "error-page",
+      element: <ErrorPage />,
+    },
   ]);
 
-  async function checkUserSession() {
-    const { data: session } = await supabase.auth.getSession();
-
-    console.log(session.session?.user);
-
-    const { data: public_user } = await supabase
-      .from("public_user")
-      .select()
-      .eq("userId", session.session!.user.id);
-
-    const { count: followCount } = await supabase
-      .from("follow")
-      .select("*", { count: "exact" })
-      .eq("follow", true)
-      .eq("followUserId", session.session!.user.id)
-      .is("followRequest", null)
-      .eq("is_seen", false);
-
-    if (session.session) {
-      const publicUserData = public_user![0];
-
-      if (public_user && public_user?.length > 0) {
-        setPublicUserObject({
-          ...publicUserObject,
-          id: publicUserData.id,
-          userId: session.session?.user.id,
-          profilName: publicUserData.profilName,
-          profilPicture: publicUserData.profilPicture,
-          statusText: publicUserData.statusText,
-          agbConsent: publicUserData.agbConsent,
-          dataProtectionConsent: publicUserData.dataProtectionConsent,
-          userConsent: publicUserData.userConsent,
-        });
-      }
-
-      setUserAuthObject({
-        ...userAuthObject,
-        accessToken: session.session.access_token,
-        isAuthenticated: true,
-      });
-    }
-
-    if (followCount) {
-      setMessageCount(followCount);
-    } else {
-      setMessageCount(0);
-    }
-  }
-
-  async function logOut() {
-    const {} = await supabase.auth.signOut();
-
-    setPublicUserObject({
-      ...publicUserObject,
-      profilName: "",
-      userId: "",
-      profilPicture: "",
-      agbConsent: false,
-      dataProtectionConsent: false,
-      userConsent: false,
-    });
-
-    setUserAuthObject({
-      ...userAuthObject,
-      accessToken: "",
-    });
-
-    setSearchUserObject({
-      ...searchUserObject,
-      userId: "",
-      profilName: "",
-      profilPicture: "",
-      agbConsent: false,
-      dataProtectionConsent: false,
-      userConsent: false,
-      statusText: "",
-      searchStatus: false,
-      fromMessage: false,
-    });
-
-    setMessageArray([]);
-  }
-
   return (
-    <functionContext.Provider
-      value={{ consentPopUp, setConsentPopUp, checkUserSession, logOut }}
+    <navContext.Provider
+      value={{
+        currentActiveNavArea,
+        setCurrentActiveNavArea,
+      }}
     >
-      <userAuthContext.Provider value={{ userAuthObject, setUserAuthObject }}>
-        <publicUserContext.Provider
-          value={{ publicUserObject, setPublicUserObject }}
-        >
-          <serachUserContext.Provider
-            value={{ searchUserObject, setSearchUserObject }}
+      <functionContext.Provider
+        value={{
+          consentPopUp,
+          setConsentPopUp,
+          checkUserSession,
+          loadFirstUserData,
+          logOut,
+        }}
+      >
+        <userAuthContext.Provider value={{ userAuthObject, setUserAuthObject }}>
+          <publicUserContext.Provider
+            value={{ publicUserObject, setPublicUserObject }}
           >
-            <messageContext.Provider
-              value={{
-                messageArray,
-                setMessageArray,
-                messageCount,
-                setMessageCount,
-              }}
+            <searchUserContext.Provider
+              value={{ globalSearchUserObject, setGlobalSearchUserObject }}
             >
-              <postsContext.Provider value={{ postsArray, setPostsArray }}>
-                <div className="open-pure-net">
-                  <RouterProvider router={router} />
-                </div>
-              </postsContext.Provider>
-            </messageContext.Provider>
-          </serachUserContext.Provider>
-        </publicUserContext.Provider>
-      </userAuthContext.Provider>
-    </functionContext.Provider>
+              <messageContext.Provider
+                value={{
+                  messageArray,
+                  setMessageArray,
+                  messageCount,
+                  setMessageCount,
+                }}
+              >
+                <postsContext.Provider value={{ postsArray, setPostsArray }}>
+                  <div className="open-pure-net">
+                    <RouterProvider router={router} />
+                  </div>
+                </postsContext.Provider>
+              </messageContext.Provider>
+            </searchUserContext.Provider>
+          </publicUserContext.Provider>
+        </userAuthContext.Provider>
+      </functionContext.Provider>
+    </navContext.Provider>
   );
 }
 

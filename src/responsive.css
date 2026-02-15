@@ -1,5 +1,5 @@
-@media screen and (min-width: 1650px) {
-  /*SignIn*/
+/*@media screen and (min-width: 1650px) {
+  //SignIn
 
   .logo-img {
     width: 9rem;
@@ -30,7 +30,7 @@
     margin-top: 4.8rem;
   }
 
-  /*Overview*/
+  //Overview
 
   .consent-popup-agb-div {
     padding-top: 75rem;
@@ -174,7 +174,7 @@
     align-items: center;
   }
 
-  /*Post*/
+  //Post
 
   .post {
     margin: 0;
@@ -218,7 +218,7 @@
     width: 1.3rem;
   }
 
-  /*Chat*/
+  //Chat
 
   .comment-overview-popup-close-button {
     width: 9rem;
@@ -256,7 +256,7 @@
     margin: 1rem 0 1rem 0.5rem;
   }
 
-  /*User*/
+  //User
 
   .update-post-popup-input-button-div {
     margin: 0 auto;
@@ -295,7 +295,7 @@
     padding-bottom: 1rem;
   }
 
-  /*Settings*/
+  //Settings
 
   .delete-account-popup-content {
     margin-top: 0.7rem;
@@ -312,11 +312,11 @@
     font-size: 17px;
   }
 
-  /*Impressum*/
+  //Impressum
 }
 
 @media screen and (max-width: 1650px) {
-  /*SignIn*/
+  //SignIn
 
   .logo-img {
     width: 8rem;
@@ -347,7 +347,7 @@
     margin-top: 0.1rem;
   }
 
-  /*Overview*/
+  //Overview
 
   .consent-popup-agb-div {
     padding-top: 75rem;
@@ -494,13 +494,13 @@
     align-items: center;
   }
 
-  /*Message*/
+  //Message
 
   .message-overview-div {
     height: 42rem;
   }
 
-  /*Post*/
+  //Post
 
   .post {
     margin: 0;
@@ -545,7 +545,7 @@
     width: 1.3rem;
   }
 
-  /*Chat*/
+  //Chat
 
   .comment-overview-popup-header {
     height: 35rem;
@@ -588,7 +588,7 @@
     text-align: left;
   }
 
-  /*User*/
+  //User
 
   .update-post-popup-input-button-div {
     margin: 0 auto;
@@ -632,7 +632,7 @@
     padding-bottom: 1rem;
   }
 
-  /*Settings*/
+  //Settings
 
   .settings-generally-data-main-div,
   .private-data-overview-div {
@@ -653,11 +653,11 @@
     font-size: 17px;
   }
 
-  /*AGB*/
+  //AGB
 }
 
 @media screen and (max-width: 1400px) {
-  /*SignIn*/
+  //SignIn
 
   .logo-img {
     width: 7rem;
@@ -691,7 +691,7 @@
     margin-top: 1.3rem;
   }
 
-  /*Overview*/
+  //Overview
 
   .consent-popup-agb-div {
     padding-top: 80rem;
@@ -790,13 +790,13 @@
     align-items: center;
   }
 
-  /*Message*/
+  //Message
 
   .message-overview-div {
     width: 50%;
   }
 
-  /*Post*/
+  //Post
 
   .post {
     margin: 0;
@@ -832,7 +832,7 @@
     width: 1.3rem;
   }
 
-  /*Chat*/
+  //Chat
 
   .comment-overview-popup {
     height: 37rem;
@@ -842,7 +842,7 @@
     height: 30rem;
   }
 
-  /*User*/
+  //User
 
   .user-section {
     padding-bottom: 1rem;
@@ -855,19 +855,19 @@
     padding-bottom: 1rem;
   }
 
-  /*Settings*/
+  //Settings
 
   .settings-delete-user-account {
     margin-bottom: 5rem;
   }
 
-  /*AGB*/
+  //AGB
 
   .agb-component {
     margin: 0;
   }
 
-  /*Data-Protection*/
+  //Data-Protection
 
   .data-protection-component {
     margin: 0;
@@ -875,7 +875,7 @@
 }
 
 @media screen and (max-width: 1000px) {
-  /*SignIn*/
+  //SignIn
 
   .logo-img {
     width: 6rem;
@@ -902,7 +902,7 @@
     display: block;
   }
 
-  /*Overview*/
+  //Overview
 
   .consent-popup {
     padding: 1.5rem 0.5rem;
@@ -1038,7 +1038,7 @@
     align-items: center;
   }
 
-  /*Message*/
+  //Message
 
   .to-overview-icon {
     width: 2.5rem;
@@ -1068,7 +1068,7 @@
     font-size: 1.1rem;
   }
 
-  /*Post*/
+  //Post
 
   .post-no-support-content-popup-attention {
     font-size: 1.4rem;
@@ -1112,13 +1112,13 @@
     width: 1.3rem;
   }
 
-  /*Chat*/
+  //Chat
 
   .comment-overview-popup {
     height: 30rem;
   }
 
-  /*User*/
+  //User
 
   .update-post-popup-input-button-div {
     margin: 0 auto;
@@ -1182,7 +1182,7 @@
     height: 34rem;
   }
 
-  /*Settings*/
+  //Settings
 
   .to-user-icon,
   .logout-icon {
@@ -1341,7 +1341,7 @@
     font-size: 1rem;
   }
 
-  /*Forget-Password*/
+  //Forget-Password
 
   .to-signin-icon {
     width: 2.7rem;
@@ -1351,15 +1351,15 @@
     text-align: left;
   }
 
-  /*Update-Password*/
+  //Update-Password
 
-  /*AGB*/
+  //AGB
 
   .agb-paragraph-div {
     margin: 0 5rem;
   }
 
-  /*Data-Protection*/
+  //Data-Protection
 
   .data-protection-component {
     padding: 3rem 0 1rem 0;
@@ -1385,7 +1385,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  /*SignIn*/
+  //SignIn
 
   .logo-img {
     width: 6rem;
@@ -1420,7 +1420,7 @@
     display: none;
   }
 
-  /*Overview*/
+  //Overview
 
   .consent-popup {
     padding: 1.5rem 0;
@@ -1596,7 +1596,7 @@
     row-gap: 0.5rem;
   }
 
-  /*Message*/
+  //Message
 
   .to-overview-icon {
     width: 2rem;
@@ -1620,7 +1620,7 @@
     font-size: 1rem;
   }
 
-  /*Post*/
+  //Post
 
   .post-no-support-content-popup-attention {
     font-size: 1.3rem;
@@ -1685,7 +1685,7 @@
     width: 1.3rem;
   }
 
-  /*Chat*/
+  //Chat
 
   .comment-overview-popup {
     height: 33rem;
@@ -1731,7 +1731,7 @@
     width: 100%;
   }
 
-  /*User*/
+  //User
 
   .update-post-popup-input-button-div {
     width: 20rem;
@@ -1819,7 +1819,7 @@
     padding: 1rem 0.3rem;
   }
 
-  /*Settings*/
+  //Settings
 
   .settings-nav-bar {
     margin: 50px 0;
@@ -1911,7 +1911,7 @@
     font-size: 17px;
   }
 
-  /*Forget-Password*/
+  //Forget-Password
 
   .to-signin-icon {
     width: 2.5rem;
@@ -1937,7 +1937,7 @@
     font-size: 17px;
   }
 
-  /*Update-Password*/
+  //Update-Password
 
   .update-password-div {
     width: 75%;
@@ -1955,7 +1955,7 @@
     font-size: 17px;
   }
 
-  /*Impressum*/
+  //Impressum
 
   .impressum-headline {
     font-size: 1.7rem;
@@ -1975,7 +1975,7 @@
     font-size: 1.1rem;
   }
 
-  /*AGB*/
+  //AGB
 
   .agb-headline {
     margin-top: 1rem;
@@ -1986,7 +1986,7 @@
     font-size: 1.1rem;
   }
 
-  /*Data-Protection*/
+  //Data-Protection
 
   .data-protection-headline {
     font-size: 1.7rem;
@@ -2009,7 +2009,7 @@
 }
 
 @media screen and (max-width: 400px) {
-  /*SignIn*/
+  //SignIn
 
   .logo-img {
     width: 4rem;
@@ -2043,7 +2043,7 @@
     display: none;
   }
 
-  /*Overview*/
+  //Overview
 
   .consent-popup-agb-div {
     padding-top: 80rem;
@@ -2185,13 +2185,13 @@
     row-gap: 0.3rem;
   }
 
-  /*Message*/
+  //Message
 
   .to-overview-icon {
     margin-left: -5rem;
   }
 
-  /*Post*/
+  //Post
 
   .post {
     margin: 0;
@@ -2226,7 +2226,7 @@
     width: 1rem;
   }
 
-  /*Chat*/
+  //Chat
 
   .comment-overview-popup {
     padding: 1.5rem 0.5rem;
@@ -2284,7 +2284,7 @@
     column-gap: 7%;
   }
 
-  /*User*/
+  //User
 
   .create-post-popup,
   .update-post-popup {
@@ -2374,7 +2374,7 @@
     padding: 0.5rem;
   }
 
-  /*Settings*/
+  //Settings
 
   .settings-success-toasty {
     height: 11rem;
@@ -2476,21 +2476,21 @@
     font-size: 16px;
   }
 
-  /*Forget-Password*/
+  //Forget-Password
 
   .forget-password-div {
     width: 90%;
   }
 
-  /*Update-Password*/
+  //Update-Password
 
   .update-password-div {
     width: 90%;
   }
 
-  /*Impressum*/
+  //Impressum
 
-  /*AGB*/
+  //AGB
 
   .agb-headline {
     font-size: 1.7rem;
@@ -2505,7 +2505,7 @@
     font-size: 1.3rem;
   }
 
-  /*Data-Protection*/
+  //Data-Protection
 
   .data-protection-headline {
     margin: 0.3rem auto;
@@ -2538,4 +2538,4 @@
     padding: 0.1rem 0.3rem;
     font-size: 0.9rem;
   }
-}
+}*/

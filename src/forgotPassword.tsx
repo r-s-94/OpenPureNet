@@ -18,7 +18,7 @@ export default function ForgotPassword() {
         {
           unstyled: true,
           className: "w-[25rem] h-[10rem] px-5",
-        }
+        },
       );
     } else {
       toast.error(
@@ -26,7 +26,7 @@ export default function ForgotPassword() {
         {
           unstyled: true,
           className: "w-[27rem] h-[10rem] px-7",
-        }
+        },
       );
     }
 

@@ -27,19 +27,19 @@ export default function Comment({
       const { data: like_dislike_comment } = await supabase
         .from("like_dislike_comments")
         .select()
-        .eq("userId", session.session!.user.id)
-        .eq("commentId", comment.id);
+        .eq("user_id", session.session!.user.id)
+        .eq("comment_id", comment.id);
 
       const { count: like_comment_count } = await supabase
         .from("like_dislike_comments")
         .select("*", { count: "exact", head: true })
-        .eq("commentId", comment.id)
+        .eq("comment_id", comment.id)
         .eq("type", "like");
 
       const { count: dislike_comment_count } = await supabase
         .from("like_dislike_comments")
         .select("*", { count: "exact", head: true })
-        .eq("commentId", comment.id)
+        .eq("comment_id", comment.id)
         .eq("type", "dislike");
 
       if (like_dislike_comment) {
@@ -70,7 +70,7 @@ export default function Comment({
     commentId: number,
     userId: string,
     currentLikeDislike: string,
-    prevLikeDislike: string
+    prevLikeDislike: string,
   ) {
     if (currentLikeDislike === prevLikeDislike) {
       const {} = await supabase
@@ -92,10 +92,10 @@ export default function Comment({
       const currentTimestamp = new Date().toLocaleString();
 
       const {} = await supabase.from("like_dislike_comments").insert({
-        userId: userId,
+        user_id: userId,
         type: currentLikeDislike,
-        timeStamp: currentTimestamp,
-        commentId: commentId,
+        time_stamp: currentTimestamp,
+        comment_id: commentId,
       });
 
       loadLikeDislikeComment(commentId);
@@ -109,8 +109,8 @@ export default function Comment({
     const { data: like_dislike_comment } = await supabase
       .from("like_dislike_comments")
       .select()
-      .eq("userId", session.session!.user.id)
-      .eq("commentId", commentId);
+      .eq("user_id", session.session!.user.id)
+      .eq("comment_id", commentId);
 
     if (like_dislike_comment) {
       if (like_dislike_comment[0] !== undefined) {
@@ -124,13 +124,13 @@ export default function Comment({
     const { count: like_comment_count } = await supabase
       .from("like_dislike_comments")
       .select("*", { count: "exact", head: true })
-      .eq("commentId", commentId)
+      .eq("comment_id", commentId)
       .eq("type", "like");
 
     const { count: dislike_comment_count } = await supabase
       .from("like_dislike_comments")
       .select("*", { count: "exact", head: true })
-      .eq("commentId", commentId)
+      .eq("comment_id", commentId)
       .eq("type", "dislike");
 
     if (like_comment_count) {
@@ -148,11 +148,11 @@ export default function Comment({
 
   return (
     <div className="comment-div my-3 p-4 border border-gray-300 shadow-lg rounded-sm ">
-      <div className="comment-user-div flex justify-start items-center gap-x-3">
-        {comment.public_user.profilPicture !== "" ? (
+      <div className="comment-user-div py-3 flex justify-start items-center gap-x-3">
+        {comment.public_user.profil_picture !== "" ? (
           <img
-            src={`https://eypauwdeqovcsrjwuxtj.supabase.co/storage/v1/object/public/profilepicture/${comment.public_user.profilPicture}`}
-            className="comment-user-picture w-13 h-13 bg-cover rounded-[50%]"
+            src={`https://pmhsscblwzipolnmirow.supabase.co/storage/v1/object/public/profilepicture/${comment.public_user.profil_picture}`}
+            className="comment-user-picture w-10 h-10 bg-cover rounded-[50%]"
             alt=""
           />
         ) : (
@@ -162,7 +162,7 @@ export default function Comment({
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            className="comment-placeholder-icon w-7 text-blue-400 rounded-sm hover:text-white"
+            className="comment-placeholder-icon w-9 text-blue-500 rounded-sm"
           >
             <path
               stroke-linecap="round"
@@ -171,20 +171,28 @@ export default function Comment({
             />
           </svg>
         )}
-        <p className="comment-user-name">{comment.public_user.profilName}</p>
+        <p className="comment-user-name">{comment.public_user.profil_name}</p>
       </div>
 
-      <p className="comment-text">{comment.text}</p>
-      <p className="comment-timestamp text-end">{comment.timeStamp}</p>
-      <div className="comment-option-button-div pt-3 flex justify-around items-center border border-t-gray-200 border-l-white border-r-white border-b-white">
+      <p className="comment-text py-3">{comment.text}</p>
+      <p className="comment-timestamp text-gray-500 text-end">
+        {new Date(Number(comment.time_stamp)).toLocaleString("de-DE", {
+          timeStyle: "short",
+        })}
+        {"  "}
+        {new Date(Number(comment.time_stamp)).toLocaleString("de-DE", {
+          dateStyle: "medium",
+        })}
+      </p>
+      <div className="comment-option-button-div pt-5 pb-3 flex justify-around items-center border border-t-gray-200 border-l-white border-r-white border-b-white">
         <div className="comment-edit-delete-button-div flex justify-center items-center gap-x-5">
           <button
             onClick={() => {
               openEditCommentPopUp(comment.id);
             }}
             className={`comment-edit-button ${
-              comment.userId === publicUserObject.userId ? "" : "hidden"
-            } px-2 py-0.5 flex justify-center items-center gap-x-1 bg-blue-400 text-white border border-white rounded-sm cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-400`}
+              comment.user_id === publicUserObject.user_id ? "" : "hidden"
+            } px-2 py-0.5 flex justify-center items-center gap-x-1 bg-blue-500 text-white border border-white rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -192,7 +200,7 @@ export default function Comment({
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              className="comment-edit-icon w-6 cursor-pointer"
+              className="comment-edit-icon w-6"
             >
               <path
                 stroke-linecap="round"
@@ -206,8 +214,8 @@ export default function Comment({
               openDeleteCommentPopUp(comment.id);
             }}
             className={`comment-delete-button ${
-              comment.userId === publicUserObject.userId ? "" : "hidden"
-            } px-2 py-0.5 flex justify-center items-center gap-x-1 bg-red-500 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500`}
+              comment.user_id === publicUserObject.user_id ? "" : "hidden"
+            } px-2 py-0.5 flex justify-center items-center gap-x-1 bg-red-600 text-white border rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-red-600 hover:border-red-600`}
           >
             {" "}
             <svg
@@ -216,7 +224,7 @@ export default function Comment({
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              className="comment-delete-icon w-6 cursor-pointer"
+              className="comment-delete-icon w-6"
             >
               <path
                 stroke-linecap="round"
@@ -232,12 +240,12 @@ export default function Comment({
               checkLikeDislikeComment(
                 likeDislikeCommentId,
                 comment.id,
-                publicUserObject.userId,
+                publicUserObject.user_id,
                 "like",
-                prevLikeDislikeCommentType
+                prevLikeDislikeCommentType,
               );
             }}
-            className="comment-like-button px-2 py-0.5 flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 rounded-sm hover:bg-white cursor-pointer"
+            className="comment-like-button px-2 py-0.5 flex justify-center items-center gap-x-1 rounded-sm transition-all duration-300 ease-in-out cursor-pointer"
           >
             {" "}
             <svg
@@ -247,7 +255,7 @@ export default function Comment({
               stroke-width="1.5"
               stroke="currentColor"
               className={`comment-like-icon w-6 cursor-pointer ${
-                prevLikeDislikeCommentType === "like" ? "fill-green-500" : ""
+                prevLikeDislikeCommentType === "like" ? "fill-green-600" : ""
               }`}
             >
               <path
@@ -263,12 +271,12 @@ export default function Comment({
               checkLikeDislikeComment(
                 likeDislikeCommentId,
                 comment.id,
-                publicUserObject.userId,
+                publicUserObject.user_id,
                 "dislike",
-                prevLikeDislikeCommentType
+                prevLikeDislikeCommentType,
               );
             }}
-            className="comment-dislike-button px-2 py-0.5 flex justify-center items-center gap-x-1 bg-gray-50 hover:bg-white border border-gray-200 rounded-sm cursor-pointer"
+            className="comment-dislike-button px-2 py-0.5 flex justify-center items-center gap-x-1 rounded-sm transition-all duration-300 ease-in-out cursor-pointer"
           >
             {" "}
             <svg
@@ -278,7 +286,7 @@ export default function Comment({
               stroke-width="1.5"
               stroke="currentColor"
               className={`comment-dislike-icon w-6 cursor-pointer ${
-                prevLikeDislikeCommentType === "dislike" ? "fill-red-500" : ""
+                prevLikeDislikeCommentType === "dislike" ? "fill-red-600" : ""
               }`}
             >
               <path

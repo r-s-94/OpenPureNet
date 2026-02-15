@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./signin.css";
 import { supabase } from "./supabase";
 import { Link, useNavigate } from "react-router-dom";
@@ -20,17 +20,63 @@ import {
   DialogDescription,
 } from "./components/ui/dialog";
 import { publicUserContext } from "./publicUserContext";
+import { userAuthContext } from "./userAuthContext";
+import { navContext } from "./navContext";
 
 export default function SignIn() {
   const [userMail, setUserMail] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
+  const [checkInput, setCheckInput] = useState<boolean>(true);
+  const [changeInputType, setChangeInputType] = useState<string>("password");
   const [noticePopUp, setNoticePopUp] = useState<boolean>(false);
   const [, setNoticePopUpMessage] = useState<string>("");
   const navigation = useNavigate();
-  const { checkUserSession } = useContext(functionContext);
+  const { checkUserSession, loadFirstUserData } = useContext(functionContext);
   const { publicUserObject, setPublicUserObject } =
     useContext(publicUserContext);
-  //const { userAuthObject, setUserAuthObject } = useContext(userAuthContext);
+  //const { userAuthObject } = useContext(userAuthContext);
+  const { setCurrentActiveNavArea } = useContext(navContext);
+
+  useEffect(() => {
+    //checkUserSession();
+    //console.log(userAuthObject);
+
+    const checkSession = async () => {
+      const { data: session } = await supabase.auth.getSession();
+      console.log(session.session);
+
+      if (session.session) {
+        setCurrentActiveNavArea("overview");
+        navigation("/private-route/overview");
+        console.log("Check");
+      }
+    };
+
+    checkSession();
+  }, []);
+
+  function checkMail() {
+    if (
+      (!userMail.includes("@") && userMail.length > 0) ||
+      (userMail.includes(" ") && userMail.length > 0)
+    ) {
+      toast.error(
+        "Der Benutzername/E-Mail muss @-Zeichen haben und kein Lerrraum.",
+        {
+          unstyled: true,
+          className: "signin-toasty-incorrect w-[25rem] h-[7rem] px-5",
+        },
+      );
+    }
+  }
+
+  function checkInputType() {
+    if (checkInput) {
+      setChangeInputType("text");
+    } else {
+      setChangeInputType("password");
+    }
+  }
 
   async function signIn() {
     if (userMail !== "" && userPassword !== "") {
@@ -38,6 +84,26 @@ export default function SignIn() {
         email: userMail,
         password: userPassword,
       });
+
+      console.log(data);
+      //{user: null, session: null} wird zurück gegeben wenn das Projekt in SupaBase deaktiviert wurde/Pausiert wurde
+      console.log(error);
+      /*AuthRetryableFetchError: Failed to fetch
+        at _handleRequest2 (@supabase_supabase-js.js?v=a28c527c:4568:11)
+        at async _request (@supabase_supabase-js.js?v=a28c527c:4555:16)
+        at async SupabaseAuthClient.signInWithPassword (@supabase_supabase-js.js?v=a28c527c:5308:15)
+        at async signIn
+      */
+
+      if (data.user === null && data.session === null) {
+        toast.error(
+          "Anmeldung derzeit nicht möglich? Bitte kontaktieren Sie den Support oder den Entwickler.",
+          {
+            unstyled: true,
+            className: "signin-toasty-incorrect w-[25rem] h-[7rem] px-5",
+          },
+        );
+      }
 
       if (
         error?.code === "invalid_credentials" ||
@@ -49,7 +115,7 @@ export default function SignIn() {
           {
             unstyled: true,
             className: "signin-toasty-incorrect w-[25rem] h-[7rem] px-5",
-          }
+          },
         );
         setUserPassword("");
       } else {
@@ -58,17 +124,14 @@ export default function SignIn() {
           accessToken: data.session!.access_token,
           isAuthenticated: true,
         });*/
-        setPublicUserObject({ ...publicUserObject, userId: data.user!.id });
+        setPublicUserObject({ ...publicUserObject, user_id: data.user!.id });
         checkUserSession();
+        loadFirstUserData();
+        setCurrentActiveNavArea("overview");
         navigation("/private-route/overview");
         setUserMail("");
         setUserPassword("");
       }
-    } else {
-      toast.error("Beide Felder müssen ausgefüllt sein.", {
-        unstyled: true,
-        className: "signin-toasty-both-fields w-[27rem] h-[5rem]",
-      });
     }
   }
 
@@ -143,25 +206,51 @@ export default function SignIn() {
             type="text"
             value={userMail}
             onChange={(event) => {
-              setUserMail(event.target.value);
+              setUserMail(event.target.value.trimStart());
             }}
+            onBlur={checkMail}
             placeholder="Benutzername\E-Mail"
             className="pl-2 py-1.5 text-lg border border-gray-400 rounded-sm"
             name=""
           />
           <input
-            type="password"
+            type={changeInputType}
             value={userPassword}
             onChange={(event) => {
-              setUserPassword(event.target.value);
+              setUserPassword(event.target.value.trimStart());
             }}
             placeholder="Passwort"
             className="pl-2 py-1.5 text-lg border border-gray-400 rounded-sm"
             name=""
           />
+          <div>
+            <input
+              type="checkbox"
+              onChange={() => {
+                setCheckInput(!checkInput);
+              }}
+              onClick={checkInputType}
+              name=""
+              id=""
+            />{" "}
+            Passwort anzeigen
+          </div>
           <button
             onClick={signIn}
-            className="mt-5 px-16.5 py-1.5 text-lg bg-blue-500 text-white border border-white rounded-sm cursor-pointer hover:bg-white hover:text-blue-500 hover:border-blue-500"
+            disabled={
+              userMail.includes("@") === true &&
+              userMail.includes(" ") === false &&
+              userPassword.length > 5
+                ? false
+                : true
+            }
+            className={`mt-5 px-16.5 py-1.5 text-lg ${
+              userMail.includes("@") === true &&
+              userMail.includes(" ") === false &&
+              userPassword.length > 5
+                ? `bg-blue-500 text-white border border-white transition-all duration-500 ease-in-out cursor-pointer hover:bg-white hover:text-blue-500 hover:border-blue-500`
+                : `bg-gray-200`
+            } rounded-sm`}
           >
             Anmelden
           </button>
@@ -177,9 +266,8 @@ export default function SignIn() {
         <div className="w-[15rem] py-5 text-lg">
           <span className="mr-3 text-red-500">Hinweis!</span>Die
           Social-Media-Plattform OpenPureNet befindet sich noch in einer
-          Testphase. Solange wie die Testphase läuft, ist die Nutzung kostenlos.
-          Wer sich Registrieren möchte sendet bitte eine E-Mail an
-          open-pure-net@web.de.
+          Testphase. Solange wie die Testphase läuft sendet bitte zum
+          registrieren eine E-Mail an open-pure-net@web.de.
         </div>
       </div>
 
@@ -204,7 +292,7 @@ export default function SignIn() {
                 onClick={() => {
                   setNoticePopUpMessage(
                     `Du möchtest etwas melden. Du möchtest uns Kritik oder Anregungen
-               mitteilen? Dann schreib unserem Supportteam per Mail an open-pure-net@web.de.`
+               mitteilen? Dann schreib unserem Supportteam per Mail an open-pure-net@web.de.`,
                   );
                   setNoticePopUp(true);
                 }}

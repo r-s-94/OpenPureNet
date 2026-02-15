@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./settings.css";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { publicUserContext } from "./publicUserContext";
 import type { Tables } from "./database.types";
 import { supabase } from "./supabase";
@@ -17,6 +17,8 @@ import { Toaster } from "./components/ui/sonner";
 import { toast } from "sonner";
 import { functionContext } from "./functionContext";
 import "./responsive.css";
+import Nav from "./nav";
+import { navContext } from "./navContext";
 
 export default function Settings() {
   const [privateUserObject, setPrivateUserObject] = useState<
@@ -27,8 +29,8 @@ export default function Settings() {
     id: 0,
     PLZ: 0,
     street: "",
-    houseNumber: 0,
-    userId: "",
+    house_number: 0,
+    user_id: "",
   });
   const [privateUserArray, setPrivateUserArray] = useState<
     Tables<"private_user">[]
@@ -43,18 +45,10 @@ export default function Settings() {
   const [editPrivateUserDataPopUp, setEditPrivateUserDataPopUp] =
     useState<boolean>(false);
   const [updateCityName, setUpdateCityName] = useState<string>("");
-  const [minimumSignCityName, setMinimumSignCityName] =
-    useState<boolean>(false);
   const [updateStreetName, setUpdateStreetName] = useState<string>("");
-  const [minimumSignStreetName, setMinimumSignStreetName] =
-    useState<boolean>(false);
   const [updateHousenumber, setUpdateHousenumber] = useState<number>(0);
-  const [minimumSignHousenumber, setMinimumSignHousenumber] =
-    useState<boolean>(false);
   const [updatePLZ, setUpdatePLZ] = useState<string>("");
-  const [minimumSignPLZ, setMinimumSignPLZ] = useState<boolean>(false);
   const [updateCountry, setUpdateCountry] = useState<string>("");
-  const [minimumSignCountry, setMinimumSignCountry] = useState<boolean>(false);
   const [currentSessionUserId, setCurrentSessionUserId] = useState<string>("");
   const [deletePrivateUserDataPopUp, setDeletePrivateUserDataPopUp] =
     useState<boolean>(false);
@@ -68,70 +62,136 @@ export default function Settings() {
   const { userAuthObject, setUserAuthObject } = useContext(userAuthContext);
   const { publicUserObject, setPublicUserObject } =
     useContext(publicUserContext);
-  const { checkUserSession } = useContext(functionContext);
+  const { loadFirstUserData } = useContext(functionContext);
+  const { setCurrentActiveNavArea } = useContext(navContext);
+  const resetInputFile = useRef<HTMLInputElement | null>(null);
+  //const { userId } = useParams();
 
   useEffect(() => {
+    loadFirstUserData();
     const fetchData = async () => {
-      const { data: session } = await supabase.auth.getSession();
+      console.log(publicUserObject);
+      /*setStatusText(publicUserObject.status_text);
+      setAGBConsent(publicUserObject.agb_consent);
+      setDataprotectionConsent(publicUserObject.data_protection_consent);
+      setUserDataConsent(publicUserObject.user_consent);*/
+      //const { data: session } = await supabase.auth.getSession();
+      /*const { data: public_user } = await supabase
+        .from("public_user")
+        .select()
+        .eq("user_id", publicUserObject.user_id);*/
+      /*if (public_user) {
+        const publicUserData = public_user[0];
 
-      if (session.session) {
-        const accessToken = session.session.access_token;
+        setPublicUserObject({
+            ...publicUserObject,
+            id: publicUserData.id,
+            user_id: session.session?.user.id,
+            profil_name: publicUserData.profil_name,
+            profil_picture: publicUserData.profil_picture,
+            status_text: publicUserData.status_text,
+            agb_consent: publicUserData.agb_consent,
+            data_protection_consent: publicUserData.data_protection_consent,
+            user_consent: publicUserData.user_consent,
+          });
+        //setStatusText(publicUserData.status_text);
+      }*/
+      /*if (session.session) {
         const sessionUserId = session.session.user.id;
-        setUserAuthObject({ ...userAuthObject, accessToken: accessToken });
-        setCurrentSessionUserId(sessionUserId);
-      }
+        //const currentSession = session.session;
+        //const currentSessionUser = session.session.user;
+        //const currentSessionAppMetadata = session.session.user.app_metadata;
 
-      setStatusText(publicUserObject.statusText);
-      setAGBConsent(publicUserObject.agbConsent);
-      setDataprotectionConsent(publicUserObject.dataProtectionConsent);
-      setUserDataConsent(publicUserObject.userConsent);
+        setCurrentSessionUserId(sessionUserId);
+      }*/
+      /*setUserAuthObject({
+          ...userAuthObject,
+          access_token: currentSession.access_token,
+          expires_at: currentSession.expires_at!,
+          refresh_token: currentSession.refresh_token,
+          user: {
+            app_metadata: {
+              provider: currentSessionAppMetadata.provider!,
+              providers: [""],
+            },
+            aud: currentSessionUser.aud,
+            confirmed_at: currentSessionUser.confirmed_at!,
+            created_at: currentSessionUser.created_at,
+            email: currentSessionUser.email!,
+            email_confirmed_at: currentSessionUser.email_confirmed_at!,
+            id: currentSessionUser.id,
+            identities: [],
+            is_anonymous: currentSessionUser.is_anonymous!,
+            last_sign_in_at: currentSessionUser.last_sign_in_at!,
+            phone: currentSessionUser.phone!,
+            role: currentSessionUser.role!,
+            updated_at: currentSessionUser.updated_at!,
+            user_metadata: {
+              email_verified: false,
+            },
+          },
+        });*/
     };
 
+    setCurrentActiveNavArea("user");
+
     fetchData();
+
+    return () => {
+      clearPrivateInfos();
+    };
   }, []);
 
   async function updateStatustext() {
-    if (statusText !== "") {
-      if (publicUserObject.statusText === "") {
-        const {} = await supabase
-          .from("public_user")
-          .update({ statusText: statusText })
-          .eq("userId", publicUserObject.userId);
+    const { data: public_user } = await supabase
+      .from("public_user")
+      .select()
+      .eq("user_id", publicUserObject.user_id);
 
-        toast.success("Dein Statustext wurde erfolgreich erstellt.", {
-          unstyled: true,
-          className: "w-[20rem] h-[5rem] px-5",
-        });
-        setStatusText("");
-      } else {
+    if (public_user) {
+      const userStatusText = public_user[0].status_text;
+      console.log(userStatusText);
+
+      if (userStatusText !== "") {
         const {} = await supabase
           .from("public_user")
-          .update({ statusText: statusText })
-          .eq("userId", publicUserObject.userId);
+          .update({ status_text: publicUserObject.status_text })
+          .eq("user_id", publicUserObject.user_id);
 
         toast.success("Dein Statustext wurde erfolgreich aktualisiert.", {
           unstyled: true,
           className: "w-[25rem] h-[5rem] px-5",
         });
-        setStatusText("");
+        setPublicUserObject({ ...publicUserObject, status_text: "" });
+      } else {
+        const {} = await supabase
+          .from("public_user")
+          .update({ status_text: publicUserObject.status_text })
+          .eq("user_id", publicUserObject.user_id);
+
+        toast.success("Dein Statustext wurde erfolgreich erstellt.", {
+          unstyled: true,
+          className: "w-[20rem] h-[5rem] px-5",
+        });
+        setPublicUserObject({ ...publicUserObject, status_text: "" });
       }
     }
 
-    checkUserSession();
+    //loadFirstUserData();
   }
 
   async function delteStatustext() {
     const {} = await supabase
       .from("public_user")
-      .update({ statusText: "" })
-      .eq("userId", publicUserObject.userId);
+      .update({ status_text: "" })
+      .eq("user_id", publicUserObject.user_id);
 
     toast.success("Dein Statustext wurde erfolgreich gelöscht.", {
       unstyled: true,
       className: "w-[20rem] h-[5rem] px-5",
     });
 
-    checkUserSession();
+    loadFirstUserData();
     setStatusText("");
   }
 
@@ -141,8 +201,8 @@ export default function Settings() {
       if (updateProfilname !== "") {
         const {} = await supabase
           .from("public_user")
-          .update({ profilName: updateProfilname })
-          .eq("userId", userId);
+          .update({ profil_name: updateProfilname })
+          .eq("user_id", userId);
 
         setUpdateProfilname("");
         toast.success("Dein Profilname wurde aktualisiert.", {
@@ -158,13 +218,13 @@ export default function Settings() {
     } else {
       if (updateProfilname !== "") {
         const {} = await supabase.from("public_user").insert({
-          userId: publicUserObject.userId,
-          profilName: updateProfilname,
-          profilPicture: publicUserObject.profilPicture,
-          statusText: publicUserObject.statusText,
-          agbConsent: publicUserObject.agbConsent,
-          dataProtectionConsent: publicUserObject.dataProtectionConsent,
-          userConsent: publicUserObject.userConsent,
+          user_id: publicUserObject.user_id,
+          profil_name: updateProfilname,
+          profil_picture: publicUserObject.profil_picture,
+          status_text: publicUserObject.status_text,
+          agb_consent: publicUserObject.agb_consent,
+          data_protection_consent: publicUserObject.data_protection_consent,
+          user_consent: publicUserObject.user_consent,
         });
 
         toast.success("Dein Profilname wurde erfolgreich erstellt.", {
@@ -172,6 +232,7 @@ export default function Settings() {
           className: "w-[25rem] h-[5rem] px-5",
         });
         setUpdateProfilname("");
+        reloadGeneralUserData();
       } else {
         toast.info("Bitte gebe einen Profilnamen ein.", {
           unstyled: true,
@@ -200,6 +261,14 @@ export default function Settings() {
     }
   }
 
+  function resetAvatarFile() {
+    if (resetInputFile.current) {
+      resetInputFile.current.value = "";
+    }
+
+    setUpdateAvatarFile(null);
+  }
+
   async function updateProfilPicture() {
     if (!updateAvatarFile) return;
 
@@ -212,31 +281,61 @@ export default function Settings() {
 
     const {} = await supabase
       .from("public_user")
-      .update({ profilPicture: data?.path })
-      .eq("userId", publicUserObject.userId);
+      .update({ profil_picture: data?.path })
+      .eq("user_id", publicUserObject.user_id);
 
     toast.success("Profilbild wurde aktualisiert.", {
       unstyled: true,
       className: "w-[23rem] h-[5rem] px-5",
     });
+
+    reloadGeneralUserData();
+    setUpdateAvatarFile(null);
   }
 
   async function deletePicture() {
     const {} = await supabase.storage
       .from("profilepicture")
-      .remove([publicUserObject.profilPicture]);
+      .remove([publicUserObject.profil_picture]);
 
     const {} = await supabase
       .from("public_user")
       .update({
-        profilPicture: "",
+        profil_picture: "",
       })
-      .eq("userId", publicUserObject.userId);
+      .eq("user_id", publicUserObject.user_id);
 
     toast.success("Profilbild wurde erfolgreich gelöscht.", {
       unstyled: true,
       className: "w-[27rem] h-[5rem] px-5",
     });
+    setUpdateAvatarFile(null);
+
+    reloadGeneralUserData();
+  }
+
+  async function reloadGeneralUserData() {
+    const { data: session } = await supabase.auth.getSession();
+
+    if (session.session) {
+      const { data: public_user } = await supabase
+        .from("public_user")
+        .select()
+        .eq("user_id", session.session.user.id);
+
+      console.log(public_user);
+
+      if (public_user && public_user[0] !== undefined) {
+        const publicUserData = public_user[0];
+
+        setPublicUserObject({
+          ...publicUserObject,
+          profil_name: publicUserData.profil_name,
+          profil_picture: publicUserData.profil_picture,
+          status_text: publicUserData.status_text,
+        });
+      }
+    }
   }
 
   async function loadPrivateUserData() {
@@ -256,82 +355,13 @@ export default function Settings() {
     }
   }
 
-  function inputCityName(cityName: string) {
-    const cityNameWithoutSpace = cityName;
-    setUpdateCityName(cityNameWithoutSpace.trimStart());
-
-    if (cityNameWithoutSpace.trimStart().length > 0) {
-      setMinimumSignCityName(true);
-    }
-
-    if (cityNameWithoutSpace === "") {
-      setMinimumSignCityName(false);
-    }
-  }
-
-  function inputStreetName(streetName: string) {
-    const streetNameWithoutSpace = streetName;
-    setUpdateStreetName(streetNameWithoutSpace.trimStart());
-
-    if (streetNameWithoutSpace.trimStart().length > 0) {
-      setMinimumSignStreetName(true);
-    }
-
-    if (streetNameWithoutSpace === "") {
-      setMinimumSignStreetName(false);
-    }
-  }
-
-  function inputHousenumber(houseNumber: string) {
-    setUpdateHousenumber(Number(houseNumber));
-
-    if (houseNumber !== "0") {
-      setMinimumSignHousenumber(true);
-    }
-
-    if (houseNumber === "") {
-      setMinimumSignHousenumber(false);
-    }
-  }
-
-  function inputPLZ(plz: string) {
-    const plzWithoutSpace = plz;
-    setUpdatePLZ(plzWithoutSpace.trimStart());
-
-    if (plzWithoutSpace.trimStart().length > 0) {
-      setMinimumSignPLZ(true);
-    }
-
-    if (plzWithoutSpace === "") {
-      setMinimumSignPLZ(false);
-    }
-  }
-
-  function inputCountry(country: string) {
-    const countryWithoutSpace = country;
-    setUpdateCountry(countryWithoutSpace.trimStart());
-
-    if (countryWithoutSpace.trimStart().length > 0) {
-      setMinimumSignCountry(true);
-    }
-
-    if (countryWithoutSpace === "") {
-      setMinimumSignCountry(false);
-    }
-  }
-
   function openPrivateUserPopUp(update: string) {
     if (update === "update") {
       setUpdateCityName(privateUserObject.city);
-      setMinimumSignCityName(true);
       setUpdateStreetName(privateUserObject.street);
-      setMinimumSignStreetName(true);
-      setUpdateHousenumber(privateUserObject.houseNumber);
-      setMinimumSignHousenumber(true);
+      setUpdateHousenumber(privateUserObject.house_number);
       setUpdatePLZ(String(privateUserObject.PLZ));
-      setMinimumSignPLZ(true);
       setUpdateCountry(privateUserObject.country);
-      setMinimumSignCountry(true);
       setEditPrivateUserDataPopUp(true);
     } else {
       setUpdateCityName("");
@@ -345,7 +375,7 @@ export default function Settings() {
 
   async function updatePrivateUserData() {
     const findUser = privateUserArray.find((user) => {
-      return user.userId === currentSessionUserId;
+      return user.user_id === currentSessionUserId;
     });
 
     if (findUser) {
@@ -368,17 +398,12 @@ export default function Settings() {
       });
 
       setEditPrivateUserDataPopUp(false);
-      setMinimumSignCityName(false);
-      setMinimumSignStreetName(false);
-      setMinimumSignHousenumber(false);
-      setMinimumSignPLZ(false);
-      setMinimumSignCountry(false);
     } else {
       const {} = await supabase.from("private_user").insert({
-        userId: currentSessionUserId,
+        user_id: currentSessionUserId,
         city: updateCityName,
         street: updateStreetName,
-        houseNumber: updateHousenumber,
+        house_number: updateHousenumber,
         PLZ: Number(updatePLZ),
         country: updateCountry,
       });
@@ -388,16 +413,11 @@ export default function Settings() {
         {
           unstyled: true,
           className: "settings-success-toasty w-[30rem] h-[7rem] px-7",
-        }
+        },
       );
 
       setEditPrivateUserDataPopUp(false);
       setPrivateDataExist(true);
-      setMinimumSignCityName(false);
-      setMinimumSignStreetName(false);
-      setMinimumSignHousenumber(false);
-      setMinimumSignPLZ(false);
-      setMinimumSignCountry(false);
     }
   }
 
@@ -417,16 +437,12 @@ export default function Settings() {
       {
         unstyled: true,
         className: "settings-success-toasty w-[27rem] h-[7rem] px-5",
-      }
+      },
     );
 
     setDeletePrivateUserDataPopUp(false);
     setPrivateDataExist(false);
-    setMinimumSignCityName(false);
-    setMinimumSignStreetName(false);
-    setMinimumSignHousenumber(false);
-    setMinimumSignPLZ(false);
-    setMinimumSignCountry(false);
+
     setPrivateUserObject({
       ...privateUserObject,
       city: "",
@@ -434,12 +450,12 @@ export default function Settings() {
       id: 0,
       PLZ: 0,
       street: "",
-      houseNumber: 0,
-      userId: "",
+      house_number: 0,
+      user_id: "",
     });
   }
 
-  async function toUser() {
+  async function clearPrivateInfos() {
     setPrivateUserObject({
       ...privateUserObject,
       city: "",
@@ -447,78 +463,102 @@ export default function Settings() {
       id: 0,
       PLZ: 0,
       street: "",
-      houseNumber: 0,
-      userId: "",
+      house_number: 0,
+      user_id: "",
     });
     setPrivateUserArray([]);
     setCurrentPrivateUserId(0);
     setCurrentSessionUserId("");
-    checkUserSession();
-    navigation(`/private-route/user/${publicUserObject.userId}`);
+    loadFirstUserData();
   }
 
   async function deleteAccount() {
     const {} = await supabase
       .from("public_user")
       .delete()
-      .eq("userId", publicUserObject.userId);
+      .eq("user_id", publicUserObject.user_id);
 
     const {} = await supabase
       .from("posts")
       .delete()
-      .eq("userId", publicUserObject.userId);
+      .eq("user_id", publicUserObject.user_id);
 
     const {} = await supabase
       .from("comments")
       .delete()
-      .eq("userId", publicUserObject.userId);
+      .eq("user_id", publicUserObject.user_id);
 
     const {} = await supabase
       .from("private_user")
       .delete()
-      .eq("userId", publicUserObject.userId);
+      .eq("user_id", publicUserObject.user_id);
 
     const {} = await supabase
       .from("like_dislike_posts")
       .delete()
-      .eq("userId", publicUserObject.userId);
+      .eq("user_id", publicUserObject.user_id);
 
     const {} = await supabase
       .from("like_dislike_comments")
       .delete()
-      .eq("userId", publicUserObject.userId);
+      .eq("user_id", publicUserObject.user_id);
 
     const {} = await supabase
       .from("follow")
       .delete()
-      .eq("userId", publicUserObject.userId);
+      .eq("user_id", publicUserObject.user_id);
 
     const {} = await supabase
       .from("follow")
       .delete()
-      .eq("followUserId", publicUserObject.userId);
+      .eq("follow_user_id", publicUserObject.user_id);
 
     const {} = await supabase.storage
       .from("profilepicture")
-      .remove([publicUserObject.profilPicture]);
+      .remove([publicUserObject.profil_picture]);
 
-    const {} = await supabase.auth.admin.deleteUser(publicUserObject.userId);
+    const {} = await supabase.auth.admin.deleteUser(publicUserObject.user_id);
 
     const {} = await supabase.auth.signOut();
 
     setPublicUserObject({
       ...publicUserObject,
-      profilName: "",
-      profilPicture: "",
-      userId: "",
-      agbConsent: false,
-      dataProtectionConsent: false,
-      userConsent: false,
+      profil_name: "",
+      profil_picture: "",
+      user_id: "",
+      agb_consent: false,
+      data_protection_consent: false,
+      user_consent: false,
     });
 
     setUserAuthObject({
       ...userAuthObject,
-      accessToken: "",
+      access_token: "",
+      expires_at: 0,
+      expires_in: 0,
+      refresh_token: "",
+      token_type: "",
+      user: {
+        app_metadata: {
+          provider: "",
+          providers: [""],
+        },
+        aud: "",
+        confirmed_at: "",
+        created_at: "",
+        email: "",
+        email_confirmed_at: "",
+        id: "",
+        identities: [],
+        is_anonymous: false,
+        last_sign_in_at: "",
+        phone: "",
+        role: "",
+        updated_at: "",
+        user_metadata: {
+          email_verified: false,
+        },
+      },
     });
 
     setDeleteAccountPopUp(false);
@@ -530,36 +570,57 @@ export default function Settings() {
     const {} = await supabase
       .from("public_user")
       .update({
-        agbConsent: false,
-        dataProtectionConsent: false,
-        userConsent: false,
+        agb_consent: false,
+        data_protection_ponsent: false,
+        user_consent: false,
       })
-      .eq("userId", publicUserObject.userId);
+      .eq("user_id", publicUserObject.user_id);
 
     const {} = await supabase.auth.signOut();
 
     setPublicUserObject({
       ...publicUserObject,
-      profilName: "",
-      userId: "",
-      agbConsent: false,
-      dataProtectionConsent: false,
-      userConsent: false,
+      profil_name: "",
+      user_id: "",
+      agb_consent: false,
+      data_protection_consent: false,
+      user_consent: false,
     });
 
     setUserAuthObject({
       ...userAuthObject,
-      accessToken: "",
+      access_token: "",
+      expires_at: 0,
+      expires_in: 0,
+      refresh_token: "",
+      token_type: "",
+      user: {
+        app_metadata: {
+          provider: "",
+          providers: [""],
+        },
+        aud: "",
+        confirmed_at: "",
+        created_at: "",
+        email: "",
+        email_confirmed_at: "",
+        id: "",
+        identities: [],
+        is_anonymous: false,
+        last_sign_in_at: "",
+        phone: "",
+        role: "",
+        updated_at: "",
+        user_metadata: {
+          email_verified: false,
+        },
+      },
     });
     navigation("/");
   }
 
-  function toSignIn() {
-    navigation("/");
-  }
-
   return (
-    <section className="settings-section">
+    <section className="settings-section h-full pb-20">
       {" "}
       <Toaster
         position="top-center"
@@ -570,65 +631,35 @@ export default function Settings() {
             "flex justify-center items-center gap-x-5 text-xl rounded-sm",
         }}
       />
-      <nav className="settings-nav-bar my-15 flex justify-around items-center">
-        <button onClick={toUser} className="to-user-link cursor-pointer">
-          <svg
-            xmlns="http://www.w5.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            className="to-user-icon w-13"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M15.75 19.5 8.25 12l7.5-7.5"
-            />
-          </svg>
-        </button>
-        <h1 className="settings-headline text-4xl">Einstellungen</h1>
-        <button
-          onClick={toSignIn}
-          className="logout-button px-3 flex flex-col items-center justify-center hover:text-blue-400 rounded-sm cursor-pointer"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            className="logout-icon w-13"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25"
-            />
-          </svg>
-          <span className="interaction-label text-lg">Ausloggen</span>
-        </button>
-      </nav>
+      <Nav />
+      <h1 className="settings-headline text-center mt-3 mb-5 text-3xl">
+        Einstellungen
+      </h1>
       <div className="settings-status-text-div mx-auto my-5 flex flex-col items-center justify-center gap-y-5">
         <textarea
           name=""
-          value={statusText}
+          value={publicUserObject.status_text}
           onChange={(event) => {
-            setStatusText(event.target.value);
+            setPublicUserObject({
+              ...publicUserObject,
+              status_text: event.target.value.trimStart(),
+            });
           }}
           placeholder="Statustext eingeben..."
-          className="settings-status-textarea w-[40rem] h-[10rem] px-3 py-1 text-lg border border-gray-300 rounded-sm resize-none"
+          className="settings-status-textarea w-[40rem] h-[10rem] px-3 py-1 text-lg bg-white border border-gray-300 rounded-sm resize-none"
         ></textarea>
         <div className="settings-status-button-div flex justify-center items-center gap-x-5">
           <button
             onClick={updateStatustext}
-            className="settings-status-update-button px-7 py-1.5 text-lg bg-blue-500 text-white border border-white rounded-sm cursor-pointer hover:bg-white hover:text-blue-500 hover:border-blue-500"
+            disabled={publicUserObject.status_text.length > 0 ? false : true}
+            className={`settings-status-update-button px-7 py-1.5 text-lg ${publicUserObject.status_text.length > 0 ? "bg-blue-500 text-white border border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500" : "bg-gray-200 border border-gray-300"} rounded-sm`}
           >
             Statustext updaten
           </button>
           <button
             onClick={delteStatustext}
-            className="settings-status-delete-button px-7 py-1.5 text-lg flex justify-center items-center gap-x-1 bg-red-500 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500"
+            disabled={publicUserObject.status_text.length > 0 ? false : true}
+            className={`settings-status-delete-button px-7 py-1.5 text-lg flex justify-center items-center gap-x-1 ${statusText.length > 0 ? "bg-red-600 text-white border cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-red-600 hover:border-red-600" : "bg-gray-200 border border-gray-300"} rounded-sm`}
           >
             Statustext löschen
           </button>
@@ -638,13 +669,13 @@ export default function Settings() {
         <p className="settings-generally-data-div-headline ml-[15%] text-[1.7rem]">
           Allgemeine Infos
         </p>{" "}
-        <div className="settings-generally-data-main-div mx-auto px-20 py-10 flex flex-col items-center justify-center gap-y-7 bg-gray-50 border border-gray-400 rounded-sm shadow-lg">
+        <div className="settings-generally-data-main-div mx-auto px-20 py-10 flex flex-col items-center justify-center gap-y-7 bg-white border border-gray-400 rounded-sm shadow-lg">
           <div className="edit-profil-name-div flex justify-center items-center gap-x-5">
             <input
               type="text"
               value={updateProfilname}
               onChange={(event) => {
-                setUpdateProfilname(event.target.value);
+                setUpdateProfilname(event.target.value.trimStart());
               }}
               name=""
               className="settings-generally-data-div-input pl-5 py-1.5 text-lg bg-white border border-gray-400 rounded-sm"
@@ -652,9 +683,10 @@ export default function Settings() {
             />
             <button
               onClick={() => {
-                editProfilname(publicUserObject.id, publicUserObject.userId);
+                editProfilname(publicUserObject.id, publicUserObject.user_id);
               }}
-              className="edit-profil-name-button px-5 py-1.5 text-lg bg-blue-500 text-white border border-white rounded-sm cursor-pointer hover:bg-white hover:text-blue-500 hover:border-blue-500"
+              disabled={updateProfilname.length > 0 ? false : true}
+              className={`edit-profil-name-button px-5 py-1.5 text-lg ${updateProfilname.length > 0 ? "bg-blue-500 text-white border border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500" : "bg-gray-200 border border-gray-300"} rounded-sm`}
             >
               Profilnamen ändern
             </button>
@@ -664,7 +696,7 @@ export default function Settings() {
               type="text"
               value={updatePassword}
               onChange={(event) => {
-                setUpdatePassword(event.target.value);
+                setUpdatePassword(event.target.value.trimStart());
               }}
               name=""
               className="settings-generally-data-div-input pl-5 py-1.5 text-lg bg-white border border-gray-400 rounded-sm"
@@ -672,39 +704,69 @@ export default function Settings() {
             />
             <button
               onClick={editPasswort}
-              className="edit-password-button px-8 py-1.5 text-lg bg-blue-500 text-white border border-white rounded-sm cursor-pointer hover:bg-white hover:text-blue-500 hover:border-blue-500"
+              disabled={updatePassword.length > 0 ? false : true}
+              className={`edit-password-button px-8 py-1.5 text-lg ${updatePassword.length > 0 ? "bg-blue-500 text-white border border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500" : "bg-gray-200 border border-gray-300"} rounded-sm`}
             >
               Passwort ändern
             </button>
           </div>
           <div className="settings-generally-data-div-picture-div flex flex-col items-center justify-center gap-x-3">
-            <input
-              type="file"
-              onChange={(event) => {
-                const target = event.target as HTMLInputElement;
-                const file = target.files?.[0] ?? null;
-                setUpdateAvatarFile(file);
-              }}
-              className="settings-generally-data-div-picture-input w-full bg-white text-base text-gray-700
-        file:me-4 file:py-2 file:px-4
+            <div className="flex justify-center align-center gap-x-1.5">
+              <input
+                type="file"
+                onChange={(event) => {
+                  const target = event.target as HTMLInputElement;
+                  const file = target.files?.[0] ?? null;
+                  setUpdateAvatarFile(file);
+                }}
+                ref={resetInputFile}
+                className="settings-generally-data-div-picture-input w-full bg-white text-base text-gray-700
+        file:me-4 file:py-1 file:px-4
         file:rounded-sm file:border-0
-        file:text-base 
+        file:text-lg 
+        file:transition-all duration-300 ease-in-out
         file:bg-blue-500 file:text-white
         hover:file:bg-white hover:file:border-blue-500 hover:file:text-blue-500
         file:disabled:opacity-50 file:disabled:pointer-events-none
-       cursor-pointer border border-gray-200 rounded-sm"
-              name=""
-            />
+       file:cursor-pointer border border-gray-200 rounded-sm"
+                name=""
+              />
+              <button
+                onClick={resetAvatarFile}
+                disabled={updateAvatarFile !== null ? false : true}
+                className={`settings-reset-input-button px-5 py-1 text-base flex justify-center items-center gap-x-1 rounded-sm ${updateAvatarFile !== null ? "bg-red-600 border text-white border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-red-600 hover:border-red-600" : "bg-gray-200 border border-gray-300"}`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  className="settings-remove-avatar-file-button w-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18 18 6M6 6l12 12"
+                  />
+                </svg>
+                Entfernen
+              </button>
+            </div>
             <div className="picture-button-div mt-5 flex justify-center items-center gap-x-5">
               <button
                 onClick={updateProfilPicture}
-                className="update-picture-button px-7 py-1.5 text-lg bg-blue-500 text-white border border-white rounded-sm cursor-pointer hover:bg-white hover:text-blue-500 hover:border-blue-500"
+                disabled={updateAvatarFile !== null ? false : true}
+                className={`update-picture-button px-7 py-1.5 text-lg ${updateAvatarFile !== null ? "bg-blue-500 text-white border border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500" : "bg-gray-200 border border-gray-300"} rounded-sm`}
               >
                 Profilbild updaten
               </button>
               <button
                 onClick={deletePicture}
-                className="delete-picture-button px-7 py-1.5 text-lg flex justify-center items-center gap-x-1 bg-red-500 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500"
+                disabled={
+                  publicUserObject.profil_picture.length > 0 ? false : true
+                }
+                className={`delete-picture-button px-7 py-1.5 text-lg flex justify-center items-center gap-x-1 ${publicUserObject.profil_picture.length > 0 ? "bg-red-600 text-white border transition-all duration-300 ease-in-out cursor-pointer hover:bg-white hover:text-red-600 hover:border-red-600" : "bg-gray-200 border border-gray-300"}  rounded-sm`}
               >
                 Profilbild löschen
               </button>
@@ -724,7 +786,7 @@ export default function Settings() {
         >
           <DialogHeader>
             <DialogDescription className="edit-private-user-popup-description">
-              <div className="mt-5 flex flex-col gap-y-5">
+              <div className="mt-5 bg-white flex flex-col gap-y-5">
                 {" "}
                 <p className="mx-auto my-2 text-black text-[22px]">
                   Alle Felder sind Freiwillig.
@@ -733,7 +795,7 @@ export default function Settings() {
                   type="text"
                   value={updateCityName}
                   onChange={(event) => {
-                    inputCityName(event.target.value);
+                    setUpdateCityName(event.target.value.trimStart());
                   }}
                   className="edit-private-user-popup-input w-[17rem] mx-auto px-3 py-1 text-lg border border-gray-400 rounded-sm"
                   name=""
@@ -743,7 +805,7 @@ export default function Settings() {
                   type="text"
                   value={updateStreetName}
                   onChange={(event) => {
-                    inputStreetName(event.target.value);
+                    setUpdateStreetName(event.target.value.trimStart());
                   }}
                   className="edit-private-user-popup-input w-[17rem] mx-auto px-3 py-1 text-lg border border-gray-400 rounded-sm"
                   name=""
@@ -753,9 +815,11 @@ export default function Settings() {
                   type="number"
                   value={updateHousenumber !== 0 ? updateHousenumber : ""}
                   onChange={(event) => {
-                    inputHousenumber(event.target.value);
+                    setUpdateHousenumber(
+                      Number(event.target.value.trimStart()),
+                    );
                   }}
-                  className="edit-private-user-popup-input w-[17rem] mx-auto px-3 py-1 text-lg border border-gray-400 rounded-sm"
+                  className="edit-private-user-popup-input w-[17rem] mx-auto px-3 py-1 text-lg text-right border border-gray-400 rounded-sm"
                   name=""
                   placeholder="Hausnummer eingeben"
                 />
@@ -763,9 +827,9 @@ export default function Settings() {
                   type="number"
                   value={Number(updatePLZ) !== 0 ? updatePLZ : ""}
                   onChange={(event) => {
-                    inputPLZ(event.target.value);
+                    setUpdatePLZ(event.target.value.trimStart());
                   }}
-                  className="edit-private-user-popup-input w-[17rem] mx-auto px-3 py-1 text-lg border border-gray-400 rounded-sm"
+                  className="edit-private-user-popup-input w-[17rem] mx-auto px-3 py-1 text-lg text-right border border-gray-400 rounded-sm"
                   name=""
                   placeholder="PLZ eingeben"
                 />
@@ -773,7 +837,7 @@ export default function Settings() {
                   type="text"
                   value={updateCountry}
                   onChange={(event) => {
-                    inputCountry(event.target.value);
+                    setUpdateCountry(event.target.value.trimStart());
                   }}
                   className="edit-private-user-popup-input w-[17rem] mx-auto  px-3 py-1 text-lg border border-gray-400 rounded-sm"
                   name=""
@@ -784,13 +848,8 @@ export default function Settings() {
                 <button
                   onClick={() => {
                     setEditPrivateUserDataPopUp(false);
-                    setMinimumSignCityName(false);
-                    setMinimumSignStreetName(false);
-                    setMinimumSignHousenumber(false);
-                    setMinimumSignPLZ(false);
-                    setMinimumSignCountry(false);
                   }}
-                  className="edit-private-user-popup-close-button px-3 py-1 text-lg flex justify-center items-center bg-gray-50 text-black border border-gray-200 rounded-sm cursor-pointer hover:bg-white"
+                  className="edit-private-user-popup-close-button px-3 py-1 text-lg flex justify-center items-center bg-gray-200 text-black border border-gray-300 transition-all duration-300 ease-in-out rounded-sm cursor-pointer hover:bg-white"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -811,24 +870,24 @@ export default function Settings() {
                 <button
                   onClick={updatePrivateUserData}
                   disabled={
-                    minimumSignCityName === true &&
-                    minimumSignStreetName === true &&
-                    minimumSignHousenumber == true &&
-                    minimumSignPLZ === true &&
-                    minimumSignCountry === true
+                    updateCityName.length > 0 &&
+                    updateStreetName.length > 0 &&
+                    updateHousenumber !== 0 &&
+                    updatePLZ.length > 4 &&
+                    updateCountry.length > 0
                       ? false
                       : true
                   }
-                  className={`edit-private-user-popup-new-user-data-button ${
+                  className={`new-private-user-popup-new-user-data-button ${
                     privateDataExist === false ? "" : "hidden"
                   } ${
-                    minimumSignCityName === true &&
-                    minimumSignStreetName === true &&
-                    minimumSignHousenumber == true &&
-                    minimumSignPLZ === true &&
-                    minimumSignCountry === true
-                      ? "bg-blue-400 text-white border border-white hover:bg-white hover:text-blue-400 hover:border-blue-400 cursor-pointer"
-                      : "bg-gray-300"
+                    updateCityName.length > 0 &&
+                    updateStreetName.length > 0 &&
+                    updateHousenumber !== 0 &&
+                    updatePLZ.length > 4 &&
+                    updateCountry.length > 0
+                      ? "bg-blue-400 text-white border border-white hover:bg-white hover:text-blue-500 hover:border-blue-500 transition-all duration-300 ease-in-out cursor-pointer"
+                      : "bg-gray-200 border border-gray-300"
                   } px-5 py-1 text-lg flex justify-center items-center gap-x-1 rounded-sm`}
                 >
                   {" "}
@@ -851,24 +910,24 @@ export default function Settings() {
                 <button
                   onClick={updatePrivateUserData}
                   disabled={
-                    minimumSignCityName === true &&
-                    minimumSignStreetName === true &&
-                    minimumSignHousenumber == true &&
-                    minimumSignPLZ === true &&
-                    minimumSignCountry === true
+                    updateCityName.length > 0 &&
+                    updateStreetName.length > 0 &&
+                    updateHousenumber !== 0 &&
+                    updatePLZ.length > 4 &&
+                    updateCountry.length > 0
                       ? false
                       : true
                   }
                   className={`edit-private-user-popup-update-user-data-button ${
                     privateDataExist === true ? "" : "hidden"
                   } ${
-                    minimumSignCityName === true &&
-                    minimumSignStreetName === true &&
-                    minimumSignHousenumber == true &&
-                    minimumSignPLZ === true &&
-                    minimumSignCountry === true
-                      ? "bg-blue-400 text-white border border-white hover:bg-white hover:text-blue-400 hover:border-blue-400 cursor-pointer"
-                      : "bg-gray-300"
+                    updateCityName.length > 0 &&
+                    updateStreetName.length > 0 &&
+                    updateHousenumber !== 0 &&
+                    updatePLZ.length > 4 &&
+                    updateCountry.length > 0
+                      ? "bg-blue-400 text-white border border-white hover:bg-white hover:text-blue-500 hover:border-blue-500 transition-all duration-300 ease-in-out cursor-pointer"
+                      : "bg-gray-200 border border-gray-300"
                   } px-5 py-1 text-lg flex justify-center items-center gap-x-1 rounded-sm`}
                 >
                   {" "}
@@ -913,7 +972,7 @@ export default function Settings() {
                   onClick={() => {
                     setDeletePrivateUserDataPopUp(false);
                   }}
-                  className="delete-private-user-popup-close-button px-3 py-1 text-[18px] flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 cursor-pointer rounded-sm hover:bg-white"
+                  className="delete-private-user-popup-close-button px-3 py-1 text-[18px] flex justify-center items-center gap-x-1 bg-gray-200 text-black border border-gray-300 transition-all duration-300 ease-in-out rounded-sm cursor-pointer hover:bg-white"
                 >
                   schließen
                 </button>
@@ -921,7 +980,7 @@ export default function Settings() {
                   onClick={() => {
                     deletePrivateUserData(privateUserObject.id);
                   }}
-                  className="delete-private-user-popup-delete-button px-5 py-1 text-lg flex justify-center items-center gap-x-1 bg-red-500 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500"
+                  className="delete-private-user-popup-delete-button px-5 py-1 text-lg flex justify-center items-center gap-x-1 bg-red-600 text-white border rounded-sm transition-all duration-300 ease-in-out cursor-pointer hover:bg-white hover:text-red-600 hover:border-red-600"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -950,7 +1009,7 @@ export default function Settings() {
         </p>
         <button
           onClick={loadPrivateUserData}
-          className="private-data-div-load-button ml-[15%] px-5 py-1.5 text-lg bg-blue-500 text-white border border-white rounded-sm cursor-pointer hover:bg-white hover:text-blue-500 hover:border-blue-500"
+          className="private-data-div-load-button ml-[15%] px-5 py-1.5 text-lg bg-blue-500 text-white border border-white rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500"
         >
           Daten laden
         </button>
@@ -981,13 +1040,13 @@ export default function Settings() {
                 {privateUserObject.street}
               </td>
               <td className="private-data-div-info number w-[200px] h-[40px] px-3 text-[17px] text-right bg-white border border-gray-400">
-                {privateUserObject.houseNumber !== 0
-                  ? privateUserObject.houseNumber
+                {privateUserObject.house_number !== 0
+                  ? privateUserObject.house_number
                   : ""}
               </td>
               <td className="private-data-div-info number w-[200px] px-3 text-[17px] text-right bg-white border border-gray-400">
                 {privateUserObject.PLZ !== 0
-                  ? privateUserObject.houseNumber
+                  ? privateUserObject.house_number
                   : ""}
               </td>
               <td className="private-data-div-info w-[200px] px-3 text-[17px] bg-white border border-gray-400">
@@ -1002,9 +1061,9 @@ export default function Settings() {
               }}
               className={`${
                 privateDataExist === false
-                  ? "bg-blue-500 text-white border border-white hover:bg-white hover:text-blue-500 hover:border-blue-500 cursor-pointer"
-                  : "bg-gray-300 hover:bg-gray-300 text-white hover:text-white hover:border-white"
-              } create-private-data-button px-5 py-2 flex justify-center items-center gap-x-1 text-lg rounded-sm`}
+                  ? "bg-blue-500 text-white border border-white hover:bg-white hover:text-blue-500 hover:border-blue-500 cursor-pointer transition-all duration-300 ease-in-out"
+                  : "bg-gray-200 border border-gray-300"
+              } create-private-data-button px-6 py-2 flex justify-center items-center gap-x-1 text-lg rounded-sm`}
               disabled={privateDataExist}
             >
               <svg
@@ -1028,10 +1087,10 @@ export default function Settings() {
                 openPrivateUserPopUp("update");
               }}
               disabled={!privateDataExist}
-              className={`update-private-data-button px-5 py-2 flex justify-center items-center gap-x-1 text-lg rounded-sm ${
+              className={`update-private-data-button px-6 py-2 flex justify-center items-center gap-x-1 text-lg rounded-sm ${
                 privateDataExist === true
-                  ? "bg-blue-500 text-white border border-white hover:bg-white hover:text-blue-500 hover:border-blue-500 cursor-pointer"
-                  : "bg-gray-300 text-white hover:bg-gray-300 hover:text-white hover:border-white "
+                  ? "bg-blue-500 text-white border border-white hover:bg-white hover:text-blue-500 hover:border-blue-500 cursor-pointer transition-all duration-300 ease-in-out"
+                  : "bg-gray-200 border border-gray-300"
               }`}
             >
               <svg
@@ -1053,10 +1112,10 @@ export default function Settings() {
             <button
               onClick={opendeletePrivateUserDataPopUp}
               disabled={!privateDataExist}
-              className={`delete-private-data-button px-5 py-2 text-lg flex justify-center items-center gap-x-1 border rounded-sm ${
+              className={`delete-private-data-button px-6 py-2 text-lg flex justify-center items-center gap-x-1 border rounded-sm ${
                 privateDataExist === true
-                  ? "bg-red-500 text-white hover:bg-white hover:text-red-500 hover:border-red-500 cursor-pointer"
-                  : "bg-gray-300 hover:bg-gray-300 text-white hover:text-gray-50 hover:border-white"
+                  ? "bg-red-600 text-white hover:bg-white hover:text-red-600 hover:border-red-600 cursor-pointer transition-all duration-300 ease-in-out"
+                  : "bg-gray-200 border border-gray-300"
               }`}
             >
               <svg
@@ -1136,7 +1195,7 @@ export default function Settings() {
           <h2 className="settings-agb-div-headline ml-[15rem] mt-10 mb-5 text-2xl">
             Allgemine Geschäftsbedingungen
           </h2>
-          <div className="settings-agb-overview w-[75%] h-[500px] mx-auto border border-gray-400 rounded-sm overflow-hidden">
+          <div className="settings-agb-overview w-[75%] h-[500px] mx-auto bg-white border border-gray-400 rounded-sm overflow-hidden">
             <div className="settings-agb-overview-scroll-div w-full h-full px-7 py-5 overflow-y-scroll">
               <AGBComponent />
             </div>
@@ -1160,7 +1219,7 @@ export default function Settings() {
           <h2 className="settings-data-protection-headline ml-[15rem] mt-10 mb-5 text-2xl">
             Datenschutzerklärung
           </h2>
-          <div className="settings-data-protection-overview w-[75%] h-[500px] mx-auto px-7 py-5 border border-gray-400 rounded-sm overflow-hidden">
+          <div className="settings-data-protection-overview w-[75%] h-[500px] mx-auto py-5 bg-white border border-gray-400 rounded-sm overflow-hidden">
             <div className="settings-data-protection-overview-scroll-div w-full h-full px-7 py-5 overflow-y-scroll">
               <DataprotectionComponent />
             </div>
@@ -1184,7 +1243,7 @@ export default function Settings() {
           <h2 className="settings-user-consent-headline ml-[15rem] mt-10 mb-5 text-2xl">
             Einwilligung zur Datenverarbeitung <wbr /> durch Drittanbieter
           </h2>
-          <div className="settings-user-consent-text w-[75%] mx-auto p-5 text-lg border border-gray-400 rounded-sm">
+          <div className="settings-user-consent-text w-[75%] mx-auto p-5 text-lg bg-white border border-gray-400 rounded-sm">
             Ich willige ein, dass meine freiwilligen angegebenen
             personenbezogenen Daten (z.B. Adresse, Stadt, Telefonnummer), im
             Rahmen der Nutzung der Plattform OpenPureNet, an den Dienstleister
@@ -1247,14 +1306,16 @@ export default function Settings() {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-      <button
-        onClick={() => {
-          setDeleteAccountPopUp(true);
-        }}
-        className="settings-delete-user-account ml-[15rem] my-15 px-5 py-1 text-lg flex justify-center items-center gap-x-1 bg-red-500 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500"
-      >
-        Account löschen
-      </button>
+      <div className="settings-delete-account-div mt-20">
+        <button
+          onClick={() => {
+            setDeleteAccountPopUp(true);
+          }}
+          className="settings-delete-user-account ml-[15rem] px-5 py-1 text-lg flex justify-center items-center gap-x-1 bg-red-600 text-white border rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-red-600 hover:border-red-600"
+        >
+          Account löschen
+        </button>
+      </div>
     </section>
   );
   /*

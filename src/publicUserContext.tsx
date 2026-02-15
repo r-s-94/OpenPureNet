@@ -9,13 +9,13 @@ interface PublicUserContext {
 export const publicUserContext = createContext<PublicUserContext>({
   publicUserObject: {
     id: 0,
-    userId: "",
-    profilName: "",
-    profilPicture: "",
-    statusText: "",
-    agbConsent: false,
-    dataProtectionConsent: false,
-    userConsent: false,
+    user_id: "",
+    profil_name: "",
+    profil_picture: "",
+    status_text: "",
+    agb_consent: false,
+    data_protection_consent: false,
+    user_consent: false,
   },
   setPublicUserObject: () => {},
 });

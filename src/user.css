@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+.user-section {
+  background-color: #f0f2f5;
+}
+
 .user-post-overview {
   position: relative;
 }
@@ -12,5 +16,7 @@
   right: 0;
   height: 20px;
   pointer-events: none;
-  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.7) inset;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.7) inset;
+  box-shadow: 0 -6px 8px rgba(0, 0, 0, 0.5) inset;
+  box-shadow: 0 -10px 12px rgba(0, 0, 0, 0.3) inset;
 }

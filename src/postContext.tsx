@@ -2,9 +2,9 @@ import { createContext } from "react";
 
 export interface PublicUserObject {
   id: number;
-  userId: string;
-  profilName: string;
-  profilPicture: string;
+  user_id: string;
+  profil_name: string;
+  profil_picture: string;
 }
 
 export interface PostObject {
@@ -12,8 +12,8 @@ export interface PostObject {
   medium: string;
   public_user: PublicUserObject;
   text: string;
-  timeStamp: string;
-  userId: string;
+  time_stamp: string;
+  user_id: string;
 }
 
 interface PostArrayContext {

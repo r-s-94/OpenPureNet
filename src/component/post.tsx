@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { publicUserContext } from "@/publicUserContext";
 import { IllegalWordsArray } from "@/illegalWords";
-import { serachUserContext } from "@/searchUserContext";
+import { searchUserContext } from "@/searchUserContext";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import type { PostObject } from "@/postContext";
@@ -21,10 +21,10 @@ import "./post.css";
 export interface CommentObject {
   text: string;
   id: number;
-  postId: number;
+  post_id: number;
   public_user: PublicUserObject;
-  timeStamp: string;
-  userId: string;
+  time_stamp: string;
+  user_id: string;
 }
 
 export default function Post({
@@ -45,7 +45,6 @@ export default function Post({
   const [commentsArray, setCommentsArray] = useState<CommentObject[]>([]);
   const [createComment, setCreateComment] = useState<string>("");
   const [updateComment, setUpdateComment] = useState<string>("");
-  const [checkTextContent, setCheckTextContent] = useState<boolean>(false);
   const [currentCommentId, setCurrentCommentId] = useState<number>(0);
   const [commentPopUp, setCommentPopUp] = useState<boolean>(false);
   const [createCommentPopUp, setCreateCommentPopUp] = useState<boolean>(false);
@@ -66,7 +65,7 @@ export default function Post({
   const [prevLikeDislikePostType, setPrevLikeDislikePostType] =
     useState<string>("");
   const { publicUserObject } = useContext(publicUserContext);
-  const { searchUserObject } = useContext(serachUserContext);
+  const { globalSearchUserObject } = useContext(searchUserContext);
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -75,31 +74,31 @@ export default function Post({
       const { data: like_dislike_post } = await supabase
         .from("like_dislike_posts")
         .select()
-        .eq("userId", session.session!.user.id)
-        .eq("postId", post.id);
+        .eq("user_id", session.session!.user.id)
+        .eq("post_id", post.id);
 
       const { count: like_post_count } = await supabase
         .from("like_dislike_posts")
         .select("*", { count: "exact", head: true })
-        .eq("postId", post.id)
+        .eq("post_id", post.id)
         .eq("type", "like");
 
       const { count: dislike_post_count } = await supabase
         .from("like_dislike_posts")
         .select("*", { count: "exact", head: true })
-        .eq("postId", post.id)
+        .eq("post_id", post.id)
         .eq("type", "dislike");
 
       const { data: comments } = await supabase
         .from("comments")
         .select(
-          "id, userId, text, timeStamp, postId, public_user: userId (id, userId, profilName, profilPicture)"
+          "id, user_id, text, time_stamp, post_id, public_user: user_id (id, user_id, profil_name, profil_picture)",
         );
 
       const { count: comment_count } = await supabase
         .from("comments")
         .select("*", { count: "exact", head: true })
-        .eq("postId", post.id);
+        .eq("post_id", post.id);
 
       if (like_dislike_post) {
         if (like_dislike_post[0] !== undefined) {
@@ -139,7 +138,7 @@ export default function Post({
     const { data } = await supabase
       .from("comments")
       .select(
-        "id, userId, text, timeStamp, postId, public_user: userId (id, userId, profilName, profilPicture)"
+        "id, user_id, text, time_stamp, post_id, public_user: user_id (id, user_id, profil_name, profil_picture)",
       );
 
     if (data) {
@@ -152,7 +151,7 @@ export default function Post({
     const { count: comment_count } = await supabase
       .from("comments")
       .select("*", { count: "exact", head: true })
-      .eq("postId", post.id);
+      .eq("post_id", post.id);
 
     if (comment_count) {
       setCommentCount(comment_count);
@@ -166,7 +165,7 @@ export default function Post({
     postId: number,
     userId: string,
     currentLikeDislike: string,
-    prevLikeDislike: string
+    prevLikeDislike: string,
   ) {
     if (currentLikeDislike === prevLikeDislike) {
       const {} = await supabase
@@ -187,10 +186,10 @@ export default function Post({
       const currentTimestamp = new Date().toLocaleString();
 
       const {} = await supabase.from("like_dislike_posts").insert({
-        userId: userId,
+        user_id: userId,
         type: currentLikeDislike,
-        timeStamp: currentTimestamp,
-        postId: postId,
+        time_stamp: currentTimestamp,
+        post_id: postId,
       });
 
       loadLikeDislikePost(postId);
@@ -204,8 +203,8 @@ export default function Post({
     const { data: like_dislike_post } = await supabase
       .from("like_dislike_posts")
       .select()
-      .eq("userId", session.session!.user.id)
-      .eq("postId", postId);
+      .eq("user_id", session.session!.user.id)
+      .eq("post_id", postId);
 
     if (like_dislike_post) {
       if (like_dislike_post[0] !== undefined) {
@@ -219,13 +218,13 @@ export default function Post({
     const { count: like_post_count } = await supabase
       .from("like_dislike_posts")
       .select("*", { count: "exact", head: true })
-      .eq("postId", postId)
+      .eq("post_id", postId)
       .eq("type", "like");
 
     const { count: dislike_post_count } = await supabase
       .from("like_dislike_posts")
       .select("*", { count: "exact", head: true })
-      .eq("postId", postId)
+      .eq("post_id", postId)
       .eq("type", "dislike");
 
     if (like_post_count) {
@@ -243,7 +242,7 @@ export default function Post({
 
   function openCommentPopUp(postId: number) {
     const filteredCommentArray = commentsArray.filter((comment) => {
-      return comment.postId === postId;
+      return comment.post_id === postId;
     });
 
     setCurrentPostId(postId);
@@ -255,127 +254,94 @@ export default function Post({
     setCreateCommentPopUp(true);
   }
 
-  function editCreateCommentInput(createCommentInput: string) {
-    const createCommentWithoutSpace = createCommentInput;
-    setCreateComment(createCommentWithoutSpace.trimStart());
-
-    if (createCommentWithoutSpace.trimStart().length > 0) {
-      setCheckTextContent(true);
-    }
-
-    if (createCommentWithoutSpace === "") {
-      setCheckTextContent(false);
-    }
-  }
-
   async function newComment() {
-    if (createComment !== "") {
-      let resultIllegalContent = 0;
+    let resultIllegalContent = 0;
 
-      for (let index = 0; index < IllegalWordsArray.length; index++) {
-        resultIllegalContent = createComment.search(IllegalWordsArray[index]);
-
-        if (resultIllegalContent !== -1) {
-          break;
-        }
-      }
+    for (let index = 0; index < IllegalWordsArray.length; index++) {
+      resultIllegalContent = createComment.search(IllegalWordsArray[index]);
 
       if (resultIllegalContent !== -1) {
-        setNoSupportContentMessage(
-          "In deinem Kommentar wurde problematischer Inhalt gefunden. Bitte überprüfe und korrigiere ihn."
-        );
-        setNoSupportContentPopUp(true);
-      } else {
-        const currentTimestamp = new Date().toLocaleString();
-
-        const {} = await supabase.from("comments").insert({
-          userId: publicUserObject.userId,
-          text: createComment,
-          timeStamp: currentTimestamp,
-          postId: currentPostId,
-        });
-
-        toast.success("Dein Kommentar wurde Erfolgreich erstellt.", {
-          unstyled: true,
-          className: "w-[20rem] h-[6rem] px-5",
-        });
-
-        loadComments();
-        setCreateComment("");
-        setCheckTextContent(false);
-        setCreateCommentPopUp(false);
+        break;
       }
+    }
+
+    if (resultIllegalContent !== -1) {
+      setNoSupportContentMessage(
+        "In deinem Kommentar wurde problematischer Inhalt gefunden. Bitte überprüfe und korrigiere ihn.",
+      );
+      setNoSupportContentPopUp(true);
+    } else {
+      const currentTimestamp = new Date().getTime();
+
+      const {} = await supabase.from("comments").insert({
+        user_id: publicUserObject.user_id,
+        text: createComment,
+        time_stamp: String(currentTimestamp),
+        post_id: currentPostId,
+      });
+
+      toast.success("Dein Kommentar wurde Erfolgreich erstellt.", {
+        unstyled: true,
+        className: "w-[20rem] h-[6rem] px-5",
+      });
+
+      loadComments();
+      setCreateComment("");
+      setCreateCommentPopUp(false);
     }
   }
 
   function openEditCommentPopUp(commentId: number) {
     const findComment = commentsArray.find(
-      (comment) => comment.id === commentId
+      (comment) => comment.id === commentId,
     );
 
     if (findComment) {
       setUpdateComment(findComment.text);
       setCurrentCommentId(commentId);
-      setCheckTextContent(true);
       setUpdateCommentPopUp(true);
     }
   }
 
-  function editUpdateCommentInput(updateCommentInput: string) {
-    const updateCommentWithoutSpace = updateCommentInput;
-    setUpdateComment(updateCommentWithoutSpace.trimStart());
-
-    if (updateCommentWithoutSpace.trimStart().length > 0) {
-      setCheckTextContent(true);
-    }
-
-    if (updateCommentWithoutSpace === "") {
-      setCheckTextContent(false);
-    }
-  }
-
   async function editComment(commentId: number) {
-    if (updateComment !== "") {
-      let resultIllegalContent = 0;
+    let resultIllegalContent = 0;
 
-      for (let index = 0; index < IllegalWordsArray.length; index++) {
-        resultIllegalContent = updateComment.search(IllegalWordsArray[index]);
-
-        if (resultIllegalContent !== -1) {
-          break;
-        }
-      }
+    for (let index = 0; index < IllegalWordsArray.length; index++) {
+      resultIllegalContent = updateComment.search(IllegalWordsArray[index]);
 
       if (resultIllegalContent !== -1) {
-        setNoSupportContentMessage(
-          "In deinen Kommentar wurde problematischer Inhalt gefunden. Bitte überprüfe und korrigiere ihn."
-        );
-        setNoSupportContentPopUp(true);
-      } else {
-        const updateTimestamp = new Date().toLocaleString();
-
-        const {} = await supabase
-          .from("comments")
-          .update({ text: updateComment, timeStamp: updateTimestamp })
-          .eq("id", commentId);
-
-        toast.success("Dein Kommentar wurde Erfolgreich bearbeitet.", {
-          unstyled: true,
-          className: "w-[20rem] h-[5rem] px-5",
-        });
-
-        loadComments();
-        setUpdateComment("");
-        setCurrentCommentId(0);
-        setCheckTextContent(false);
-        setUpdateCommentPopUp(false);
+        break;
       }
+    }
+
+    if (resultIllegalContent !== -1) {
+      setNoSupportContentMessage(
+        "In deinen Kommentar wurde problematischer Inhalt gefunden. Bitte überprüfe und korrigiere ihn.",
+      );
+      setNoSupportContentPopUp(true);
+    } else {
+      const updateTimestamp = new Date().getTime();
+
+      const {} = await supabase
+        .from("comments")
+        .update({ text: updateComment, time_stamp: String(updateTimestamp) })
+        .eq("id", commentId);
+
+      toast.success("Dein Kommentar wurde Erfolgreich bearbeitet.", {
+        unstyled: true,
+        className: "w-[20rem] h-[5rem] px-5",
+      });
+
+      loadComments();
+      setUpdateComment("");
+      setCurrentCommentId(0);
+      setUpdateCommentPopUp(false);
     }
   }
 
   function openDeleteCommentPopUp(commentId: number) {
     const findComment = commentsArray.find(
-      (comment) => comment.id === commentId
+      (comment) => comment.id === commentId,
     );
 
     if (findComment) {
@@ -415,10 +381,10 @@ export default function Post({
           }}
           className="comment-overview-popup !max-w-xl"
         >
-          <DialogHeader className="comment-overview-popup-header h-[800px] border border-gray-400 rounded-sm overflow-hidden">
-            <div className="w-full h-full py-1 px-3 overflow-y-scroll">
+          <DialogHeader className="comment-overview-popup-header h-[800px] overflow-hidden">
+            <div className="w-full h-full py-1 overflow-y-scroll">
               {commentsArray
-                .filter((comment) => comment.postId === currentPostId)
+                .filter((comment) => comment.post_id === currentPostId)
                 .map((comment) => {
                   return (
                     <>
@@ -441,7 +407,7 @@ export default function Post({
                 setCreateComment("");
                 setCommentPopUp(false);
               }}
-              className="comment-overview-popup-close-button px-3 py-1.5 text-[16px] text-black flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 rounded-sm cursor-pointer hover:bg-white"
+              className="comment-overview-popup-close-button px-3 py-[5px] text-[16px] text-black flex justify-center items-center gap-x-1 bg-gray-200 border border-gray-300 rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -461,7 +427,7 @@ export default function Post({
             </button>{" "}
             <button
               onClick={openCreateCommentPopUp}
-              className="comment-overview-popup-open-new-comment-button px-5 py-1.5 text-[16px] flex justify-center items-center gap-x-1 bg-blue-400 text-white border border-white rounded-sm cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-400"
+              className="comment-overview-popup-open-new-comment-button px-5 py-1.5 text-[16px] flex justify-center items-center gap-x-1 bg-blue-500 text-white border border-white rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500"
             >
               <div className="flex justify-center items-center">
                 <svg
@@ -510,7 +476,7 @@ export default function Post({
             <textarea
               value={createComment}
               onChange={(event) => {
-                editCreateCommentInput(event.target.value);
+                setCreateComment(event.target.value.trimStart());
               }}
               className="create-comment-popup-textarea w-full h-[250px] text-black text-lg px-5 py-3 border border-gray-400 resize-none"
               name=""
@@ -521,10 +487,9 @@ export default function Post({
                 onClick={() => {
                   loadComments();
                   setCreateComment("");
-                  setCheckTextContent(false);
                   setCreateCommentPopUp(false);
                 }}
-                className="create-comment-popup-close-button px-3 py-1.5 text-[16px] text-black flex justify-center items-center bg-gray-50 border border-gray-200 rounded-sm cursor-pointer hover:bg-white"
+                className="create-comment-popup-close-button px-3 py-1.5 text-[16px] text-black flex justify-center items-center bg-gray-200 border border-gray-300 rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -544,11 +509,11 @@ export default function Post({
               </button>{" "}
               <button
                 onClick={newComment}
-                disabled={!checkTextContent}
+                disabled={!(createComment.length > 0)}
                 className={`create-comment-popup-new-comment-button px-5 py-1.5 text-[16px] flex justify-center items-center gap-x-1 rounded-sm ${
-                  checkTextContent
-                    ? "bg-blue-400 text-white border border-white cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-400"
-                    : "bg-gray-200"
+                  createComment.length > 0
+                    ? "bg-blue-500 text-white border border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500"
+                    : "bg-gray-200 border border-gray-300"
                 }`}
               >
                 {" "}
@@ -600,7 +565,7 @@ export default function Post({
             <textarea
               value={updateComment}
               onChange={(event) => {
-                editUpdateCommentInput(event.target.value);
+                setUpdateComment(event.target.value.trimStart());
               }}
               className="update-comment-popup-textarea w-full h-[250px] text-black text-lg px-5 py-3 border border-gray-400 resize-none"
               name=""
@@ -612,10 +577,9 @@ export default function Post({
                 onClick={() => {
                   setCurrentCommentId(0);
                   setUpdateComment("");
-                  setCheckTextContent(false);
                   setUpdateCommentPopUp(false);
                 }}
-                className="update-comment-popup-close-button px-3 py-1.5 text-[17px] text-black flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 rounded-sm cursor-pointer hover:bg-white"
+                className="update-comment-popup-close-button px-3 py-1.5 text-[17px] text-black flex justify-center items-center gap-x-1 bg-gray-200 border border-gray-300 rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -637,11 +601,11 @@ export default function Post({
                 onClick={() => {
                   editComment(currentCommentId);
                 }}
-                disabled={!checkTextContent}
+                disabled={!(updateComment.length > 0)}
                 className={`update-comment-popup-update-button px-5 py-1.5 text-[16px] flex justify-center items-center gap-x-1 rounded-sm ${
-                  checkTextContent
-                    ? "bg-blue-400 text-white border border-white cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-400"
-                    : "bg-gray-200"
+                  updateComment.length > 0
+                    ? "bg-blue-500 text-white border border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500"
+                    : "bg-gray-200 border border-gray-300"
                 }`}
               >
                 {" "}
@@ -705,7 +669,7 @@ export default function Post({
                 setNoSupportContentMessage("");
                 setNoSupportContentPopUp(false);
               }}
-              className="post-no-support-content-popup-close-button mx-auto mt-10 mb-3 px-5 py-1 text-[17px] text-black flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 rounded-sm cursor-pointer hover:bg-white"
+              className="post-no-support-content-popup-close-button mx-auto mt-10 mb-3 px-5 py-1 text-[17px] text-black flex justify-center items-center gap-x-1 bg-gray-200 border border-gray-300 rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -744,7 +708,7 @@ export default function Post({
                 setCurrentCommentId(0);
                 setDeleteCommentPopUp(false);
               }}
-              className="delete-comment-popup-close-button px-3 py-1.5 flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 cursor-pointer rounded-sm hover:bg-white"
+              className="delete-comment-popup-close-button px-3 py-1.5 flex justify-center items-center gap-x-1 bg-gray-200 border border-gray-300 cursor-pointer transition-all duration-300 ease-in-out rounded-sm hover:bg-white"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -752,7 +716,7 @@ export default function Post({
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                className="delete-comment-popup-close-icon w-5 cursor-pointer"
+                className="delete-comment-popup-close-icon w-5"
               >
                 <path
                   stroke-linecap="round"
@@ -766,7 +730,7 @@ export default function Post({
               onClick={() => {
                 deleteComment(currentCommentId);
               }}
-              className="delete-comment-popup-delete-button px-5 py-1.5 flex justify-center items-center gap-x-1 bg-red-500 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500"
+              className="delete-comment-popup-delete-button px-5 py-1.5 flex justify-center items-center gap-x-1 bg-red-600 text-white border rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-red-600 hover:border-red-600"
             >
               {" "}
               <svg
@@ -775,7 +739,7 @@ export default function Post({
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                className="delete-comment-popup-delete-icon w-6 cursor-pointer"
+                className="delete-comment-popup-delete-icon w-6"
               >
                 <path
                   stroke-linecap="round"
@@ -789,13 +753,13 @@ export default function Post({
         </DialogContent>
       </Dialog>
 
-      <div className="post mx-3 my-10 px-10 pt-5 pb-1 bg-white shadow-lg rounded-sm">
-        <div className="post-user-option-div my-3 flex justify-between items-center gap-x-3">
+      <div className="post mx-0.5 my-0.3 bg-white shadow-lg rounded-sm">
+        <div className="post-user-option-div px-3 py-5 flex justify-between items-center gap-x-3">
           <div className="post-user-div flex justify-center items-center gap-x-3">
-            {post.public_user.profilPicture !== "" ? (
+            {post.public_user.profil_picture !== "" ? (
               <img
-                src={`https://eypauwdeqovcsrjwuxtj.supabase.co/storage/v1/object/public/profilepicture/${post.public_user.profilPicture}`}
-                className="profilpicture w-13 h-13 bg-cover rounded-full"
+                src={`https://pmhsscblwzipolnmirow.supabase.co/storage/v1/object/public/profilepicture/${post.public_user.profil_picture}`}
+                className="profilpicture w-10 h-10 bg-cover rounded-full"
                 alt=""
               />
             ) : (
@@ -805,7 +769,7 @@ export default function Post({
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                className="user-icon w-10 text-blue-400 rounded-sm hover:text-white"
+                className="user-icon w-9 text-blue-500 rounded-sm"
               >
                 <path
                   stroke-linecap="round"
@@ -815,21 +779,21 @@ export default function Post({
               </svg>
             )}
             <p className="profilname text-[18px]">
-              {post.public_user.profilName || "Profilname"}
+              {post.public_user.profil_name || "Profilname"}
             </p>
           </div>
 
           <div className="post-option-button-div flex justify-center items-center gap-x-3">
             {postKebabMenuId === post.id ? (
-              <div className="post-option-div px-3 py-3 bg-white flex flex-col items-center justify-center gap-y-1 border border-gray-200 shadow-lg rounded-sm">
+              <div className="post-option-div px-3 py-3 bg-white flex flex-col items-center justify-center gap-y-1.5 border border-gray-200 shadow-lg rounded-sm">
                 {" "}
                 <button
                   onClick={() => {
                     openEditPostPopUp(post.id);
                   }}
-                  className={`edit-button px-2 py-1 bg-blue-400 text-white border border-white rounded-sm cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-400 ${
+                  className={`edit-button px-2 py-1 bg-blue-500 text-white transition-all duration-500 ease-in-out border border-white rounded-sm cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-500 ${
                     hiddenPostOptions === "hiddenPostOptions" ? "hidden" : ""
-                  } ${searchUserObject.searchStatus ? "hidden" : ""}`}
+                  } ${globalSearchUserObject.search_status ? "hidden" : ""}`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -837,7 +801,7 @@ export default function Post({
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    className="w-6 cursor-pointer"
+                    className="w-6"
                   >
                     <path
                       stroke-linecap="round"
@@ -850,9 +814,9 @@ export default function Post({
                   onClick={() => {
                     openDeletePostPopUp(post.id);
                   }}
-                  className={`delete-button px-2 py-1 flex justify-center items-center gap-x-1 bg-red-500 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500 ${
+                  className={`delete-button px-2 py-1 flex justify-center items-center gap-x-1 transition-all duration-300 ease-in-out bg-red-600 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-600 hover:border-red-600 ${
                     hiddenPostOptions === "hiddenPostOptions" ? "hidden" : ""
-                  } ${searchUserObject.searchStatus ? "hidden" : ""}`}
+                  } ${globalSearchUserObject.search_status ? "hidden" : ""}`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -881,8 +845,8 @@ export default function Post({
                   ? "hidden-post-kebab-menu-button"
                   : ""
               } ${
-                searchUserObject.searchStatus ? "search-user-status" : ""
-              } p-1 flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 rounded-sm hover:bg-white`}
+                globalSearchUserObject.search_status ? "search-user-status" : ""
+              } p-x-1 flex justify-center items-center gap-x-1 transition-all duration-500 ease-in-out cursor-pointer rounded-sm`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -901,49 +865,54 @@ export default function Post({
             </button>
           </div>
         </div>
-        <p className="post-text my-3 text-[17px]">{post.text}</p>
+
+        <p className="post-text p-3 text-[17px]">{post.text}</p>
 
         <div className="post-medium-div w-full h-auto my-3">
           {post.medium.slice(-4) === ".jpg" ? (
             <img
-              src={`https://eypauwdeqovcsrjwuxtj.supabase.co/storage/v1/object/public/medium/${post.medium}`}
-              className="post-medium-img w-full h-auto rounded-sm"
+              src={`https://pmhsscblwzipolnmirow.supabase.co/storage/v1/object/public/medium/${post.medium}`}
+              className="post-medium-img w-full h-auto"
               alt=""
             />
           ) : post.medium.slice(-4) === ".png" ? (
             <img
-              src={`https://eypauwdeqovcsrjwuxtj.supabase.co/storage/v1/object/public/medium/${post.medium}`}
-              className="post-medium-img w-full h-auto rounded-sm"
+              src={`https://pmhsscblwzipolnmirow.supabase.co/storage/v1/object/public/medium/${post.medium}`}
+              className="post-medium-img w-full h-auto"
               alt=""
             />
           ) : post.medium.slice(-4) === ".mp4" ? (
-            <video
-              className="post-medium-video w-full h-auto rounded-sm"
-              controls
-            >
+            <video className="post-medium-video w-full h-auto" controls>
               <source
-                src={`https://eypauwdeqovcsrjwuxtj.supabase.co/storage/v1/object/public/medium/${post.medium}`}
+                src={`https://pmhsscblwzipolnmirow.supabase.co/storage/v1/object/public/medium/${post.medium}`}
                 type="video/mp4"
               />
             </video>
           ) : null}
         </div>
 
-        <p className="timestamp mb-3 text-gray-400 text-base text-end">
-          {post.timeStamp}
+        <p className="timestamp pb-3 pr-3 text-gray-500 text-base text-end">
+          {new Date(Number(post.time_stamp)).toLocaleString("de-DE", {
+            timeStyle: "short",
+          })}
+          {"  "}
+          {new Date(Number(post.time_stamp)).toLocaleString("de-DE", {
+            dateStyle: "medium",
+          })}
         </p>
-        <div className="button-div w-full py-5 flex justify-around items-center border border-t-gray-200 border-l-white border-r-white border-b-white">
+
+        <div className="button-div w-full py-7 flex justify-around items-center rounded-sm border border-t-gray-200 border-l-white border-r-white border-b-white">
           <div
             className={`edit-delete-div flex justify-center items-center gap-x-5 ${
               hiddenPostOptions === "hiddenPostOptions" ? "hidden" : ""
-            } ${searchUserObject.searchStatus ? "hidden" : ""}`}
+            } ${globalSearchUserObject.search_status ? "hidden" : ""}`}
           >
             {" "}
             <button
               onClick={() => {
                 openEditPostPopUp(post.id);
               }}
-              className="edit-button px-2 py-1 bg-blue-400 text-white border border-white rounded-sm cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-400"
+              className="edit-button px-2 py-1 bg-blue-500 transition-all duration-300 ease-in-out text-white border border-white rounded-sm cursor-pointer hover:bg-white hover:text-blue-500 hover:border-blue-500"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -951,7 +920,7 @@ export default function Post({
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                className="w-6 cursor-pointer"
+                className="w-6"
               >
                 <path
                   stroke-linecap="round"
@@ -964,7 +933,7 @@ export default function Post({
               onClick={() => {
                 openDeletePostPopUp(post.id);
               }}
-              className="delete-button px-2 py-1 flex justify-center items-center gap-x-1 bg-red-500 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500"
+              className="delete-button px-2 py-1 transition-all duration-300 ease-in-out flex justify-center items-center gap-x-1 bg-red-600 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-600 hover:border-red-600"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -972,7 +941,7 @@ export default function Post({
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                className="w-6 cursor-pointer"
+                className="w-6"
               >
                 <path
                   stroke-linecap="round"
@@ -989,12 +958,12 @@ export default function Post({
                 checkLikeDislikePost(
                   likeDislikePostId,
                   post.id,
-                  publicUserObject.userId,
+                  publicUserObject.user_id,
                   "like",
-                  prevLikeDislikePostType
+                  prevLikeDislikePostType,
                 );
               }}
-              className="like-button px-2 py-1 flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 cursor-pointer rounded-sm hover:bg-white"
+              className="like-button px-2 py-1 transition-all duration-300 ease-in-out flex justify-center items-center gap-x-1 cursor-pointer rounded-sm"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -1003,7 +972,7 @@ export default function Post({
                 stroke-width="1.5"
                 stroke="currentColor"
                 className={`like-icon w-6 cursor-pointer ${
-                  prevLikeDislikePostType === "like" ? "fill-green-500" : ""
+                  prevLikeDislikePostType === "like" ? "fill-green-600" : ""
                 }`}
               >
                 <path
@@ -1019,12 +988,12 @@ export default function Post({
                 checkLikeDislikePost(
                   likeDislikePostId,
                   post.id,
-                  publicUserObject.userId,
+                  publicUserObject.user_id,
                   "dislike",
-                  prevLikeDislikePostType
+                  prevLikeDislikePostType,
                 );
               }}
-              className="dislike-button px-2 py-1 flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 cursor-pointer rounded-sm hover:bg-white"
+              className="dislike-button px-2 py-1 transition-all duration-300 ease-in-out flex justify-center items-center gap-x-1 cursor-pointer rounded-sm"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -1033,7 +1002,7 @@ export default function Post({
                 stroke-width="1.5"
                 stroke="currentColor"
                 className={`dislike-icon w-6 cursor-pointer ${
-                  prevLikeDislikePostType === "dislike" ? "fill-red-500" : ""
+                  prevLikeDislikePostType === "dislike" ? "fill-red-600" : ""
                 }`}
               >
                 <path
@@ -1049,7 +1018,7 @@ export default function Post({
             onClick={() => {
               openCommentPopUp(post.id);
             }}
-            className="chat-button px-2 py-1 flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 rounded-sm hover:bg-white"
+            className="chat-button px-2 py-1 transition-all duration-500 ease-in-out cursor-pointer flex justify-center items-center gap-x-1 rounded-sm"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

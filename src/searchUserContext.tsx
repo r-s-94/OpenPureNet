@@ -2,34 +2,34 @@ import { createContext } from "react";
 
 export interface SearchUserObject {
   id: number;
-  userId: string;
-  profilName: string;
-  profilPicture: string;
-  agbConsent: boolean;
-  dataProtectionConsent: boolean;
-  userConsent: boolean;
-  statusText: string;
-  searchStatus: boolean;
-  fromMessage: boolean;
+  user_id: string;
+  profil_name: string;
+  profil_picture: string;
+  agb_consent: boolean;
+  data_protection_consent: boolean;
+  user_consent: boolean;
+  status_text: string;
+  search_status: boolean;
+  from_message: boolean;
 }
 
 interface SearchUserContext {
-  searchUserObject: SearchUserObject;
-  setSearchUserObject: (value: SearchUserObject) => void;
+  globalSearchUserObject: SearchUserObject;
+  setGlobalSearchUserObject: (value: SearchUserObject) => void;
 }
 
-export const serachUserContext = createContext<SearchUserContext>({
-  searchUserObject: {
+export const searchUserContext = createContext<SearchUserContext>({
+  globalSearchUserObject: {
     id: 0,
-    userId: "",
-    profilName: "",
-    profilPicture: "",
-    agbConsent: false,
-    dataProtectionConsent: false,
-    userConsent: false,
-    statusText: "",
-    searchStatus: false,
-    fromMessage: false,
+    user_id: "",
+    profil_name: "",
+    profil_picture: "",
+    agb_consent: false,
+    data_protection_consent: false,
+    user_consent: false,
+    status_text: "",
+    search_status: false,
+    from_message: false,
   },
-  setSearchUserObject: () => {},
+  setGlobalSearchUserObject: () => {},
 });

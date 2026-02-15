@@ -9,7 +9,7 @@ export default function DataProtection() {
   const navigation = useNavigate();
 
   function checkUserSession() {
-    if (userAuthObject.accessToken) {
+    if (userAuthObject !== null) {
       navigation("/private-route/overview");
     } else {
       navigation("/");

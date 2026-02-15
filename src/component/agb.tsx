@@ -2,14 +2,16 @@ import { useNavigate } from "react-router-dom";
 import AGBComponent from "./agbComponent";
 import { useContext } from "react";
 import { userAuthContext } from "@/userAuthContext";
+import { supabase } from "@/supabase";
 //import "../responsive.css";
 
 export default function AGB() {
   const { userAuthObject } = useContext(userAuthContext);
   const navigation = useNavigate();
 
-  function checkUserSession() {
-    if (userAuthObject.accessToken) {
+  async function checkUserSession() {
+    const { data: session } = await supabase.auth.getSession();
+    if (session.session !== null) {
       navigation("/private-route/overview");
     } else {
       navigation("/");

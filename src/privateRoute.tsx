@@ -1,15 +1,21 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { userAuthContext } from "./userAuthContext";
 import { Navigate, Outlet } from "react-router-dom";
+import ErrorPage from "./errorPage";
 
 export default function PrivateRoute() {
   const { userAuthObject } = useContext(userAuthContext);
 
-  if (userAuthObject.accessToken === "") {
-    return "";
+  /*useEffect(() => {
+    //checkUserSession();
+    console.log(userAuthObject);
+  }, []);*/
+
+  if (userAuthObject === null) {
+    return <ErrorPage />;
   }
 
-  if (userAuthObject.isAuthenticated) {
+  if (userAuthObject !== null) {
     return <Outlet />;
   }
 
