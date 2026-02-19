@@ -41,7 +41,7 @@ export default function Settings() {
   const [updatePassword, setUpdatePassword] = useState<string>("");
   const [updateAvatarFile, setUpdateAvatarFile] = useState<File | null>(null);
   //const [updateMail, setUpdateMail] = useState<string>("");
-  const [currentPrivateUserId, setCurrentPrivateUserId] = useState<number>(0);
+  //const [currentPrivateUserId, setCurrentPrivateUserId] = useState<number>(0);
   const [editPrivateUserDataPopUp, setEditPrivateUserDataPopUp] =
     useState<boolean>(false);
   const [updateCityName, setUpdateCityName] = useState<string>("");
@@ -49,7 +49,7 @@ export default function Settings() {
   const [updateHousenumber, setUpdateHousenumber] = useState<number>(0);
   const [updatePLZ, setUpdatePLZ] = useState<string>("");
   const [updateCountry, setUpdateCountry] = useState<string>("");
-  const [currentSessionUserId, setCurrentSessionUserId] = useState<string>("");
+  //const [currentSessionUserId, setCurrentSessionUserId] = useState<string>("");
   const [deletePrivateUserDataPopUp, setDeletePrivateUserDataPopUp] =
     useState<boolean>(false);
   const [deleteAccountPopUp, setDeleteAccountPopUp] = useState<boolean>(false);
@@ -345,7 +345,7 @@ export default function Settings() {
       setPrivateDataExist(true);
       setPrivateUserArray(data!);
       setPrivateUserObject(data![0]);
-      setCurrentPrivateUserId(data![0].id);
+      //setCurrentPrivateUserId(data![0].id);
     } else {
       setPrivateDataExist(false);
       toast.info("Hinweis: Es existieren keine Adressdaten von dir.", {
@@ -467,8 +467,8 @@ export default function Settings() {
       user_id: "",
     });
     setPrivateUserArray([]);
-    setCurrentPrivateUserId(0);
-    setCurrentSessionUserId("");
+    //setCurrentPrivateUserId(0);
+    //setCurrentSessionUserId("");
     loadFirstUserData();
   }
 
