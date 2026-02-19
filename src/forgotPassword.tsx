@@ -1,3 +1,4 @@
+import "./forgotPassword.css";
 import { useState } from "react";
 import { supabase } from "./supabase";
 import { Toaster } from "./components/ui/sonner";
@@ -34,7 +35,7 @@ export default function ForgotPassword() {
   }
 
   return (
-    <section className="forget-password-section">
+    <section className="forget-password-section h-screen">
       <Toaster
         position="top-center"
         richColors
@@ -45,14 +46,14 @@ export default function ForgotPassword() {
         }}
       />
 
-      <Link to="/" className="to-signin-link">
+      <Link to="/" className="forget-password-section-back-link">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="to-signin-icon w-12 mt-10 ml-30 "
+          className="forget-password-section-back-icon w-10 pt-10 ml-30 "
         >
           <path
             stroke-linecap="round"
@@ -62,12 +63,12 @@ export default function ForgotPassword() {
         </svg>
       </Link>
 
-      <p className="forget-password-text mt-10 mx-10 text-center text-2xl">
+      <p className="forget-password-section-text mt-10 mx-10 text-center text-2xl">
         Passwort vergessen? Gib deine E-Mail-Adresse ein, um dein Passwort
         zurückzusetzen.
       </p>
 
-      <div className="forget-password-div w-[35rem] mx-auto mt-10 px-5 py-15 flex justify-center items-center gap-x-3 bg-gray-50 border border-gray-400 rounded-sm">
+      <div className="forget-password-section-main-div w-[35rem] mx-auto mt-10 px-5 py-15 flex flex-col justify-center items-center gap-y-3 bg-white border border-gray-300 rounded-sm">
         <input
           type="text"
           value={userMail}
@@ -75,12 +76,12 @@ export default function ForgotPassword() {
             setUserMail(event.target.value);
           }}
           placeholder="E-Mail eingeben"
-          className="forget-password-input pl-2 py-1.5 text-lg bg-white border border-gray-400 rounded-sm"
+          className="forget-password-section-password-input w-[15.3rem] pl-2 py-1.5 text-lg bg-white border border-gray-400 rounded-sm"
           name=""
         />{" "}
         <button
           onClick={resetPassword}
-          className="forget-password-reset-button px-7 py-1.5 text-lg bg-blue-500 text-white border border-white rounded-sm hover:bg-white hover:text-blue-500 hover:border-blue-500 cursor-pointer"
+          className="forget-password-section-password-reset-button px-7 py-1.5 flex justify-center items-center text-lg bg-blue-500 text-white border border-white rounded-sm hover:bg-white hover:text-blue-500 hover:border-blue-500 cursor-pointer"
         >
           Passwort-Link anfodern
         </button>

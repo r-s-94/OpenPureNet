@@ -4,19 +4,19 @@
   background-color: #f0f2f5;
 }
 
-.settings-agb-overview,
-.settings-data-protection-overview {
+.settings-section-agb-overview,
+.settings-section-data-protection-overview {
   position: relative;
 }
 
-.settings-agb-overview:after,
-.settings-data-protection-overview:after {
+.settings-section-agb-overview::after,
+.settings-section-data-protection-overview::after {
   content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 20px;
+  height: 10px;
   pointer-events: none;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.7) inset;
   box-shadow: 0 -6px 8px rgba(0, 0, 0, 0.5) inset;

@@ -222,7 +222,7 @@ export default function SignIn() {
             className="pl-2 py-1.5 text-lg border border-gray-400 rounded-sm"
             name=""
           />
-          <div>
+          <div className="w-full flex justify-center align-center gap-x-1">
             <input
               type="checkbox"
               onChange={() => {
@@ -243,7 +243,7 @@ export default function SignIn() {
                 ? false
                 : true
             }
-            className={`mt-5 px-16.5 py-1.5 text-lg ${
+            className={`signin-button mt-5 px-16.5 py-1.5 text-lg ${
               userMail.includes("@") === true &&
               userMail.includes(" ") === false &&
               userPassword.length > 5
@@ -257,21 +257,21 @@ export default function SignIn() {
 
         <Link
           to="forget-password"
-          className="forget-password  mt-5 text-lg text-blue-500 hover:underline"
+          className="forget-password mt-5 text-lg text-blue-500 hover:underline"
         >
           Passwort vergessen?
         </Link>
 
         <div className="w-[15rem] py-5 text-lg">
-          <span className="mr-3 text-red-500">Hinweis!</span>Die
+          <span className="mr-3 text-red-600">Hinweis!</span>Die
           Social-Media-Plattform OpenPureNet befindet sich noch in einer
           Testphase. Solange wie die Testphase läuft sendet bitte zum
           registrieren eine E-Mail an open-pure-net@web.de.
         </div>
       </div>
 
-      <div className="footer-info-div w-full mt-17 py-3 flex justify-center items-center gap-x-3 bg-white border border-gray-200">
-        <Link to="/impressum" className="cursor-pointer">
+      <div className="footer-info-div w-full mt-25 py-3 flex justify-center items-center gap-x-3 bg-white border border-gray-200">
+        <Link to="/imprint" className="cursor-pointer">
           Impressum
         </Link>
         <span className="seperate-symbole">|</span>

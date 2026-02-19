@@ -169,12 +169,12 @@ export default function NewPost() {
         setCreatePost("");
         navigation("/private-route/overview");
       } else {
-        const currentTimestamp = new Date().toLocaleString();
+        const currentTimestamp = new Date().getTime();
 
         const {} = await supabase.from("posts").insert({
           user_id: publicUserObject.user_id,
           text: createPost,
-          time_stamp: currentTimestamp,
+          time_stamp: String(currentTimestamp),
           medium: "",
         });
 
@@ -216,7 +216,7 @@ export default function NewPost() {
         }}
       />
       <Nav />
-      <div className="w-[50%] h-[15rem] mt-30 mx-auto shadow-lg">
+      <div className="new-post-section-textarea-div w-[50%] h-[15rem] mt-30 mx-auto shadow-lg">
         <textarea
           value={createPost}
           onChange={(event) => {
@@ -225,27 +225,32 @@ export default function NewPost() {
           onFocus={() => {
             setInlineModerationNote(false);
           }}
-          className="create-post-popup-textarea w-full h-full bg-white text-black text-lg px-5 py-3 rounded-sm border border-gray-400 overflow-y-scroll resize-none"
+          className="new-post-section-create-post-textarea w-full h-full bg-white text-black text-lg px-5 py-3 rounded-sm border border-gray-400 overflow-y-scroll resize-none"
           placeholder="Was möchtest du teilen?"
           name=""
         ></textarea>
       </div>
 
-      <div className="w-[50%] mt-10 mx-auto bg-white p-5 flex flex-col gap-y-1.5 border border-gray-400 shadow-lg rounded-sm">
+      <div className="new-post-section-moderation-medium-div w-[50%] mt-10 mx-auto bg-white p-5 flex flex-col gap-y-1.5 border border-gray-400 shadow-lg rounded-sm">
         {inlineModerationNote && (
-          <div className="text-red-500 text-lg">
+          <div>
             {" "}
-            <p className="text-red-500 text-xl"> Achtung</p> In deinem Beitrag
-            wurde problematischer Inhalt gefunden, bitte überprüfe deine Eingabe
-            und korrigiere sie gegebenenfalls.
+            <p className="new-post-section-moderation-focus-word text-red-500 text-xl">
+              {" "}
+              Achtung
+            </p>{" "}
+            <p className="new-post-section-moderation-notice text-lg">
+              In deinem Beitrag wurde problematischer Inhalt gefunden, bitte
+              überprüfe deine Eingabe und korrigiere sie gegebenenfalls.
+            </p>
           </div>
         )}
-        <div className="create-post-popup-input-button-div flex justify-center items-center gap-x-1.5">
+        <div className="new-post-section-create-post-medium-button-div flex justify-center items-center gap-x-1.5">
           <input
             type="file"
             onChange={editNewAvatarFile}
             ref={resetInputFile}
-            className="user-section__create-post-input-file w-full  text-base text-gray-700
+            className="new-post-section-create-post-input-file w-full text-base text-gray-700
         file:me-4 file:py-1.5 file:px-5
         file:rounded-sm file:border-0
         file:text-base 
@@ -264,7 +269,7 @@ export default function NewPost() {
               resetAvatarFile();
             }}
             disabled={newAvatarFile !== null ? false : true}
-            className={`create-post-popup-reset-input-button px-5 py-[6px] text-base flex justify-center items-center gap-x-1 rounded-sm ${newAvatarFile !== null ? "bg-red-600 border text-white border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-red-600 hover:border-red-600" : "bg-gray-200 border border-gray-300"} `}
+            className={`new-post-section-create-post-reset-input-button px-5 py-[6px] text-base flex justify-center items-center gap-x-1 rounded-sm ${newAvatarFile !== null ? "bg-red-600 border text-white border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-red-600 hover:border-red-600" : "bg-gray-200 border border-gray-300"} `}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -272,7 +277,7 @@ export default function NewPost() {
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              className="create-post-remove-avatar-file-button w-6"
+              className="new-post-section-create-post-remove-avatar-file-icon w-6"
             >
               <path
                 stroke-linecap="round"
@@ -284,11 +289,11 @@ export default function NewPost() {
           </button>
         </div>
         <div
-          className={`create-post-popup-mb-message px-3 py-1.5 text-base flex justify-start items-center border border-gray-100 rounded-sm ${mediumCategoryArray[mediumCategory].design}`}
+          className={`new-post-section-create-post-mb-message px-3 py-1.5 text-base flex justify-start items-center border border-gray-100 rounded-sm ${mediumCategoryArray[mediumCategory].design}`}
         >
           {avatarFileMBMessage} {mediumCategoryArray[mediumCategory].svg}
         </div>
-        <div className="create-post-popup-button-div mt-5 flex justify-end items-center gap-x-5">
+        <div className="new-post-section-create-post-button-div mt-5 flex justify-end items-center gap-x-5">
           <button
             onClick={() => {
               setCreatePost("");
@@ -302,7 +307,7 @@ export default function NewPost() {
               }
               setInlineModerationNote(false);
             }}
-            className="create-post-popup-close-button px-3 py-1.5 text-[17px] text-black flex justify-center items-center gap-x-1 bg-gray-200 border border-gray-300 rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white"
+            className="new-post-section-create-post-close-button px-3 py-1.5 text-[17px] text-black flex justify-center items-center gap-x-1 bg-gray-200 border border-gray-300 rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -310,7 +315,7 @@ export default function NewPost() {
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              className="w-5"
+              className="new-post-section-create-post-close-icon w-5"
             >
               <path
                 stroke-linecap="round"
@@ -329,7 +334,7 @@ export default function NewPost() {
                 (newAvatarFile !== null && Number(avatarFileMBSize) < FOURTY_MB)
               )
             }
-            className={`create-post-popup-create-button px-5 py-1.5 text-[17px] flex justify-center items-center gap-x-1 rounded-sm ${
+            className={`new-post-section-create-post-create-button px-5 py-1.5 text-[17px] flex justify-center items-center gap-x-1 rounded-sm ${
               (createPost.length > 0 && Number(avatarFileMBSize) < FOURTY_MB) ||
               (newAvatarFile !== null && Number(avatarFileMBSize) < FOURTY_MB)
                 ? "bg-blue-500 border text-white border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500"
@@ -344,7 +349,7 @@ export default function NewPost() {
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                className="create-post-popup-plus-icon w-5"
+                className="new-post-section-create-post-plus-icon w-5"
               >
                 <path
                   stroke-linecap="round"
@@ -358,7 +363,7 @@ export default function NewPost() {
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                className="create-post-popup-paper-icon w-5"
+                className="new-post-section-create-post-paper-icon w-5"
               >
                 <path
                   stroke-linecap="round"

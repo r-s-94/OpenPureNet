@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./settings.css";
 import { useContext, useEffect, useRef, useState } from "react";
 import { publicUserContext } from "./publicUserContext";
@@ -65,7 +65,7 @@ export default function Settings() {
   const { loadFirstUserData } = useContext(functionContext);
   const { setCurrentActiveNavArea } = useContext(navContext);
   const resetInputFile = useRef<HTMLInputElement | null>(null);
-  //const { userId } = useParams();
+  const { userId } = useParams();
 
   useEffect(() => {
     loadFirstUserData();
@@ -133,7 +133,7 @@ export default function Settings() {
         });*/
     };
 
-    setCurrentActiveNavArea("user");
+    setCurrentActiveNavArea("settings");
 
     fetchData();
 
@@ -146,7 +146,7 @@ export default function Settings() {
     const { data: public_user } = await supabase
       .from("public_user")
       .select()
-      .eq("user_id", publicUserObject.user_id);
+      .eq("user_id", userId || publicUserObject.user_id);
 
     if (public_user) {
       const userStatusText = public_user[0].status_text;
@@ -156,7 +156,7 @@ export default function Settings() {
         const {} = await supabase
           .from("public_user")
           .update({ status_text: publicUserObject.status_text })
-          .eq("user_id", publicUserObject.user_id);
+          .eq("user_id", userId || publicUserObject.user_id);
 
         toast.success("Dein Statustext wurde erfolgreich aktualisiert.", {
           unstyled: true,
@@ -167,7 +167,7 @@ export default function Settings() {
         const {} = await supabase
           .from("public_user")
           .update({ status_text: publicUserObject.status_text })
-          .eq("user_id", publicUserObject.user_id);
+          .eq("user_id", userId || publicUserObject.user_id);
 
         toast.success("Dein Statustext wurde erfolgreich erstellt.", {
           unstyled: true,
@@ -184,7 +184,7 @@ export default function Settings() {
     const {} = await supabase
       .from("public_user")
       .update({ status_text: "" })
-      .eq("user_id", publicUserObject.user_id);
+      .eq("user_id", userId || publicUserObject.user_id);
 
     toast.success("Dein Statustext wurde erfolgreich gelöscht.", {
       unstyled: true,
@@ -218,7 +218,7 @@ export default function Settings() {
     } else {
       if (updateProfilname !== "") {
         const {} = await supabase.from("public_user").insert({
-          user_id: publicUserObject.user_id,
+          user_id: userId || publicUserObject.user_id,
           profil_name: updateProfilname,
           profil_picture: publicUserObject.profil_picture,
           status_text: publicUserObject.status_text,
@@ -282,7 +282,7 @@ export default function Settings() {
     const {} = await supabase
       .from("public_user")
       .update({ profil_picture: data?.path })
-      .eq("user_id", publicUserObject.user_id);
+      .eq("user_id", userId || publicUserObject.user_id);
 
     toast.success("Profilbild wurde aktualisiert.", {
       unstyled: true,
@@ -303,7 +303,7 @@ export default function Settings() {
       .update({
         profil_picture: "",
       })
-      .eq("user_id", publicUserObject.user_id);
+      .eq("user_id", userId || publicUserObject.user_id);
 
     toast.success("Profilbild wurde erfolgreich gelöscht.", {
       unstyled: true,
@@ -375,7 +375,7 @@ export default function Settings() {
 
   async function updatePrivateUserData() {
     const findUser = privateUserArray.find((user) => {
-      return user.user_id === currentSessionUserId;
+      return user.user_id === userId || publicUserObject.user_id;
     });
 
     if (findUser) {
@@ -384,11 +384,11 @@ export default function Settings() {
         .update({
           city: updateCityName,
           street: updateStreetName,
-          houseNumber: updateHousenumber,
+          house_number: updateHousenumber,
           PLZ: Number(updatePLZ),
           country: updateCountry,
         })
-        .eq("id", currentPrivateUserId);
+        .eq("user_id", userId || publicUserObject.user_id);
 
       loadPrivateUserData();
 
@@ -400,7 +400,7 @@ export default function Settings() {
       setEditPrivateUserDataPopUp(false);
     } else {
       const {} = await supabase.from("private_user").insert({
-        user_id: currentSessionUserId,
+        user_id: userId || publicUserObject.user_id,
         city: updateCityName,
         street: updateStreetName,
         house_number: updateHousenumber,
@@ -632,10 +632,10 @@ export default function Settings() {
         }}
       />
       <Nav />
-      <h1 className="settings-headline text-center mt-3 mb-5 text-3xl">
+      <h1 className="settings-section-headline text-center mt-5 mb-7 text-3xl">
         Einstellungen
       </h1>
-      <div className="settings-status-text-div mx-auto my-5 flex flex-col items-center justify-center gap-y-5">
+      <div className="settings-section-status-text-div mx-auto my-5 flex flex-col items-center justify-center gap-y-5">
         <textarea
           name=""
           value={publicUserObject.status_text}
@@ -646,31 +646,31 @@ export default function Settings() {
             });
           }}
           placeholder="Statustext eingeben..."
-          className="settings-status-textarea w-[40rem] h-[10rem] px-3 py-1 text-lg bg-white border border-gray-300 rounded-sm resize-none"
+          className="settings-section-status-textarea w-[40rem] h-[10rem] px-3 py-1 text-lg bg-white border border-gray-300 rounded-sm resize-none"
         ></textarea>
-        <div className="settings-status-button-div flex justify-center items-center gap-x-5">
+        <div className="settings-section-status-button-div flex justify-center items-center gap-x-5">
           <button
             onClick={updateStatustext}
             disabled={publicUserObject.status_text.length > 0 ? false : true}
-            className={`settings-status-update-button px-7 py-1.5 text-lg ${publicUserObject.status_text.length > 0 ? "bg-blue-500 text-white border border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500" : "bg-gray-200 border border-gray-300"} rounded-sm`}
+            className={`settings-section-status-update-button px-7 py-1.5 flex justify-center items-center text-lg ${publicUserObject.status_text.length > 0 ? "bg-blue-500 text-white border border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500" : "bg-gray-200 border border-gray-300"} rounded-sm`}
           >
             Statustext updaten
           </button>
           <button
             onClick={delteStatustext}
             disabled={publicUserObject.status_text.length > 0 ? false : true}
-            className={`settings-status-delete-button px-7 py-1.5 text-lg flex justify-center items-center gap-x-1 ${statusText.length > 0 ? "bg-red-600 text-white border cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-red-600 hover:border-red-600" : "bg-gray-200 border border-gray-300"} rounded-sm`}
+            className={`settings-section-status-delete-button px-7 py-1.5 text-lg flex justify-center items-center gap-x-1 ${statusText.length > 0 ? "bg-red-600 text-white border cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-red-600 hover:border-red-600" : "bg-gray-200 border border-gray-300"} rounded-sm`}
           >
             Statustext löschen
           </button>
         </div>
       </div>
-      <div className="settings-generally-data-div mt-15 flex flex-col items-start justify-center">
-        <p className="settings-generally-data-div-headline ml-[15%] text-[1.7rem]">
+      <div className="settings-section-generally-data-div mt-15 flex flex-col items-start justify-center">
+        <p className="settings-section-generally-data-div-headline ml-[15%] text-[1.7rem]">
           Allgemeine Infos
         </p>{" "}
-        <div className="settings-generally-data-main-div mx-auto px-20 py-10 flex flex-col items-center justify-center gap-y-7 bg-white border border-gray-400 rounded-sm shadow-lg">
-          <div className="edit-profil-name-div flex justify-center items-center gap-x-5">
+        <div className="settings-section-generally-data-main-div mx-auto px-20 py-10 flex flex-col items-center justify-center gap-y-7 bg-white border border-gray-400 rounded-sm shadow-lg">
+          <div className="settings-section-edit-profil-name-div flex justify-center items-center gap-x-5">
             <input
               type="text"
               value={updateProfilname}
@@ -678,7 +678,7 @@ export default function Settings() {
                 setUpdateProfilname(event.target.value.trimStart());
               }}
               name=""
-              className="settings-generally-data-div-input pl-5 py-1.5 text-lg bg-white border border-gray-400 rounded-sm"
+              className="settings-section-edit-profil-name-input pl-5 py-1.5 text-lg bg-white border border-gray-400 rounded-sm"
               placeholder="Profilnamen eingeben"
             />
             <button
@@ -686,12 +686,12 @@ export default function Settings() {
                 editProfilname(publicUserObject.id, publicUserObject.user_id);
               }}
               disabled={updateProfilname.length > 0 ? false : true}
-              className={`edit-profil-name-button px-5 py-1.5 text-lg ${updateProfilname.length > 0 ? "bg-blue-500 text-white border border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500" : "bg-gray-200 border border-gray-300"} rounded-sm`}
+              className={`settings-section-edit-profil-name-button px-5 py-1.5 flex justify-center items-center text-lg ${updateProfilname.length > 0 ? "bg-blue-500 text-white border border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500" : "bg-gray-200 border border-gray-300"} rounded-sm`}
             >
               Profilnamen ändern
             </button>
           </div>{" "}
-          <div className="edit-password-div flex justify-center items-center gap-x-5">
+          <div className="settings-section-edit-password-div flex justify-center items-center gap-x-5">
             <input
               type="text"
               value={updatePassword}
@@ -699,19 +699,19 @@ export default function Settings() {
                 setUpdatePassword(event.target.value.trimStart());
               }}
               name=""
-              className="settings-generally-data-div-input pl-5 py-1.5 text-lg bg-white border border-gray-400 rounded-sm"
+              className="settings-section-edite-password-input pl-5 py-1.5 text-lg bg-white border border-gray-400 rounded-sm"
               placeholder="Passwort eingeben"
             />
             <button
               onClick={editPasswort}
               disabled={updatePassword.length > 0 ? false : true}
-              className={`edit-password-button px-8 py-1.5 text-lg ${updatePassword.length > 0 ? "bg-blue-500 text-white border border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500" : "bg-gray-200 border border-gray-300"} rounded-sm`}
+              className={`settings-section-edit-password-button px-8 py-1.5 flex justify-center items-center text-lg ${updatePassword.length > 0 ? "bg-blue-500 text-white border border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500" : "bg-gray-200 border border-gray-300"} rounded-sm`}
             >
               Passwort ändern
             </button>
           </div>
-          <div className="settings-generally-data-div-picture-div flex flex-col items-center justify-center gap-x-3">
-            <div className="flex justify-center align-center gap-x-1.5">
+          <div className="settings-section-generally-data-div-picture-div flex flex-col items-center justify-center gap-x-3">
+            <div className="settings-section-medium-button-div flex justify-center align-center gap-x-1.5">
               <input
                 type="file"
                 onChange={(event) => {
@@ -720,7 +720,7 @@ export default function Settings() {
                   setUpdateAvatarFile(file);
                 }}
                 ref={resetInputFile}
-                className="settings-generally-data-div-picture-input w-full bg-white text-base text-gray-700
+                className="settings-section-edit-picture-input w-full bg-white text-base text-gray-700
         file:me-4 file:py-1 file:px-4
         file:rounded-sm file:border-0
         file:text-lg 
@@ -734,7 +734,7 @@ export default function Settings() {
               <button
                 onClick={resetAvatarFile}
                 disabled={updateAvatarFile !== null ? false : true}
-                className={`settings-reset-input-button px-5 py-1 text-base flex justify-center items-center gap-x-1 rounded-sm ${updateAvatarFile !== null ? "bg-red-600 border text-white border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-red-600 hover:border-red-600" : "bg-gray-200 border border-gray-300"}`}
+                className={`settings-section-reset-input-button px-5 py-1 text-base flex justify-center items-center gap-x-1 rounded-sm ${updateAvatarFile !== null ? "bg-red-600 border text-white border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-red-600 hover:border-red-600" : "bg-gray-200 border border-gray-300"}`}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -742,7 +742,7 @@ export default function Settings() {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  className="settings-remove-avatar-file-button w-6"
+                  className="settings-section-remove-avatar-file-icon w-6"
                 >
                   <path
                     stroke-linecap="round"
@@ -753,11 +753,11 @@ export default function Settings() {
                 Entfernen
               </button>
             </div>
-            <div className="picture-button-div mt-5 flex justify-center items-center gap-x-5">
+            <div className="settings-section-picture-button-div mt-5 flex justify-center items-center gap-x-5">
               <button
                 onClick={updateProfilPicture}
                 disabled={updateAvatarFile !== null ? false : true}
-                className={`update-picture-button px-7 py-1.5 text-lg ${updateAvatarFile !== null ? "bg-blue-500 text-white border border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500" : "bg-gray-200 border border-gray-300"} rounded-sm`}
+                className={`settings-section-update-picture-button px-7 py-1.5 flex justify-center items-center  text-lg ${updateAvatarFile !== null ? "bg-blue-500 text-white border border-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500" : "bg-gray-200 border border-gray-300"} rounded-sm`}
               >
                 Profilbild updaten
               </button>
@@ -766,7 +766,7 @@ export default function Settings() {
                 disabled={
                   publicUserObject.profil_picture.length > 0 ? false : true
                 }
-                className={`delete-picture-button px-7 py-1.5 text-lg flex justify-center items-center gap-x-1 ${publicUserObject.profil_picture.length > 0 ? "bg-red-600 text-white border transition-all duration-300 ease-in-out cursor-pointer hover:bg-white hover:text-red-600 hover:border-red-600" : "bg-gray-200 border border-gray-300"}  rounded-sm`}
+                className={`settings-section-delete-picture-button px-7 py-1.5 text-lg flex justify-center items-center gap-x-1 ${publicUserObject.profil_picture.length > 0 ? "bg-red-600 text-white border transition-all duration-300 ease-in-out cursor-pointer hover:bg-white hover:text-red-600 hover:border-red-600" : "bg-gray-200 border border-gray-300"}  rounded-sm`}
               >
                 Profilbild löschen
               </button>
@@ -782,13 +782,13 @@ export default function Settings() {
           onInteractOutside={(e) => {
             e.preventDefault();
           }}
-          className="edit-private-user-popup w-full"
+          className="settings-section-edit-private-user-popup w-full"
         >
           <DialogHeader>
-            <DialogDescription className="edit-private-user-popup-description">
-              <div className="mt-5 bg-white flex flex-col gap-y-5">
+            <DialogDescription className="settings-section-edit-private-user-popup-description">
+              <div className="settings-section-private-data-form-div mt-5 bg-white flex flex-col gap-y-5">
                 {" "}
-                <p className="mx-auto my-2 text-black text-[22px]">
+                <p className="settings-section-mini-headline mx-auto my-2 text-black text-[22px]">
                   Alle Felder sind Freiwillig.
                 </p>
                 <input
@@ -797,7 +797,7 @@ export default function Settings() {
                   onChange={(event) => {
                     setUpdateCityName(event.target.value.trimStart());
                   }}
-                  className="edit-private-user-popup-input w-[17rem] mx-auto px-3 py-1 text-lg border border-gray-400 rounded-sm"
+                  className="settings-section-edit-private-user-popup-input w-[17rem] mx-auto px-3 py-1 text-lg border border-gray-400 rounded-sm"
                   name=""
                   placeholder="Stadt eingeben"
                 />{" "}
@@ -807,7 +807,7 @@ export default function Settings() {
                   onChange={(event) => {
                     setUpdateStreetName(event.target.value.trimStart());
                   }}
-                  className="edit-private-user-popup-input w-[17rem] mx-auto px-3 py-1 text-lg border border-gray-400 rounded-sm"
+                  className="settings-section-edit-private-user-popup-input w-[17rem] mx-auto px-3 py-1 text-lg border border-gray-400 rounded-sm"
                   name=""
                   placeholder="Straße eingeben"
                 />
@@ -819,7 +819,7 @@ export default function Settings() {
                       Number(event.target.value.trimStart()),
                     );
                   }}
-                  className="edit-private-user-popup-input w-[17rem] mx-auto px-3 py-1 text-lg text-right border border-gray-400 rounded-sm"
+                  className="settings-section-edit-private-user-popup-input w-[17rem] mx-auto px-3 py-1 text-lg text-right border border-gray-400 rounded-sm"
                   name=""
                   placeholder="Hausnummer eingeben"
                 />
@@ -829,7 +829,7 @@ export default function Settings() {
                   onChange={(event) => {
                     setUpdatePLZ(event.target.value.trimStart());
                   }}
-                  className="edit-private-user-popup-input w-[17rem] mx-auto px-3 py-1 text-lg text-right border border-gray-400 rounded-sm"
+                  className="settings-section-edit-private-user-popup-input w-[17rem] mx-auto px-3 py-1 text-lg text-right border border-gray-400 rounded-sm"
                   name=""
                   placeholder="PLZ eingeben"
                 />
@@ -839,17 +839,17 @@ export default function Settings() {
                   onChange={(event) => {
                     setUpdateCountry(event.target.value.trimStart());
                   }}
-                  className="edit-private-user-popup-input w-[17rem] mx-auto  px-3 py-1 text-lg border border-gray-400 rounded-sm"
+                  className="settings-section-edit-private-user-popup-input w-[17rem] mx-auto  px-3 py-1 text-lg border border-gray-400 rounded-sm"
                   name=""
                   placeholder="Land eingeben"
                 />
               </div>
-              <div className="edit-private-user-popup-button-div mt-10 mb-3 flex justify-end items-center gap-x-5">
+              <div className="settings-section-edit-private-user-popup-button-div mt-10 mb-3 flex justify-end items-center gap-x-5">
                 <button
                   onClick={() => {
                     setEditPrivateUserDataPopUp(false);
                   }}
-                  className="edit-private-user-popup-close-button px-3 py-1 text-lg flex justify-center items-center bg-gray-200 text-black border border-gray-300 transition-all duration-300 ease-in-out rounded-sm cursor-pointer hover:bg-white"
+                  className="settings-section-edit-private-user-popup-close-button px-3 py-1 text-lg flex justify-center items-center bg-gray-200 text-black border border-gray-300 transition-all duration-300 ease-in-out rounded-sm cursor-pointer hover:bg-white"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -857,7 +857,7 @@ export default function Settings() {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    className="w-6"
+                    className="settings-section-cancel-icon w-6"
                   >
                     <path
                       stroke-linecap="round"
@@ -878,7 +878,7 @@ export default function Settings() {
                       ? false
                       : true
                   }
-                  className={`new-private-user-popup-new-user-data-button ${
+                  className={`settings-section-new-private-user-popup-new-user-data-button ${
                     privateDataExist === false ? "" : "hidden"
                   } ${
                     updateCityName.length > 0 &&
@@ -886,7 +886,7 @@ export default function Settings() {
                     updateHousenumber !== 0 &&
                     updatePLZ.length > 4 &&
                     updateCountry.length > 0
-                      ? "bg-blue-400 text-white border border-white hover:bg-white hover:text-blue-500 hover:border-blue-500 transition-all duration-300 ease-in-out cursor-pointer"
+                      ? "bg-blue-500 text-white border border-white hover:bg-white hover:text-blue-500 hover:border-blue-500 transition-all duration-300 ease-in-out cursor-pointer"
                       : "bg-gray-200 border border-gray-300"
                   } px-5 py-1 text-lg flex justify-center items-center gap-x-1 rounded-sm`}
                 >
@@ -897,12 +897,12 @@ export default function Settings() {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    className="w-6"
+                    className="settings-section-new-private-user-data-icon w-6"
                   >
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
-                      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                      d="M12 4.5v15m7.5-7.5h-15"
                     />
                   </svg>
                   Daten erstellen
@@ -918,7 +918,7 @@ export default function Settings() {
                       ? false
                       : true
                   }
-                  className={`edit-private-user-popup-update-user-data-button ${
+                  className={`settings-section-edit-private-user-popup-update-user-data-button ${
                     privateDataExist === true ? "" : "hidden"
                   } ${
                     updateCityName.length > 0 &&
@@ -926,7 +926,7 @@ export default function Settings() {
                     updateHousenumber !== 0 &&
                     updatePLZ.length > 4 &&
                     updateCountry.length > 0
-                      ? "bg-blue-400 text-white border border-white hover:bg-white hover:text-blue-500 hover:border-blue-500 transition-all duration-300 ease-in-out cursor-pointer"
+                      ? "bg-blue-500 text-white border border-white hover:bg-white hover:text-blue-500 hover:border-blue-500 transition-all duration-300 ease-in-out cursor-pointer"
                       : "bg-gray-200 border border-gray-300"
                   } px-5 py-1 text-lg flex justify-center items-center gap-x-1 rounded-sm`}
                 >
@@ -937,7 +937,7 @@ export default function Settings() {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    className="w-6"
+                    className="settings-section-edite-private-user-data-icon w-6"
                   >
                     <path
                       stroke-linecap="round"
@@ -960,27 +960,19 @@ export default function Settings() {
           onInteractOutside={(e) => {
             e.preventDefault();
           }}
-          className="delete-private-user-popup"
+          className="settings-section-delete-private-user-popup"
         >
           <DialogHeader>
-            <DialogDescription className="delete-private-user-popup-description p-5 text-black flex flex-col gap-10">
-              <p className="delete-private-user-popup-note text-[18px]">
+            <DialogDescription className="settings-section-delete-private-user-popup-description p-5 text-black flex flex-col gap-10">
+              <p className="settings-section-delete-private-user-popup-note text-[18px]">
                 Möchtest du deine Adressdaten wirklick löschen?
               </p>
-              <div className="delete-private-user-popup-button-div w-full flex justify-end items-center gap-x-3">
+              <div className="settings-section-delete-private-user-popup-button-div w-full flex justify-end items-center gap-x-3">
                 <button
                   onClick={() => {
                     setDeletePrivateUserDataPopUp(false);
                   }}
-                  className="delete-private-user-popup-close-button px-3 py-1 text-[18px] flex justify-center items-center gap-x-1 bg-gray-200 text-black border border-gray-300 transition-all duration-300 ease-in-out rounded-sm cursor-pointer hover:bg-white"
-                >
-                  schließen
-                </button>
-                <button
-                  onClick={() => {
-                    deletePrivateUserData(privateUserObject.id);
-                  }}
-                  className="delete-private-user-popup-delete-button px-5 py-1 text-lg flex justify-center items-center gap-x-1 bg-red-600 text-white border rounded-sm transition-all duration-300 ease-in-out cursor-pointer hover:bg-white hover:text-red-600 hover:border-red-600"
+                  className="settings-section-delete-private-user-popup-close-button px-3 py-1 text-[18px] flex justify-center items-center gap-x-1 bg-gray-200 text-black border border-gray-300 transition-all duration-300 ease-in-out rounded-sm cursor-pointer hover:bg-white"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -988,7 +980,29 @@ export default function Settings() {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    className="w-6"
+                    className="settings-section-cancel-private-user-data-icon w-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6 18 18 6M6 6l12 12"
+                    />
+                  </svg>
+                  schließen
+                </button>
+                <button
+                  onClick={() => {
+                    deletePrivateUserData(privateUserObject.id);
+                  }}
+                  className="settings-section-delete-private-user-popup-delete-button px-5 py-1 text-lg flex justify-center items-center gap-x-1 bg-red-600 text-white border rounded-sm transition-all duration-300 ease-in-out cursor-pointer hover:bg-white hover:text-red-600 hover:border-red-600"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    className="settings-section-delete-private-user-date-delete-icon w-6"
                   >
                     <path
                       stroke-linecap="round"
@@ -1003,58 +1017,56 @@ export default function Settings() {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-      <div className="private-data-div mt-15 py-5 flex flex-col items-start justify-center">
-        <p className="private-data-div-headline text-2xl ml-[15%] my-5">
+      <div className="settings-section-private-data-div mt-15 py-5 flex flex-col items-start justify-center">
+        <p className="settings-section-private-data-div-headline text-2xl ml-[15%] my-5">
           Private Infos
         </p>
         <button
           onClick={loadPrivateUserData}
-          className="private-data-div-load-button ml-[15%] px-5 py-1.5 text-lg bg-blue-500 text-white border border-white rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500"
+          className="settings-section-private-data-div-load-button ml-[15%] px-5 py-1.5 flex justify-center items-center text-lg bg-blue-500 text-white border border-white rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500"
         >
           Daten laden
         </button>
-        <div className="private-data-overview-div w-full mt-7 mx-auto flex flex-col justify-around items-center gap-y-3">
-          <div className="private-data-div-table bg-gray-50 shadow-lg">
-            <div className="table-headline-div">
-              <th className="table-head-title w-[200px] py-1 text-lg border border-gray-400">
+        <div className="settings-section-private-data-overview-div w-full mt-7 mx-auto flex flex-col justify-around items-center gap-y-3">
+          <div className="settings-section-private-data-div-table bg-gray-50 shadow-lg">
+            <div className="settings-section-table-headline-div">
+              <th className="settings-section-table-head-title w-[200px] py-1 text-lg border border-gray-400">
                 Stadt
               </th>
-              <th className="table-head-title w-[200px] py-1 text-lg border border-gray-400">
+              <th className="settings-section-table-head-title w-[200px] py-1 text-lg border border-gray-400">
                 Straße
               </th>
-              <th className="table-head-title w-[200px] py-1 text-lg border border-gray-400">
+              <th className="settings-section-table-head-title w-[200px] py-1 text-lg border border-gray-400">
                 Hausnummer
               </th>
-              <th className="table-head-title w-[200px] py-1 text-lg border border-gray-400">
+              <th className="settings-section-table-head-title w-[200px] py-1 text-lg border border-gray-400">
                 PLZ
               </th>
-              <th className="table-head-title w-[200px] py-1 text-lg border border-gray-400">
+              <th className="settings-section-table-head-title w-[200px] py-1 text-lg border border-gray-400">
                 Land
               </th>
             </div>
-            <div className="table-info-div">
-              <td className="private-data-div-info w-[200px] px-3 text-[17px] bg-white border border-gray-400">
+            <div className="settings-section-table-info-div">
+              <td className="settings-section-private-data-div-info w-[200px] px-3 text-[17px] bg-white border border-gray-400">
                 {privateUserObject.city}
               </td>
-              <td className="private-data-div-info w-[200px] px-3 text-[17px] bg-white border border-gray-400">
+              <td className="settings-section-private-data-div-info w-[200px] px-3 text-[17px] bg-white border border-gray-400">
                 {privateUserObject.street}
               </td>
-              <td className="private-data-div-info number w-[200px] h-[40px] px-3 text-[17px] text-right bg-white border border-gray-400">
+              <td className="settings-section-private-data-div-info number w-[200px] h-[40px] px-3 text-[17px] text-right bg-white border border-gray-400">
                 {privateUserObject.house_number !== 0
                   ? privateUserObject.house_number
                   : ""}
               </td>
-              <td className="private-data-div-info number w-[200px] px-3 text-[17px] text-right bg-white border border-gray-400">
-                {privateUserObject.PLZ !== 0
-                  ? privateUserObject.house_number
-                  : ""}
+              <td className="settings-section-private-data-div-info number w-[200px] px-3 text-[17px] text-right bg-white border border-gray-400">
+                {privateUserObject.PLZ !== 0 ? privateUserObject.PLZ : ""}
               </td>
-              <td className="private-data-div-info w-[200px] px-3 text-[17px] bg-white border border-gray-400">
+              <td className="settings-section-private-data-div-info w-[200px] px-3 text-[17px] bg-white border border-gray-400">
                 {privateUserObject.country}
               </td>
             </div>
           </div>
-          <div className="private-user-data-div-button-div mt-5 flex justify-center items-center gap-x-5">
+          <div className="settings-section-private-user-data-div-button-div mt-5 flex justify-center items-center gap-x-5">
             <button
               onClick={() => {
                 openPrivateUserPopUp("");
@@ -1063,7 +1075,7 @@ export default function Settings() {
                 privateDataExist === false
                   ? "bg-blue-500 text-white border border-white hover:bg-white hover:text-blue-500 hover:border-blue-500 cursor-pointer transition-all duration-300 ease-in-out"
                   : "bg-gray-200 border border-gray-300"
-              } create-private-data-button px-6 py-2 flex justify-center items-center gap-x-1 text-lg rounded-sm`}
+              } settings-section-create-private-data-button px-6 py-2 flex justify-center items-center gap-x-1 text-lg rounded-sm`}
               disabled={privateDataExist}
             >
               <svg
@@ -1072,12 +1084,12 @@ export default function Settings() {
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                className="w-6"
+                className="settings-section-open-new-private-user-data-popup-icon w-6"
               >
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                  d="M12 4.5v15m7.5-7.5h-15"
                 />
               </svg>
               Daten erstellen
@@ -1087,7 +1099,7 @@ export default function Settings() {
                 openPrivateUserPopUp("update");
               }}
               disabled={!privateDataExist}
-              className={`update-private-data-button px-6 py-2 flex justify-center items-center gap-x-1 text-lg rounded-sm ${
+              className={`settings-section-update-private-data-button px-6 py-2 flex justify-center items-center gap-x-1 text-lg rounded-sm ${
                 privateDataExist === true
                   ? "bg-blue-500 text-white border border-white hover:bg-white hover:text-blue-500 hover:border-blue-500 cursor-pointer transition-all duration-300 ease-in-out"
                   : "bg-gray-200 border border-gray-300"
@@ -1099,7 +1111,7 @@ export default function Settings() {
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                className="w-6"
+                className="settings-section-open-update-private-user-data-popup-icon w-6"
               >
                 <path
                   stroke-linecap="round"
@@ -1112,7 +1124,7 @@ export default function Settings() {
             <button
               onClick={opendeletePrivateUserDataPopUp}
               disabled={!privateDataExist}
-              className={`delete-private-data-button px-6 py-2 text-lg flex justify-center items-center gap-x-1 border rounded-sm ${
+              className={`settings-section-delete-private-data-button px-6 py-2 text-lg flex justify-center items-center gap-x-1 border rounded-sm ${
                 privateDataExist === true
                   ? "bg-red-600 text-white hover:bg-white hover:text-red-600 hover:border-red-600 cursor-pointer transition-all duration-300 ease-in-out"
                   : "bg-gray-200 border border-gray-300"
@@ -1124,7 +1136,7 @@ export default function Settings() {
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                className="w-6"
+                className="settings-section-open-delete-private-user-data-popup-icon w-6"
               >
                 <path
                   stroke-linecap="round"
@@ -1142,17 +1154,17 @@ export default function Settings() {
           onInteractOutside={(e) => {
             e.preventDefault();
           }}
-          className="return-consent-popup"
+          className="settings-section-return-consent-popup"
         >
           <DialogHeader>
-            <DialogDescription className="return-consent-popup-description p-5 text-black flex flex-col gap-10">
-              <span className="return-consent-popup-content  text-[24px] text-red-500">
+            <DialogDescription className="settings-section-return-consent-popup-description p-5 text-black flex flex-col gap-10">
+              <span className="settings-section-return-consent-popup-content  text-[24px] text-red-500">
                 Achtung
               </span>
-              <span className="return-consent-popup-content text-[20px]">
+              <span className="settings-section-return-consent-popup-content text-[20px]">
                 Einwilligung zurückgezogen
               </span>
-              <p className="return-consent-popup-content text-[18px]">
+              <p className="settings-section-return-consent-popup-content text-[18px]">
                 Du hast mindestens eine erforderliche Einwilligung widersprochen
                 (z.B. AGB, Datenschutz).
                 <br />
@@ -1164,7 +1176,7 @@ export default function Settings() {
                 Bist du dir sicher, dass du die Einwilligung zurückziehen
                 willst?
               </p>
-              <div className="return-consent-popup-button-div w-full flex justify-end items-center gap-x-3">
+              <div className="settings-section-return-consent-popup-button-div w-full flex justify-end items-center gap-x-3">
                 <button
                   onClick={() => {
                     setAGBConsent(true);
@@ -1172,13 +1184,13 @@ export default function Settings() {
                     setUserDataConsent(true);
                     setReturnConsentPopUp(false);
                   }}
-                  className="return-consent-popup-close-button px-3 py-1 text-[18px] flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 cursor-pointer rounded-sm hover:bg-white"
+                  className="settings-section-return-consent-popup-close-button px-3 py-1 text-[18px] flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 cursor-pointer rounded-sm hover:bg-white"
                 >
                   Nein schließen
                 </button>
                 <button
                   onClick={logOutReturnConsent}
-                  className="return-consent-popup-logout-button px-5 py-1 text-lg flex justify-center items-center gap-x-1 bg-red-500 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500"
+                  className="settings-section-return-consent-popup-logout-button px-5 py-1 text-lg flex justify-center items-center gap-x-1 bg-red-500 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500"
                 >
                   Ja ausloggen
                 </button>
@@ -1187,20 +1199,20 @@ export default function Settings() {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-      <div className="settings-return-consent-div mx-auto mt-20">
-        <h2 className="settings-return-consent-div-headline ml-[15rem] text-3xl">
+      <div className="settings-section-return-consent-div mx-auto mt-20">
+        <h2 className="settings-section-return-consent-div-headline ml-[15rem] text-3xl">
           Widerrufsrecht und Einwilligung
         </h2>
-        <div className="settings-agb-div flex flex-col items-start justify-center gap-y-3">
-          <h2 className="settings-agb-div-headline ml-[15rem] mt-10 mb-5 text-2xl">
+        <div className="settings-section-agb-div flex flex-col items-start justify-center gap-y-3">
+          <h2 className="settings-section-agb-div-headline ml-[15rem] mt-10 mb-5 text-2xl">
             Allgemine Geschäftsbedingungen
           </h2>
-          <div className="settings-agb-overview w-[75%] h-[500px] mx-auto bg-white border border-gray-400 rounded-sm overflow-hidden">
-            <div className="settings-agb-overview-scroll-div w-full h-full px-7 py-5 overflow-y-scroll">
+          <div className="settings-section-agb-overview w-[75%] h-[500px] mx-auto bg-white border border-gray-400 rounded-sm overflow-hidden">
+            <div className="settings-section-agb-overview-scroll-div w-full h-full px-7 py-5 overflow-y-scroll">
               <AGBComponent />
             </div>
           </div>
-          <div className="settings-agb-accept-div w-ful mt-1 text-lg flex justify-start items-center gap-x-3">
+          <div className="settings-section-agb-accept-div w-ful mt-1 text-lg flex justify-start items-center gap-x-3">
             <input
               type="checkbox"
               checked={agbConsent}
@@ -1208,23 +1220,23 @@ export default function Settings() {
                 setAGBConsent(event.target.checked);
                 setReturnConsentPopUp(true);
               }}
-              className="settings-agb-input-checkbox ml-[15rem] cursor-pointer"
+              className="settings-section-agb-input-checkbox ml-[15rem] cursor-pointer"
               name=""
             />{" "}
             Akzeptieren
           </div>
         </div>
 
-        <div className="settings-data-protection-div flex flex-col items-start justify-center gap-y-5">
-          <h2 className="settings-data-protection-headline ml-[15rem] mt-10 mb-5 text-2xl">
+        <div className="settings-section-data-protection-div flex flex-col items-start justify-center gap-y-5">
+          <h2 className="settings-section-data-protection-headline ml-[15rem] mt-10 mb-5 text-2xl">
             Datenschutzerklärung
           </h2>
-          <div className="settings-data-protection-overview w-[75%] h-[500px] mx-auto py-5 bg-white border border-gray-400 rounded-sm overflow-hidden">
-            <div className="settings-data-protection-overview-scroll-div w-full h-full px-7 py-5 overflow-y-scroll">
+          <div className="settings-section-data-protection-overview w-[75%] h-[500px] mx-auto py-5 bg-white border border-gray-400 rounded-sm overflow-hidden">
+            <div className="settings-section-data-protection-overview-scroll-div w-full h-full px-7 py-5 overflow-y-scroll">
               <DataprotectionComponent />
             </div>
           </div>
-          <div className="settings-data-protection-accept-div w-ful mt-1 text-lg flex justify-start items-center gap-x-3">
+          <div className="settings-section-data-protection-accept-div w-ful mt-1 text-lg flex justify-start items-center gap-x-3">
             <input
               type="checkbox"
               checked={dataprotectionConsent}
@@ -1232,28 +1244,28 @@ export default function Settings() {
                 setDataprotectionConsent(event.target.checked);
                 setReturnConsentPopUp(true);
               }}
-              className="settings-data-protection-input-checkbox ml-[15rem] cursor-pointer"
+              className="settings-section-data-protection-input-checkbox ml-[15rem] cursor-pointer"
               name=""
             />
             Akzeptieren
           </div>
         </div>
 
-        <div className="settings-user-consent-div flex flex-col items-start justify-center gap-y-5">
-          <h2 className="settings-user-consent-headline ml-[15rem] mt-10 mb-5 text-2xl">
+        <div className="settings-section-user-consent-div flex flex-col items-start justify-center gap-y-5">
+          <h2 className="settings-section-user-consent-headline ml-[15rem] mt-10 mb-5 text-2xl">
             Einwilligung zur Datenverarbeitung <wbr /> durch Drittanbieter
           </h2>
-          <div className="settings-user-consent-text w-[75%] mx-auto p-5 text-lg bg-white border border-gray-400 rounded-sm">
+          <div className="settings-section-user-consent-text w-[75%] mx-auto p-5 text-lg bg-white border border-gray-400 rounded-sm">
             Ich willige ein, dass meine freiwilligen angegebenen
             personenbezogenen Daten (z.B. Adresse, Stadt, Telefonnummer), im
             Rahmen der Nutzung der Plattform OpenPureNet, an den Dienstleister
             SupaBase Inc. übermittelt und dort gemäß deren
-            Datenschutzrichlinenen gespeichert und verarbeitet werden. Die
+            Datenschutzrichtlinien gespeichert und verarbeitet werden. Die
             Datenverarbeitung dient ausschließlich der technischen
             Bereitstellung und Sicherheit meines Nutzerkontos. Ich kann diese
             Einwilligung jederzeit widerrufen.
           </div>
-          <div className="settings-user-consent-accept-div w-ful mt-1 text-lg flex justify-start items-center gap-x-3">
+          <div className="settings-section-user-consent-accept-div w-ful mt-1 text-lg flex justify-start items-center gap-x-3">
             <input
               type="checkbox"
               checked={userDataConsent}
@@ -1261,7 +1273,7 @@ export default function Settings() {
                 setUserDataConsent(event.target.checked);
                 setReturnConsentPopUp(true);
               }}
-              className="settings-user-consent-input-checkbox ml-[15rem] cursor-pointer"
+              className="settings-section-user-consent-input-checkbox ml-[15rem] cursor-pointer"
               name=""
             />
             Akzeptieren
@@ -1273,11 +1285,11 @@ export default function Settings() {
           onInteractOutside={(e) => {
             e.preventDefault();
           }}
-          className="delete-account-popup !max-w-xl"
+          className="settings-section-delete-account-popup !max-w-xl"
         >
           <DialogHeader>
-            <DialogDescription className="delete-account-popup-description p-5 text-black flex flex-col gap-10">
-              <p className="delete-account-popup-content text-[18px]">
+            <DialogDescription className="settings-section-delete-account-popup-description p-5 text-black flex flex-col gap-10">
+              <p className="settings-section-delete-account-popup-content text-[18px]">
                 Achtung
                 <br />
                 <br />
@@ -1286,18 +1298,18 @@ export default function Settings() {
                 <br />
                 Bist du dir sicher das du deinen Account löschen möchtest?
               </p>
-              <div className="delete-account-popup-button-div w-full flex justify-end items-center gap-x-3">
+              <div className="settings-section-delete-account-popup-button-div w-full flex justify-end items-center gap-x-3">
                 <button
                   onClick={() => {
                     setDeleteAccountPopUp(false);
                   }}
-                  className="delete-account-popup-close-button px-3 py-1 text-[18px] flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 cursor-pointer rounded-sm hover:bg-white"
+                  className="settings-section-delete-account-popup-close-button px-3 py-1 text-[18px] flex justify-center items-center gap-x-1 bg-gray-50 border border-gray-200 cursor-pointer rounded-sm hover:bg-white"
                 >
                   Nein Account nicht löschen
                 </button>
                 <button
                   onClick={deleteAccount}
-                  className="delete-account-popup-delete-button px-5 py-1 text-lg flex justify-center items-center gap-x-1 bg-red-500 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500"
+                  className="settings-section-delete-account-popup-delete-button px-5 py-1 text-lg flex justify-center items-center gap-x-1 bg-red-500 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500"
                 >
                   Ja Account löschen
                 </button>
@@ -1306,12 +1318,12 @@ export default function Settings() {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-      <div className="settings-delete-account-div mt-20">
+      <div className="settings-section-delete-account-div mt-20">
         <button
           onClick={() => {
             setDeleteAccountPopUp(true);
           }}
-          className="settings-delete-user-account ml-[15rem] px-5 py-1 text-lg flex justify-center items-center gap-x-1 bg-red-600 text-white border rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-red-600 hover:border-red-600"
+          className="settings-section-delete-user-account ml-[15rem] px-5 py-1 text-lg flex justify-center items-center gap-x-1 bg-red-600 text-white border rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-red-600 hover:border-red-600"
         >
           Account löschen
         </button>

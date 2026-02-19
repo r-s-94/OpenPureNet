@@ -538,11 +538,16 @@ export default function User() {
             ></textarea>
 
             {inlineModerationNote && (
-              <div className="my-3 text-red-500 text-base">
+              <div>
                 {" "}
-                <p className="text-red-500 text-lg"> Achtung</p> In deinem
-                Beitrag wurde problematischer Inhalt gefunden, bitte überprüfe
-                deine Eingabe und korrigiere sie gegebenenfalls.
+                <p className="new-post-section-moderation-focus-word text-red-500 text-xl">
+                  {" "}
+                  Achtung
+                </p>{" "}
+                <p className="new-post-section-moderation-notice mb-1 text-lg">
+                  In deinem Beitrag wurde problematischer Inhalt gefunden, bitte
+                  überprüfe deine Eingabe und korrigiere sie gegebenenfalls.
+                </p>
               </div>
             )}
 
@@ -766,11 +771,11 @@ export default function User() {
       globalSearchUserObject.status_text ===
         "" ? null : globalSearchUserObject.search_status &&
         globalSearchUserObject.status_text !== "" ? (
-        <div className="user-status-text-div w-[25rem] h-[5rem] mx-auto my-3 px-3 py-2 text-lg text-gray-500 overflow-auto bg-white border border-gray-300 rounded-sm">
+        <div className="user-section-status-text-div w-[25rem] h-[5rem] mx-auto my-3 px-3 py-2 text-lg text-gray-500 overflow-auto bg-white border border-gray-300 rounded-sm">
           {globalSearchUserObject.status_text}
         </div>
       ) : publicUserObject.status_text.length > 0 ? (
-        <div className="user-status-text-div w-[25rem] h-[5rem] mx-auto my-3 px-3 py-2 text-lg text-gray-500 overflow-auto bg-white border border-gray-300 rounded-sm">
+        <div className="user-section-status-text-div w-[25rem] h-[5rem] mx-auto my-3 px-3 py-2 text-lg text-gray-500 overflow-auto bg-white border border-gray-300 rounded-sm">
           {publicUserObject.status_text}
         </div>
       ) : null}
@@ -782,15 +787,15 @@ export default function User() {
           onClick={() => {
             checkFollow(followId, !follow);
           }}
-          className="follow-button mx-auto my-7 px-7 py-3 text-lg flex justify-center items-center gap-x-3 bg-blue-500 text-white border border-white rounded-sm transition-all duration-500 ease-in-out cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-500"
+          className="user-section-follow-button mx-auto my-7 px-7 py-2.5 text-lg flex justify-center items-center gap-x-3 bg-blue-500 text-white border border-white rounded-sm transition-all duration-500 ease-in-out cursor-pointer hover:bg-white hover:text-blue-400 hover:border-blue-500"
         >
           {follow ? "Gefolgt" : "Folgen"}
         </button>
       ) : null}
 
-      <div className="user-post-overview-div w-[50%] mx-auto">
+      <div className="user-section-post-overview-div w-[50%] mx-auto">
         <div
-          className={`user-post-overview ${
+          className={`user-section-post-shadow-div h-full ${
             globalSearchUserObject.search_status === true &&
             globalSearchUserObject.status_text !== ""
               ? "h-150"
@@ -800,9 +805,9 @@ export default function User() {
                 : publicUserObject.status_text !== ""
                   ? "h-170"
                   : "h-193"
-          }  mt-3 px-0.5 py-0.5 rounded-sm overflow-hidden`}
+          } mt-3 px-0.5 py-0.5 overflow-hidden`}
         >
-          <div className="w-full h-full px-1 flex flex-col gap-y-0.5 overflow-y-scroll rounded-sm">
+          <div className="user-section-post-overview w-full h-full flex flex-col gap-y-0.5 overflow-y-scroll">
             {postsArray.map((post) => {
               return (
                 <>

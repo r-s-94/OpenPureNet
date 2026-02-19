@@ -1,8 +1,10 @@
+import "./updatePassword.css";
 import { useState } from "react";
 import { supabase } from "./supabase";
 import { Link } from "react-router-dom";
 import { Toaster } from "./components/ui/sonner";
 import { toast } from "sonner";
+import "./responsive.css";
 
 export default function UpadatePassword() {
   const [updatePassword, setUpdatePassword] = useState<string>("");
@@ -26,7 +28,7 @@ export default function UpadatePassword() {
   }
 
   return (
-    <section className="update-password-section">
+    <section className="update-password-section h-screen">
       <Toaster
         position="top-center"
         richColors
@@ -37,14 +39,14 @@ export default function UpadatePassword() {
         }}
       />
 
-      <Link to="/" className="to-signin-link">
+      <Link to="/" className="update-password-section-back-link">
         <svg
           xmlns="http://www.w5.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="to-signin-icon w-12 mt-10 ml-30 cursor-pointer"
+          className="update-password-section-back-icon w-10 pt-10 ml-30 cursor-pointer"
         >
           <path
             stroke-linecap="round"
@@ -54,21 +56,21 @@ export default function UpadatePassword() {
         </svg>
       </Link>
 
-      <div className="update-password-div w-[35rem] mx-auto mt-20 px-5 py-15 flex justify-center items-center gap-x-3 bg-gray-50 border border-gray-400 rounded-sm">
+      <div className="update-password-section-main-div w-[35rem] mx-auto mt-20 px-5 py-15 flex flex-col justify-center items-center gap-y-3 bg-white border border-e-gray-300 rounded-sm">
         <input
           type="text"
           value={updatePassword}
           onChange={(event) => {
             setUpdatePassword(event.target.value);
           }}
-          className="update-password-input pl-2 py-1.5 text-lg bg-white border border-gray-400 rounded-sm"
+          className="update-password-input pl-2 py-1.5 text-lg w-[15.3rem] bg-white border border-gray-400 rounded-sm"
           placeholder="neues Passwort eingeben"
           name=""
           id=""
         />
         <button
           onClick={editPasswort}
-          className="update-password-button px-10 py-1.5 text-lg bg-blue-500 text-white border border-white rounded-sm hover:bg-white hover:text-blue-500 hover:border-blue-500 cursor-pointer"
+          className="update-password-button px-10 py-1.5 text-lg flex justify-center items-center bg-blue-500 text-white border border-white rounded-sm hover:bg-white hover:text-blue-500 hover:border-blue-500 cursor-pointer"
         >
           Passwort ändern
         </button>

@@ -9,13 +9,13 @@ export default function Follow({
 }) {
   return (
     <div className="follow-div mt-3 flex justify-center items-center gap-x-5">
-      <div className="follower-div text-lg flex flex-col items-center justify-center">
+      <div className="followers-div text-lg flex flex-col items-center justify-center">
         Follower
-        <p className="follower-label">{followers}</p>
+        <p className="followers-label">{followers}</p>
       </div>
-      <div className="followed-div text-lg flex flex-col items-center justify-center">
+      <div className="following-div text-lg flex flex-col items-center justify-center">
         Gefolgt
-        <p className="followed-label">{following}</p>
+        <p className="following-label">{following}</p>
       </div>
     </div>
   );

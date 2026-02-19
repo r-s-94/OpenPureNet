@@ -7,7 +7,6 @@ import Settings from "./settings";
 import { useEffect, useState } from "react";
 import type { Tables } from "./database.types";
 import { publicUserContext } from "./publicUserContext";
-import Impressum from "./component/impressum";
 import AGB from "./component/agb";
 import DataProtection from "./component/dataProtection";
 import { userAuthContext } from "./userAuthContext";
@@ -27,6 +26,7 @@ import { navContext } from "./navContext";
 import NewPost from "./newPost";
 import type { Session } from "@supabase/supabase-js";
 import ErrorPage from "./errorPage";
+import Imprint from "./component/imprint";
 
 function App() {
   //const navigation = useNavigate();
@@ -119,7 +119,6 @@ function App() {
   }
 
   async function loadFirstUserData() {
-    console.log("Check");
     const { data: session } = await supabase.auth.getSession();
 
     const { data: public_user } = await supabase
@@ -283,8 +282,8 @@ function App() {
     },
 
     {
-      path: "impressum",
-      element: <Impressum />,
+      path: "imprint",
+      element: <Imprint />,
     },
     {
       path: "agb",

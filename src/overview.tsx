@@ -177,91 +177,91 @@ export default function Overview() {
           onInteractOutside={(e) => {
             e.preventDefault();
           }}
-          className="consent-popup !max-w-7xl"
+          className="overview-section-consent-popup !max-w-7xl"
         >
-          <DialogDescription className="consent-popup-description h-[90vh] px-3 py-5 text-black flex flex-col items-center justify-center gap-y-10 overflow-y-scroll">
-            <div className="consent-popup-agb-div mt-[40rem] flex flex-col items-start justify-center gap-y-3">
-              <h2 className="consent-popup-headline text-lg">
+          <DialogDescription className="overview-section-consent-popup-description h-[90vh] px-3 py-5 text-black flex flex-col items-center gap-y-10 overflow-y-scroll">
+            <div className="overview-section-consent-popup-agb-div w-[95%] flex flex-col items-start justify-center gap-y-3">
+              <h2 className="overview-section-consent-popup-headline text-lg">
                 Allgemine Geschäftsbedingungen (AGB) von OpenPureNet
               </h2>
-              <div className="consent-popup-agb h-[400px] border border-gray-400 rounded-sm overflow-hidden">
-                <div className="w-full h-full p-3 overflow-y-scroll">
+              <div className="overview-section-consent-popup-agb h-[400px] border border-gray-400 rounded-sm overflow-hidden">
+                <div className="overview-section-ux-shadow-div w-full h-full p-3 overflow-y-scroll">
                   <AGBComponent />
                 </div>
               </div>
-              <div className="consent-popup-accept-div mt-1 text-base flex justify-start items-center gap-x-3">
+              <div className="overview-section-consent-popup-accept-div mt-1 text-base flex justify-start items-center gap-x-3">
                 <input
                   type="checkbox"
                   checked={agbConsent}
                   onChange={(event) => {
                     setAGBConsent(event.target.checked);
                   }}
-                  className="consent-popup-input-checkbox cursor-pointer"
+                  className="overview-section-consent-popup-input-checkbox cursor-pointer"
                   name=""
                 />{" "}
                 Akzeptieren
               </div>
             </div>
 
-            <div className="consent-popup-data-protection-div flex flex-col items-start justify-center gap-y-5">
-              <h2 className="consent-popup-headline text-lg">
+            <div className="overview-section-consent-popup-data-protection-div w-[95%] flex flex-col items-start justify-center gap-y-5">
+              <h2 className="overview-section-consent-popup-headline text-lg">
                 Datenschutzerklärung für OpenPureNet
               </h2>
-              <div className="consent-popup-data-protection h-[400px] border border-gray-400 rounded-sm overflow-hidden">
-                <div className="w-full h-full p-3 overflow-y-scroll">
+              <div className="overview-section-consent-popup-data-protection h-[400px] border border-gray-400 rounded-sm overflow-hidden">
+                <div className="overview-section-ux-shadow-div w-full h-full p-3 overflow-y-scroll">
                   <Dataprotection />
                 </div>
               </div>
-              <div className="consent-popup-accept-div mt-1 text-base flex justify-start items-center gap-x-3">
+              <div className="overview-section-consent-popup-accept-div mt-1 text-base flex justify-start items-center gap-x-3">
                 <input
                   type="checkbox"
                   checked={dataprotectionConsent}
                   onChange={(event) => {
                     setDataprotectionConsent(event.target.checked);
                   }}
-                  className="consent-popup-input-checkbox cursor-pointer"
+                  className="overview-section-consent-popup-input-checkbox cursor-pointer"
                   name=""
                 />
                 Akzeptieren
               </div>
             </div>
 
-            <div className="consent-popup-user-consent-div flex flex-col items-start justify-center gap-y-5">
-              <h2 className="consent-popup-headline text-lg">
+            <div className="overview-section-consent-popup-user-consent-div w-[95%] flex flex-col items-start justify-center gap-y-5">
+              <h2 className="overview-section-consent-popup-headline text-lg">
                 Einwilligung zur Datenverarbeitung durch Drittanbieter
               </h2>
-              <div className="consent-popup-user-consent p-3 text-lg border border-gray-400 rounded-sm">
+              <div className="overview-section-consent-popup-user-consent px-5 py-3 text-lg border border-gray-400 rounded-sm">
                 Ich willige ein, dass meine freiwilligen angegebenen
                 personenbezogenen Daten (z.B. Adresse, Stadt, Telefonnummer), im
                 Rahmen der Nutzung der Plattform OpenPureNet, an den
                 Dienstleister SupaBase Inc. übermittelt und dort gemäß deren
-                Datenschutzrichlinenen gespeichert und verarbeitet werden. Die
+                Datenschutzrichtlinien gespeichert und verarbeitet werden. Die
                 Datenverarbeitung dient ausschließlich der technischen
                 Bereitstellung und Sicherheit meines Nutzerkontos. Ich kann
                 diese Einwilligung jederzeit widerrufen.
               </div>
-              <div className="consent-popup-accept-div mt-1 text-base flex justify-start items-center gap-x-3">
+              <div className="overview-section-consent-popup-accept-div mt-1 text-base flex justify-start items-center gap-x-3">
                 <input
                   type="checkbox"
                   checked={userDataConsent}
                   onChange={(event) => {
                     setUserDataConsent(event.target.checked);
                   }}
-                  className="consent-popup-input-checkbox cursor-pointer"
+                  className="overview-section-consent-popup-input-checkbox cursor-pointer"
                   name=""
                 />
                 Akzeptieren
               </div>
             </div>
 
-            <div className="consent-popup-button-div w-full mb-10 pr-10 flex justify-end item gap-x-3">
+            <div className="overview-section-consent-popup-button-div w-full mb-10 pr-10 flex justify-end item gap-x-3">
               {" "}
               <button
                 onClick={() => {
                   setConsentPopUp(false);
                   toSignOut();
                 }}
-                className="px-5 text-base flex justify-center items-center gap-x-1 bg-gray-200 border border-gray-300 rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white"
+                className="overview-section-cancel-button px-5 text-base flex justify-center items-center gap-x-1 bg-gray-200 border border-gray-300 rounded-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -269,7 +269,7 @@ export default function Overview() {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  className="w-5"
+                  className="overview-section-cancel-icon w-5"
                 >
                   <path
                     stroke-linecap="round"
@@ -277,23 +277,17 @@ export default function Overview() {
                     d="M6 18 18 6M6 6l12 12"
                   />
                 </svg>
-                <span>abbrechen</span>
+                <span className="overview-section-cancel-label">abbrechen</span>
               </button>{" "}
               <button
                 onClick={acceptConsent}
-                className={`px-7 py-1.5 text-base flex justify-center items-center gap-x-1 rounded-sm ${
-                  agbConsent === true &&
-                  dataprotectionConsent === true &&
-                  userDataConsent === true
+                className={`overview-section-continue-button px-7 py-1.5 text-base flex justify-center items-center gap-x-1 rounded-sm ${
+                  agbConsent && dataprotectionConsent && userDataConsent
                     ? "bg-blue-500 text-white border border-white hover:bg-white hover:text-blue-500 hover:border-blue-500 cursor-pointer transition-all duration-300 ease-in-out"
                     : "bg-gray-200 border border-gray-300 text-black"
                 }  `}
                 disabled={
-                  agbConsent === true &&
-                  dataprotectionConsent === true &&
-                  userDataConsent === true
-                    ? false
-                    : true
+                  !(agbConsent && dataprotectionConsent && userDataConsent)
                 }
               >
                 {" "}
@@ -360,11 +354,11 @@ export default function Overview() {
 
       <Nav />
 
-      <div className="show-content w-full h-full grid grid-cols-3">
-        <div className="overview-placeholder"></div>
+      <div className="overview-section-show-content w-full h-full grid grid-cols-3">
+        <div className="overview-section-overview-placeholder"></div>
 
-        <div className="post-overview w-full h-213 overflow-auto">
-          <div className="post-overview-scroll-div w-full h-full px-1 flex flex-col gap-y-0.5 overflow-auto">
+        <div className="overview-section-post-overview w-full h-213 overflow-auto">
+          <div className="overview-section-post-overview-scroll-div w-full h-full px-1 flex flex-col gap-y-0.5 overflow-auto">
             {postsArray.map((post) => {
               return (
                 <>
@@ -382,7 +376,7 @@ export default function Overview() {
           </div>
         </div>
 
-        <div className="overview-placeholder2"></div>
+        <div className="overview-section-overview-placeholder2"></div>
       </div>
     </div>
   );
