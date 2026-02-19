@@ -458,6 +458,9 @@
 
   /*Navigation*/
 
+  .nav-section {
+  }
+
   /*Overview*/
 
   .consent-popup-agb-div {
@@ -480,7 +483,7 @@
   }
 
   .overview-section-post-overview {
-    height: 48rem;
+    height: 33.3rem;
   }
 
   /*Users*/
@@ -1230,7 +1233,7 @@
   .nav-section {
     height: 3.7rem;
     position: fixed;
-    bottom: 0;
+    bottom: -0.1rem;
     z-index: 1;
     column-gap: 7%;
   }
@@ -1296,12 +1299,12 @@
   }
 
   .nav-section-user-options-div {
-    top: 55rem;
+    top: 35rem;
     padding: 0.2rem;
   }
 
   .nav-section-user-options-animation-div {
-    top: 40rem;
+    top: 21rem;
   }
 
   /*Overview*/
@@ -1346,7 +1349,7 @@
   }
 
   .overview-section-post-overview {
-    height: 40.7rem;
+    height: 30.5rem;
   }
 
   /*Users*/
