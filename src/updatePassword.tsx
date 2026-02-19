@@ -10,21 +10,16 @@ export default function UpadatePassword() {
   const [updatePassword, setUpdatePassword] = useState<string>("");
 
   async function editPasswort() {
-    if (updatePassword !== "") {
-      await supabase.auth.updateUser({ password: updatePassword });
+    await supabase.auth.updateUser({ password: updatePassword });
 
-      toast.success("Dein Passwort wurde erfolgreich geändert.", {
+    toast.success(
+      "Dein Passwort wurde erfolgreich geändert. Du kannst jetzt wieder zurückkehren und dich Einloggen.",
+      {
         unstyled: true,
         className: "w-[25rem] h-[7rem] px-5",
-      });
-      setUpdatePassword("");
-    } else {
-      toast.info("Bitte gebe ein neues Passwort ein.", {
-        unstyled: true,
-        className: "w-[25rem] h-[5rem]",
-      });
-      setUpdatePassword("");
-    }
+      },
+    );
+    setUpdatePassword("");
   }
 
   return (
@@ -70,7 +65,8 @@ export default function UpadatePassword() {
         />
         <button
           onClick={editPasswort}
-          className="update-password-button px-10 py-1.5 text-lg flex justify-center items-center bg-blue-500 text-white border border-white rounded-sm hover:bg-white hover:text-blue-500 hover:border-blue-500 cursor-pointer"
+          disabled={!(updatePassword.length > 5)}
+          className={`update-password-button px-10 py-1.5 text-lg flex justify-center items-center transition-all duration-300 ease-in-out ${updatePassword.length > 5 ? "bg-blue-500 text-white border border-white rounded-sm hover:bg-white hover:text-blue-500 hover:border-blue-500" : "bg-gray-200 border border-gray-300"} cursor-pointer`}
         >
           Passwort ändern
         </button>

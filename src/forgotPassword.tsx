@@ -8,28 +8,19 @@ import "./responsive.css";
 
 export default function ForgotPassword() {
   const [userMail, setUserMail] = useState<string>("");
-  async function resetPassword() {
-    if (userMail !== "") {
-      const {} = await supabase.auth.resetPasswordForEmail(userMail, {
-        redirectTo: "http://localhost:5173/OpenPureNet/update-password",
-      });
 
-      toast.success(
-        "Wir haben dir eine E-Mail zum Zurücksetzten deines Passwortes gesendet.",
-        {
-          unstyled: true,
-          className: "w-[25rem] h-[10rem] px-5",
-        },
-      );
-    } else {
-      toast.error(
-        "Bitte gebe deine E-Mail in das Feld ein um dein Passwort zurück zusetzten.",
-        {
-          unstyled: true,
-          className: "w-[27rem] h-[10rem] px-7",
-        },
-      );
-    }
+  async function resetPassword() {
+    const {} = await supabase.auth.resetPasswordForEmail(userMail, {
+      redirectTo: "http://localhost:5173/OpenPureNet/update-password",
+    });
+
+    toast.success(
+      "Wir haben dir eine E-Mail zum Zurücksetzten deines Passwortes gesendet.",
+      {
+        unstyled: true,
+        className: "w-[25rem] h-[10rem] px-5",
+      },
+    );
 
     setUserMail("");
   }
@@ -73,7 +64,7 @@ export default function ForgotPassword() {
           type="text"
           value={userMail}
           onChange={(event) => {
-            setUserMail(event.target.value);
+            setUserMail(event.target.value.trimStart());
           }}
           placeholder="E-Mail eingeben"
           className="forget-password-section-password-input w-[15.3rem] pl-2 py-1.5 text-lg bg-white border border-gray-400 rounded-sm"
@@ -81,7 +72,8 @@ export default function ForgotPassword() {
         />{" "}
         <button
           onClick={resetPassword}
-          className="forget-password-section-password-reset-button px-7 py-1.5 flex justify-center items-center text-lg bg-blue-500 text-white border border-white rounded-sm hover:bg-white hover:text-blue-500 hover:border-blue-500 cursor-pointer"
+          disabled={!(userMail.length > 0)}
+          className={`forget-password-section-password-reset-button px-7 py-1.5 flex justify-center items-center text-lg transition-all duration-300 ease-in-out ${userMail.length > 0 ? "bg-blue-500 text-white border border-white  hover:bg-white hover:text-blue-500 hover:border-blue-500" : "bg-gray-200 border border-gray-300"}  cursor-pointer rounded-sm`}
         >
           Passwort-Link anfodern
         </button>
