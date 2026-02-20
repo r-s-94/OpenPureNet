@@ -13,7 +13,7 @@ export default function UpadatePassword() {
     await supabase.auth.updateUser({ password: updatePassword });
 
     toast.success(
-      "Dein Passwort wurde erfolgreich geändert. Du kannst jetzt wieder zurückkehren und dich Einloggen.",
+      "Dein Passwort wurde erfolgreich geändert. Du kannst jetzt dich jetzt wider einloggen.",
       {
         unstyled: true,
         className: "w-[25rem] h-[7rem] px-5",
