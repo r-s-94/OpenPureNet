@@ -731,7 +731,7 @@ export default function User() {
                 onClick={() => {
                   deletePost(currentPostId);
                 }}
-                className="delete-post-popup-delete-button px-5 py-1.5 text-[16px] flex justify-center items-center gap-x-1 bg-red-500 text-white border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500"
+                className="delete-post-popup-delete-button px-5 py-1.5 text-[16px] flex justify-center items-center gap-x-1 bg-white text-red-500 border rounded-sm cursor-pointer hover:bg-white hover:text-red-500 hover:border-red-500"
               >
                 {" "}
                 <svg

@@ -459,6 +459,7 @@
   /*Navigation*/
 
   .nav-section {
+    margin-top: 0.3rem;
   }
 
   /*Overview*/
@@ -483,7 +484,7 @@
   }
 
   .overview-section-post-overview {
-    height: 33.3rem;
+    height: 33rem;
   }
 
   /*Users*/
@@ -518,15 +519,19 @@
 
   /*Comment*/
 
+  .comment-overview-popup-header {
+    height: 27rem;
+  }
+
   /*User*/
 
   .user-section {
     padding-bottom: 1rem;
   }
 
-  .user-post-overview {
-    width: 85%;
-    height: 37rem;
+  .user-section-post-overview-div {
+    width: 50%;
+    height: 23rem;
     margin: 1rem auto;
     padding-bottom: 1rem;
   }
@@ -1304,7 +1309,7 @@
   }
 
   .nav-section-user-options-animation-div {
-    top: 21rem;
+    top: 23rem;
   }
 
   /*Overview*/
@@ -1407,7 +1412,7 @@
   /*New Post*/
 
   .new-post-section {
-    padding-top: 3rem;
+    padding-top: 1rem;
   }
 
   .new-post-section-textarea-div,
@@ -1416,11 +1421,17 @@
   }
 
   .new-post-section-textarea-div {
+    height: 13rem;
     margin-top: 0;
   }
 
   .new-post-section-create-post-textarea {
     font-size: 1rem;
+    overflow-y: auto;
+  }
+
+  .new-post-section-moderation-medium-div {
+    margin-top: 1rem;
   }
 
   .new-post-section-create-post-button-div {
@@ -1568,7 +1579,7 @@
   /*Comment*/
 
   .comment-overview-popup-header {
-    height: 30rem;
+    height: 20rem;
   }
 
   .comment-overview-popup-description {
@@ -1674,10 +1685,20 @@
 
   /*User*/
 
+  .update-post-popup-description {
+    height: 28.5rem;
+  }
+
+  .update-post-popup-textarea {
+    height: 13rem;
+    overflow-y: auto;
+  }
+
   .update-post-popup-input-button-div {
-    width: 20rem;
+    width: 100%;
     margin: 0 auto;
     flex-direction: column;
+    row-gap: 0.5rem;
   }
 
   .update-post-popup-reset-input-button,
@@ -1689,12 +1710,13 @@
   }
 
   .update-post-popup-mb-message {
-    width: 20rem;
+    width: 100%;
+    max-width: 20rem;
     margin: 0 auto;
   }
 
   .update-post-popup-button-div {
-    width: 20rem;
+    width: 100%;
     margin: 1rem auto 0 auto;
     display: flex;
     flex-direction: column;
@@ -1731,11 +1753,12 @@
   .user-section-follow-button {
     font-size: 0.9rem;
     height: 2.3rem;
+    margin: 1rem auto 0 auto;
   }
 
   .user-section-post-overview-div {
     width: 100%;
-    height: 38rem;
+    height: 21rem;
     margin: 0 auto;
     padding: 0;
   }
