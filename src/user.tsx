@@ -793,20 +793,20 @@ export default function User() {
         </button>
       ) : null}
 
-      <div className="user-section-post-overview-div w-[50%] mx-auto">
-        <div
-          className={`user-section-post-shadow-div h-full ${
-            globalSearchUserObject.search_status === true &&
-            globalSearchUserObject.status_text !== ""
-              ? "h-150"
-              : globalSearchUserObject.search_status === true &&
-                  globalSearchUserObject.status_text === ""
-                ? "h-170"
-                : publicUserObject.status_text !== ""
-                  ? "h-170"
-                  : "h-193"
-          } mt-3 px-0.5 py-0.5 overflow-hidden`}
-        >
+      <div
+        className={`user-section-post-overview-div w-[50%] mx-auto ${
+          globalSearchUserObject.search_status &&
+          globalSearchUserObject.status_text !== ""
+            ? "with-all"
+            : globalSearchUserObject.search_status &&
+                globalSearchUserObject.status_text === ""
+              ? "with-status-text"
+              : publicUserObject.status_text !== ""
+                ? "with-status-text"
+                : "without-all"
+        }`}
+      >
+        <div className="user-section-post-shadow-div h-full  mt-3 px-0.5 py-0.5 overflow-hidden">
           <div className="user-section-post-overview w-full h-full flex flex-col gap-y-0.5 overflow-y-scroll">
             {postsArray.map((post) => {
               return (

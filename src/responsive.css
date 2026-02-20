@@ -184,6 +184,18 @@
     width: 100%;
   }
 
+  .with-all {
+    height: 37rem;
+  }
+
+  .with-status-text {
+    height: 43rem;
+  }
+
+  .without-all {
+    height: 48.7rem;
+  }
+
   /*Settings*/
 
   .settings-section-delete-account-popup-content {
@@ -401,6 +413,18 @@
     padding-bottom: 1rem;
   }
 
+  .with-all {
+    height: 37rem;
+  }
+
+  .with-status-text {
+    height: 43rem;
+  }
+
+  .without-all {
+    height: 48.7rem;
+  }
+
   /*Settings*/
 
   .settings-section-generally-data-main-div,
@@ -534,6 +558,18 @@
     height: 23rem;
     margin: 1rem auto;
     padding-bottom: 1rem;
+  }
+
+  .with-all {
+    height: 17.5rem;
+  }
+
+  .with-status-text {
+    height: 23rem;
+  }
+
+  .without-all {
+    height: 28.7rem;
   }
 
   /*Settings*/
@@ -1304,12 +1340,12 @@
   }
 
   .nav-section-user-options-div {
-    top: 35rem;
+    top: 37rem;
     padding: 0.2rem;
   }
 
   .nav-section-user-options-animation-div {
-    top: 23rem;
+    top: 21rem;
   }
 
   /*Overview*/
@@ -1741,6 +1777,7 @@
     height: 3rem;
     margin: 0 auto;
     font-size: 1rem;
+    overflow-y: auto;
   }
 
   .followers-div,
@@ -1761,6 +1798,18 @@
     height: 21rem;
     margin: 0 auto;
     padding: 0;
+  }
+
+  .with-all {
+    height: 18.7rem;
+  }
+
+  .with-status-text {
+    height: 21.5rem;
+  }
+
+  .without-all {
+    height: 25rem;
   }
 
   /*Settings*/
