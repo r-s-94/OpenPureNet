@@ -549,10 +549,6 @@
 
   /*User*/
 
-  .user-section {
-    padding-bottom: 1rem;
-  }
-
   .user-section-post-overview-div {
     width: 50%;
     height: 23rem;
@@ -912,10 +908,6 @@
   }
 
   /*Settings*/
-
-  .settings-section {
-    padding-bottom: 3rem;
-  }
 
   .settings-section-headline {
     font-size: 1.6rem;
