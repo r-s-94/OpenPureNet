@@ -50,6 +50,8 @@ export default function Nav() {
     navigation(`/private-route/user/${publicUserObject.user_id}`);
   }
 
+  //
+
   async function logOut() {
     const { error } = await supabase.auth.signOut();
     setCurrentActiveNavArea("");
