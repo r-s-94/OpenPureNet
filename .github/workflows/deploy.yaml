@@ -30,7 +30,7 @@ jobs:
 
     env:
       VITE_SUPABASE_URL: ${{vars.VITE_SUPABASE_URL}}
-      VITE_SUPABASE_TOKEN: ${{vars.VITE_SUPABASE_TOKEN}}
+      VITE_SUPABASE_TOKEN: ${{vars.VITE_SUPABASE_ANON_TOKEN}}
 
     steps:
       - name: Checkout
