@@ -29,8 +29,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      VITE_SUPABASE_URL: ${{SUPABASE_URL}}
-      VITE_SUPABASE_TOKEN: ${{SUPABASE_TOKEN}}
+      VITE_SUPABASE_URL: ${{secrets.SUPABASE_URL}}
+      VITE_SUPABASE_TOKEN: ${{secrets.SUPABASE_TOKEN}}
 
     steps:
       - name: Checkout
