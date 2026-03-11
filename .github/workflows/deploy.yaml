@@ -40,6 +40,8 @@ jobs:
         run: npm ci
       - name: Use variables
         run: echo "repository variable ${{secrets.VITE_SUPABASE_URL}}"
+      - name: Use variables
+        run: echo "repository variable ${{secrets.VITE_SUPABASE_ANON_TOKEN}}"
       - name: Build
         run: npm run build
         env:
