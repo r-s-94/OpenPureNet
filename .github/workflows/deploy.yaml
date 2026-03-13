@@ -46,7 +46,7 @@ jobs:
         run: npm run build
         env:
           VITE_SUPABASE_URL: ${{secrets.VITE_SUPABASE_URL}}
-          VITE_SUPABASE_TOKEN: ${{secrets.VITE_SUPABASE_ANON_TOKEN}}
+          VITE_SUPABASE_ANON_TOKEN: ${{secrets.VITE_SUPABASE_ANON_TOKEN}}
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
