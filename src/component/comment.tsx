@@ -2,6 +2,9 @@ import { publicUserContext } from "@/publicUserContext";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "@/supabase";
 import type { CommentObject } from "./post";
+import { navContext } from "@/navContext";
+import { searchUserContext } from "@/searchUserContext";
+import { useNavigate } from "react-router-dom";
 //import "../responsive.css";
 
 export default function Comment({
@@ -19,6 +22,10 @@ export default function Comment({
   const [likeCommentCount, setLikeCommentCount] = useState<number>(0);
   const [dislikeCommentCount, setDislikeCommentCount] = useState<number>(0);
   const { publicUserObject } = useContext(publicUserContext);
+  const { setCurrentActiveNavArea } = useContext(navContext);
+  const { globalSearchUserObject, setGlobalSearchUserObject } =
+    useContext(searchUserContext);
+  const navigation = useNavigate();
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -64,6 +71,41 @@ export default function Comment({
 
     fetchAllData();
   }, []);
+
+  async function toUser(userId: string) {
+    const { data } = await supabase
+      .from("public_user")
+      .select()
+      .eq("user_id", userId);
+
+    if (data) {
+      const searchUserData = data[0];
+      console.log(searchUserData);
+
+      setCurrentActiveNavArea("user");
+      /*setSearchUserObject({
+        ...searchUserObject,
+        id: searchUserData.id,
+        name: searchUserData.profil_name,
+        text: searchUserData.status_text,
+        picture: searchUserData.profil_picture,
+        status: true,
+      });*/
+
+      setGlobalSearchUserObject({
+        ...globalSearchUserObject,
+        id: searchUserData.id,
+        user_id: searchUserData.user_id,
+        profil_name: searchUserData.profil_name,
+        profil_picture: searchUserData.profil_picture,
+        status_text: searchUserData.status_text,
+        search_status: true,
+        from_message: false,
+      });
+
+      navigation(`/private-route/user/${userId}`);
+    }
+  }
 
   async function checkLikeDislikeComment(
     id: number,
@@ -148,7 +190,12 @@ export default function Comment({
 
   return (
     <div className="comment-div my-3 p-4 border border-gray-300 shadow-lg rounded-sm ">
-      <div className="comment-user-div py-3 flex justify-start items-center gap-x-3">
+      <div
+        onClick={() => {
+          toUser(comment.user_id);
+        }}
+        className="comment-user-div py-3 flex justify-start items-center gap-x-3 cursor-pointer"
+      >
         {comment.public_user.profil_picture !== "" ? (
           <img
             src={`https://pmhsscblwzipolnmirow.supabase.co/storage/v1/object/public/profilepicture/${comment.public_user.profil_picture}`}

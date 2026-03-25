@@ -60,7 +60,7 @@ export default function SignIn() {
       (userMail.includes(" ") && userMail.length > 0)
     ) {
       toast.error(
-        "Der Benutzername/E-Mail muss @-Zeichen haben und kein Lerrraum.",
+        "Der Benutzername/E-Mail muss @-Zeichen haben und kein Leerraum.",
         {
           unstyled: true,
           className: "signin-toasty-incorrect w-[25rem] h-[7rem] px-5",

@@ -341,7 +341,7 @@ export default function Nav() {
           </div>
 
           <div
-            className={`nav-section-user-options-div fixed w-[15rem] transition-all duration-700 ease-in-out z-[1] p-2 shadow-lg rounded-sm ${userOptions ? "nav-section-user-options-animation-div" : ""}`}
+            className={`nav-section-user-options-div absolute w-[15rem] transition-all duration-700 ease-in-out z-[1] p-2 shadow-lg rounded-sm ${userOptions ? "nav-section-user-options-animation-div" : ""}`}
           >
             <div className="nav-section-user-options-child-div py-5 pl-5 bg-white flex flex-col gap-y-4 rounded-sm">
               <button

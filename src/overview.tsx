@@ -171,7 +171,7 @@ export default function Overview() {
   }
 
   return (
-    <div className="overview-section h-screen flex flex-col items-center justify-center">
+    <div className="overview-section h-[100vh] flex flex-col">
       <Dialog open={consentPopUp} onOpenChange={setConsentPopUp}>
         <DialogContent
           onInteractOutside={(e) => {
@@ -179,7 +179,7 @@ export default function Overview() {
           }}
           className="overview-section-consent-popup !max-w-7xl"
         >
-          <DialogDescription className="overview-section-consent-popup-description h-[90vh] px-3 py-5 text-black flex flex-col items-center gap-y-10 overflow-y-scroll">
+          <DialogDescription className="overview-section-consent-popup-description h-[100vh] px-3 py-5 text-black flex flex-col items-center gap-y-10 overflow-y-scroll">
             <div className="overview-section-consent-popup-agb-div w-[95%] flex flex-col items-start justify-center gap-y-3">
               <h2 className="overview-section-consent-popup-headline text-lg">
                 Allgemine Geschäftsbedingungen (AGB) von OpenPureNet
@@ -354,10 +354,10 @@ export default function Overview() {
 
       <Nav />
 
-      <div className="overview-section-show-content w-full h-full grid grid-cols-3">
+      <div className="overview-section-show-content w-full pb-1 grid grid-cols-3">
         <div className="overview-section-overview-placeholder"></div>
 
-        <div className="overview-section-post-overview w-full h-213 overflow-auto">
+        <div className="overview-section-post-overview w-full overflow-hidden">
           <div className="overview-section-post-overview-scroll-div w-full h-full px-1 flex flex-col gap-y-0.5 overflow-auto">
             {postsArray.map((post) => {
               return (

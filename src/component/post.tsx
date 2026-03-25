@@ -17,6 +17,8 @@ import type { PostObject } from "@/postContext";
 import type { PublicUserObject } from "@/postContext";
 //import "../responsive.css";
 import "./post.css";
+import { navContext } from "@/navContext";
+import { useNavigate } from "react-router-dom";
 
 export interface CommentObject {
   text: string;
@@ -63,7 +65,10 @@ export default function Post({
   const [prevLikeDislikePostType, setPrevLikeDislikePostType] =
     useState<string>("");
   const { publicUserObject } = useContext(publicUserContext);
-  const { globalSearchUserObject } = useContext(searchUserContext);
+  const navigation = useNavigate();
+  const { globalSearchUserObject, setGlobalSearchUserObject } =
+    useContext(searchUserContext);
+  const { setCurrentActiveNavArea } = useContext(navContext);
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -131,6 +136,41 @@ export default function Post({
 
     fetchAllData();
   }, []);
+
+  async function toUser(userId: string) {
+    const { data } = await supabase
+      .from("public_user")
+      .select()
+      .eq("user_id", userId);
+
+    if (data) {
+      const searchUserData = data[0];
+      console.log(searchUserData);
+
+      setCurrentActiveNavArea("user");
+      /*setSearchUserObject({
+        ...searchUserObject,
+        id: searchUserData.id,
+        name: searchUserData.profil_name,
+        text: searchUserData.status_text,
+        picture: searchUserData.profil_picture,
+        status: true,
+      });*/
+
+      setGlobalSearchUserObject({
+        ...globalSearchUserObject,
+        id: searchUserData.id,
+        user_id: searchUserData.user_id,
+        profil_name: searchUserData.profil_name,
+        profil_picture: searchUserData.profil_picture,
+        status_text: searchUserData.status_text,
+        search_status: true,
+        from_message: false,
+      });
+
+      navigation(`/private-route/user/${userId}`);
+    }
+  }
 
   async function loadComments() {
     const { data } = await supabase
@@ -732,7 +772,12 @@ export default function Post({
 
       <div className="post mx-0.5 my-0.3 bg-white shadow-lg rounded-sm">
         <div className="post-user-div px-3 py-5 flex justify-between items-center gap-x-3">
-          <div className="post-user-info-div flex justify-center items-center gap-x-3">
+          <div
+            onClick={() => {
+              toUser(post.user_id);
+            }}
+            className="post-user-info-div flex justify-center items-center gap-x-3 cursor-pointer"
+          >
             {post.public_user.profil_picture !== "" ? (
               <img
                 src={`https://pmhsscblwzipolnmirow.supabase.co/storage/v1/object/public/profilepicture/${post.public_user.profil_picture}`}

@@ -38,12 +38,11 @@
 
   .nav-section-user-options-div {
     top: -13rem;
-    right: 24%;
+    left: 2.5rem;
   }
 
   .nav-section-user-options-animation-div {
     top: 5rem;
-    right: 24%;
   }
 
   .nav-section-user-options-icon {
@@ -56,15 +55,16 @@
 
   /*Overview*/
 
-  .overview-section-overview-placeholder,
-  .overview-section-overview-placeholder2 {
-    display: block;
-  }
-
   .overview-section-show-content {
+    height: calc(100% - 5.3rem);
     padding-top: 0;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .overview-section-overview-placeholder,
+  .overview-section-overview-placeholder2 {
+    display: block;
   }
 
   /*Users*/
@@ -256,7 +256,7 @@
 
   .nav-section-user-options-div {
     top: -13rem;
-    right: 17%;
+    left: 2.5rem;
   }
 
   .nav-section-user-options-animation-div {
@@ -299,6 +299,7 @@
   }
 
   .overview-section-show-content {
+    height: calc(100% - 5.3rem);
     padding-top: 0;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -310,9 +311,11 @@
   }
 
   .overview-section-post-overview {
-    height: 48rem;
-    padding: 0.1rem 0;
+    padding: 0.1rem 0 0 0;
     position: relative;
+  }
+
+  .overview-section-post-overview-scroll-div {
   }
 
   /*Users*/
@@ -486,6 +489,10 @@
     margin-top: 0.3rem;
   }
 
+  .nav-section-user-options-div {
+    left: -11.5rem;
+  }
+
   /*Overview*/
 
   .consent-popup-agb-div {
@@ -508,7 +515,6 @@
   }
 
   .overview-section-post-overview {
-    height: 33rem;
   }
 
   /*Users*/
@@ -677,11 +683,10 @@
   }
 
   .nav-section-user-options-div {
-    right: 3%;
+    left: -11.8rem;
   }
 
   .nav-section-user-options-animation-div {
-    right: 3%;
     padding: 0.3rem;
   }
 
@@ -1333,11 +1338,12 @@
 
   .nav-section-user-options-div {
     top: 43rem;
+    left: -13rem;
     padding: 0.2rem;
   }
 
   .nav-section-user-options-animation-div {
-    top: 21rem;
+    top: -9.7rem;
   }
 
   /*Overview*/
@@ -1371,18 +1377,18 @@
     padding: 0 0.1rem;
   }
 
+  .overview-section-show-content {
+    height: calc(100% - 3.7rem);
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
   .overview-section-overview-placeholder,
   .overview-section-overview-placeholder2 {
     display: none;
   }
 
-  .overview-section-show-content {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
   .overview-section-post-overview {
-    height: 30.5rem;
   }
 
   /*Users*/
