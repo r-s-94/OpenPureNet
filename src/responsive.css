@@ -1378,7 +1378,7 @@
   }
 
   .overview-section-show-content {
-    height: calc(100% - 4.7rem);
+    height: calc(100% - 5rem);
     display: grid;
     grid-template-columns: 1fr;
   }
